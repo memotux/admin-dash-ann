@@ -8,6 +8,20 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "nuxt": "^3.2.3"
+    "@fortawesome/fontawesome-free": "^6.3.0",
+    "@fullcalendar/core": "^6.1.4",
+    "@fullcalendar/daygrid": "^6.1.4",
+    "@fullcalendar/interaction": "^6.1.4",
+    "@fullcalendar/list": "^6.1.4",
+    "@fullcalendar/timegrid": "^6.1.4",
+    "@fullcalendar/vue3": "^6.1.4",
+    "@mdi/font": "^7.1.96",
+    "@observablehq/plot": "^0.6.4",
+    "@types/node": "^18.15.0",
+    "aws-amplify": "^5.0.18",
+    "nuxt": "^3.2.3",
+    "vite-plugin-vuetify": "^1.0.2",
+    "vuetify": "^3.1.8",
+    "zod": "^3.21.4"
   }
 }
