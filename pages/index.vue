@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 definePageMeta({
   title: 'Dashboard',
-  description: 'TuxMin Dashboard'
+  description: 'Welcome to your Dashboard'
 })
 </script>
 
 <template>
-  <div>
+  <VContainer>
     Dashboard
-  </div>
+  </VContainer>
 </template>
