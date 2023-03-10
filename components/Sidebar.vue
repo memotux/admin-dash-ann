@@ -3,19 +3,19 @@ import { useTheme } from 'vuetify'
 
 const items = [
   { title: 'Dashboard', prependIcon: 'mdi:mdi-view-dashboard', to: '/' },
-  { title: 'Data', type: 'subheader' },
-  { title: 'Manage Team', prependIcon: 'fa-solid fa-people-group', to: '/team' },
-  { title: 'Contacts', prependIcon: 'fa-solid fa-address-book', to: '/contacts' },
-  { title: 'Invoices Balances', prependIcon: 'fa-solid fa-file-invoice', to: '/invoices' },
-  { title: 'Pages', type: 'subheader' },
-  { title: 'Profile Form', prependIcon: 'fa-solid fa-user', to: '/form' },
-  { title: 'Calendar', prependIcon: 'fa-regular fa-calendar-days', to: '/calendar' },
-  { title: 'FAQ Page', prependIcon: 'fa-solid fa-clipboard-question', to: '/faq' },
-  { title: 'Charts', type: 'subheader' },
-  { title: 'Bar Chart', prependIcon: 'fa-regular fa-chart-bar', to: '/bar' },
-  { title: 'Pie Chart', prependIcon: 'fa-solid fa-chart-pie', to: '/pie' },
-  { title: 'Line Chart', prependIcon: 'fa-solid fa-chart-line', to: '/line' },
-  { title: 'Geography Chart', prependIcon: 'fa-solid fa-map', to: '/geo' },
+  { title: 'Client Facing', type: 'subheader' },
+  { title: 'Products', prependIcon: 'fa-solid fa-cart-shopping', to: '/products' },
+  { title: 'Customers', prependIcon: 'fa-solid fa-people-group', to: '/customers' },
+  { title: 'Transaccions', prependIcon: 'fa-solid fa-file-invoice', to: '/transactions' },
+  { title: 'Geography', prependIcon: 'fa-solid fa-globe', to: '/geo' },
+  { title: 'Sales', type: 'subheader' },
+  { title: 'Overview', prependIcon: 'fa-solid fa-store', to: '/overview' },
+  { title: 'Daily', prependIcon: 'fa-solid fa-calendar-day', to: '/today' },
+  { title: 'Monthly', prependIcon: 'fa-solid fa-calendar-days', to: '/monthly' },
+  { title: 'Breakdown', prependIcon: 'fa-solid fa-chart-pie', to: '/brakedown' },
+  { title: 'Management', type: 'subheader' },
+  { title: 'Admin', prependIcon: 'fa-solid fa-toolbox', to: '/admin' },
+  { title: 'Performance', prependIcon: 'fa-solid fa-arrow-trend-up', to: '/performace' },
 ]
 
 const ui = useUi()
