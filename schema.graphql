@@ -1,0 +1,52 @@
+type Mutation {
+  batchAddProducts(posts: [CreateProductInput]): [Product] @aws_cognito @aws_iam
+}
+
+input CreateProductInput {
+  id: ID
+  type: DataType!
+  name: String
+  price: Float
+  description: String
+  category: String
+  rating: Float
+  supply: Int
+  yearlySalesTotal: Int
+  yearlyTotalSoldUnits: Int
+  monthlyStat: [ProductStatDateInput]
+  dailyStat: [ProductStatDateInput]
+}
+
+input ProductStatDateInput {
+  month: String
+  date: AWSDate
+  totalSales: Int!
+  totalUnits: Int!
+}
+
+type ProductStatDate {
+  month: String
+  date: AWSDate
+  totalSales: Int!
+  totalUnits: Int!
+}
+
+enum DataType {
+  PRODUCT
+  PRODUCTSTAT
+}
+
+type Product @model @auth(rules: [{ allow: public }]) {
+  id: ID! @primaryKey(sortKeyFields: ["type"])
+  type: DataType!
+  name: String
+  price: Float
+  description: String
+  category: String
+  rating: Float
+  supply: Int
+  yearlySalesTotal: Int
+  yearlyTotalSoldUnits: Int
+  monthlyStat: [ProductStatDate]
+  dailyStat: [ProductStatDate]
+}

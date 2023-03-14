@@ -1,0 +1,63 @@
+type Mutation {
+  batchAddProducts(posts: [CreateProductInput]): [Product]
+}
+
+input CreateProductInput {
+  id: ID!
+  type: DataType!
+  owner: String!
+  name: String
+  price: Float
+  description: String
+  category: String
+  rating: Float
+  supply: Int
+  yearlySalesTotal: Int
+  yearlyTotalSoldUnits: Int
+  monthlyStat: [ProductStatDateInput]
+  dailyStat: [ProductStatDateInput]
+}
+
+input ProductStatDateInput {
+  month: String
+  date: AWSDate
+  totalSales: Int!
+  totalUnits: Int!
+}
+
+type ProductStatDate {
+  month: String
+  date: AWSDate
+  totalSales: Int!
+  totalUnits: Int!
+}
+
+enum DataType {
+  PRODUCT
+  PRODUCTSTAT
+}
+
+type Product
+  @model
+  @auth(
+    rules: [
+      { allow: public }
+      { allow: groups, groups: ["admin"] }
+      { allow: groups, groups: ["user"], operations: [read, create, update] }
+      { allow: owner }
+    ]
+  ) {
+  id: ID! @primaryKey(sortKeyFields: ["type"])
+  type: DataType!
+  owner: String!
+  name: String
+  price: Float
+  description: String
+  category: String
+  rating: Float
+  supply: Int
+  yearlySalesTotal: Int
+  yearlyTotalSoldUnits: Int
+  monthlyStat: [ProductStatDate]
+  dailyStat: [ProductStatDate]
+}

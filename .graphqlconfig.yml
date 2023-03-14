@@ -1,0 +1,15 @@
+projects:
+  fullstackadmindash:
+    schemaPath: amplify/backend/api/fullstackadmindash/build/schema.graphql
+    includes:
+      - graphql/**/*.ts
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: typescript
+        generatedFileName: graphql/types.ts
+        docsFilePath: graphql
+extensions:
+  amplify:
+    version: 3
