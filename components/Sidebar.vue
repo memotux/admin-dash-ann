@@ -12,10 +12,10 @@ const items = [
   { title: 'Overview', prependIcon: 'fa-solid fa-store', to: '/overview' },
   { title: 'Daily', prependIcon: 'fa-solid fa-calendar-day', to: '/today' },
   { title: 'Monthly', prependIcon: 'fa-solid fa-calendar-days', to: '/monthly' },
-  { title: 'Breakdown', prependIcon: 'fa-solid fa-chart-pie', to: '/brakedown' },
+  { title: 'Breakdown', prependIcon: 'fa-solid fa-chart-pie', to: '/breakdown' },
   { title: 'Management', type: 'subheader' },
   { title: 'Admin', prependIcon: 'fa-solid fa-toolbox', to: '/admin' },
-  { title: 'Performance', prependIcon: 'fa-solid fa-arrow-trend-up', to: '/performace' },
+  { title: 'Performance', prependIcon: 'fa-solid fa-arrow-trend-up', to: '/performance' },
 ]
 
 const ui = useUi()
