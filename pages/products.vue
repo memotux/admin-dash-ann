@@ -4,10 +4,14 @@ definePageMeta({
   description: 'See your list of products'
 })
 
-const { data, pending } = useFetch('/api/listProducts')
+// const user = await useUser()
+
+const { data, pending } = await useFetch('/api/listProducts')
 
 const products = computed(() => data.value?.listProducts?.items.filter(item => item?.type === 'PRODUCT'))
 const isLoading = computed(() => Boolean(products.value) || !pending.value)
+
+// const uploadProducts = async () => { await useFetch(`/api/batchAddProducts?user=${user.username}`) }
 </script>
 
 <template>
@@ -20,6 +24,8 @@ const isLoading = computed(() => Boolean(products.value) || !pending.value)
     </VRow>
     <VRow v-else align="center" justify="center" style="min-height: inherit;">
       <VProgressCircular color="secondary-700" indeterminate :size="80" width="8" />
+
+      <!-- <VBtn @click="uploadProducts">Load Products</VBtn> -->
     </VRow>
   </VContainer>
 </template>

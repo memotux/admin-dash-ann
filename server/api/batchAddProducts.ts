@@ -1,8 +1,15 @@
 import { API } from "aws-amplify";
 import { createProduct, updateProduct } from '@/graphql/mutations';
-import { dataProductStat } from '@/data'
+import { dataProductStat, dataProduct } from '@/data'
 
-export default defineEventHandler(async () => {
+export default defineEventHandler(async (event) => {
+  const { user } = getQuery(event)
+  if (!user) {
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'Not a valid user...'
+    })
+  }
   try {
     const slice = dataProductStat.map(async (item) => {
       const setItem = new Map(Object.entries(item)) as Map<keyof typeof item | 'id' | 'type' | 'owner' | 'monthlyStat' | 'dailyStat', string | number | unknown>
@@ -12,11 +19,11 @@ export default defineEventHandler(async () => {
       setItem.delete('productId')
       setItem.set('id', item.productId)
       setItem.set('type', "PRODUCT")
-      // setItem.set('owner', user.username)
+      setItem.set('owner', user)
       setItem.set('monthlyStat', item.monthlyData)
       setItem.set('dailyStat', item.dailyData)
 
-      console.log('Processing Product Stat: ', item.productId);
+      console.log('Processing Product Stat: ', item._id);
 
       return await API.graphql({
         query: updateProduct,
