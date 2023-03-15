@@ -23,7 +23,7 @@ const toggleStats = () => { show.value = !show.value }
     <VCardText class="text-overline text-right secondary-700">
       {{ category }}
     </VCardText>
-    <VCardTitle class="text-h5">
+    <VCardTitle class="text-h5 font-weigth-bold">
       {{ name }}
     </VCardTitle>
 
@@ -31,7 +31,7 @@ const toggleStats = () => { show.value = !show.value }
       ${{ Number(price).toFixed(2) }}
     </VCardSubtitle>
 
-    <VRating v-model="stars" disabled half-increments />
+    <VRating v-model="stars" disabled half-increments color="secondary-600" />
 
     <VCardActions>
       <VSpacer />
@@ -45,18 +45,33 @@ const toggleStats = () => { show.value = !show.value }
       <div v-show="show">
         <VDivider />
 
-        <VCardText>
-          ID: {{ id }}
-        </VCardText>
-        <VCardText>
-          Supply Left: {{ supply }}
-        </VCardText>
-        <VCardText>
-          Yearly Sales This Year: {{ yearlySalesTotal }}
-        </VCardText>
-        <VCardText>
-          Yearly Units Sold This Year: {{ yearlyTotalSoldUnits }}
-        </VCardText>
+        <VList class="bg-primary-700">
+          <VListItem disabled>
+            <VListItemTitle>ID:
+            </VListItemTitle>
+            <template #append>
+              <VChip color="secondary">{{ id }}</VChip>
+            </template>
+          </VListItem>
+          <VListItem disabled>
+            <VListItemTitle>Supply Left:</VListItemTitle>
+            <template #append>
+              <VChip color="secondary">{{ supply }}</VChip>
+            </template>
+          </VListItem>
+          <VListItem disabled>
+            <VListItemTitle>Yearly Sales This Year:</VListItemTitle>
+            <template #append>
+              <VChip color="secondary">{{ yearlySalesTotal }}</VChip>
+            </template>
+          </VListItem>
+          <VListItem disabled>
+            <VListItemTitle>Yearly Units Sold This Year:</VListItemTitle>
+            <template #append>
+              <VChip color="secondary">{{ yearlyTotalSoldUnits }}</VChip>
+            </template>
+          </VListItem>
+        </VList>
       </div>
     </VExpandTransition>
   </VCard>
