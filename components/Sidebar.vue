@@ -24,14 +24,14 @@ const drawerColor = computed(() => theme.global.current.value.dark ? 'primary-50
 </script>
 
 <template>
-  <v-navigation-drawer
+  <VNavigationDrawer
     :color="drawerColor"
     v-model="ui.drawer"
     :rail="ui.rail"
     permanent
     @click="() => { ui.rail = false }">
-    <v-list>
-      <v-list-item v-show="!ui.rail">
+    <VList>
+      <VListItem v-show="!ui.rail">
         <h1>TUXMIN</h1>
         <template #append>
           <v-btn
@@ -39,23 +39,26 @@ const drawerColor = computed(() => theme.global.current.value.dark ? 'primary-50
             icon="fa-solid fa-circle-chevron-left"
             @click.stop="() => { ui.rail = !ui.rail }" />
         </template>
-      </v-list-item>
-      <v-list-item prepend-avatar="/favicon.ico" title="Romeo Méndez" />
-    </v-list>
+      </VListItem>
+      <VListItem v-if="ui.isAuth" prepend-avatar="/favicon.ico" title="Romeo Méndez" />
+    </VList>
 
-    <v-divider></v-divider>
+    <VDivider />
 
-    <v-list :lines="false" nav>
+    <VList v-if="ui.isAuth" :lines="false" nav>
       <template v-for="(item) in items" :key="item.title">
-        <v-list-subheader
+        <VListSubheader
           v-if="item.type === 'subheader'"
           :title="item.title"
           class="text-h6" />
-        <v-list-item
+        <VListItem
           v-else
           :active-color="drawerColor ? 'secondary' : 'primary'"
           v-bind="item" />
       </template>
-    </v-list>
-  </v-navigation-drawer>
+      <VListItem prepend-icon="fa-solid fa-right-from-bracket" @click="authLogOut">
+        Log Out
+      </VListItem>
+    </VList>
+  </VNavigationDrawer>
 </template>
