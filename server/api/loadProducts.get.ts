@@ -1,5 +1,5 @@
 import { API } from "aws-amplify";
-import { createProduct } from '@/graphql/mutations';
+import { createProduct, updateProduct } from '@/graphql/mutations';
 import { dataProductStat, dataProduct } from '@/data'
 
 export default defineEventHandler(async (event) => {
@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
   }
   try {
     const slice = dataProduct.map(async (item) => {
-      const setItem = new Map(Object.entries(item)) as Map<keyof typeof item | 'id' | 'type' | 'owner' | 'monthlyStat' | 'dailyStat', string | number | unknown>
+      const setItem = new Map(Object.entries(item)) as Map<keyof typeof item | 'id' | 'type' | 'owner' | 'monthlyStat' | 'dailyStat' | 'yearlyTotalSoldUnits' | 'yearlySalesTotal', string | number | unknown>
       const stats = dataProductStat.find((i) => i.productId === item._id)
       setItem.delete('_id')
       setItem.set('id', item._id)
@@ -20,12 +20,14 @@ export default defineEventHandler(async (event) => {
       if (stats) {
         setItem.set('monthlyStat', stats.monthlyData)
         setItem.set('dailyStat', stats.dailyData)
+        setItem.set('yearlySalesTotal', stats.yearlySalesTotal)
+        setItem.set('yearlyTotalSoldUnits', stats.yearlyTotalSoldUnits)
       }
 
       console.log('Processing Product Stat: ', item._id);
 
       return await API.graphql({
-        query: createProduct,
+        query: updateProduct,
         variables: {
           input: Object.fromEntries(setItem)
         },
