@@ -19,7 +19,7 @@
   "version": "2018-05-29",
   "operation": "Query",
   "query": $modelQueryExpression,
-  "index": "byRole"
+  "index": "usersByRole"
 } )
 #if( !$util.isNull($context.args.limit) )
   $util.qr($QueryRequest.put("limit", $context.args.limit))

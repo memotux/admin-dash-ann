@@ -57,8 +57,9 @@ type User
   country: String
   occupation: String
   phoneNumber: AWSPhone
-  transactions: [Transaction] @hasMany(indexName: "byUserId", fields: ["id"])
-  role: UserRoles! @index(name: "byRole", queryField: "userByRole")
+  transactions: [Transaction]
+    @hasMany(indexName: "transactionsByUser", fields: ["id"])
+  role: UserRoles! @index(name: "usersByRole", queryField: "userByRole")
 }
 
 type Transaction
@@ -71,7 +72,7 @@ type Transaction
     ]
   ) {
   id: ID!
-  userId: ID! @index(name: "byUserId")
+  userId: ID! @index(name: "transactionsByUser")
   cost: Float
   products: [Product] @manyToMany(relationName: "ProductTransactions")
 }
