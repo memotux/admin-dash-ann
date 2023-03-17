@@ -2,8 +2,15 @@ import { API } from "aws-amplify";
 import { createProduct, updateProduct } from '@/graphql/mutations';
 import { dataProductStat, dataProduct } from '@/data'
 
+const productMutations = { create: createProduct, update: updateProduct }
+
+interface CreateProductsPayload {
+  u: string
+  q: 'create' | 'update'
+}
+
 export default defineEventHandler(async (event) => {
-  const { u } = getQuery(event)
+  const { u, q } = getQuery(event) as unknown as CreateProductsPayload
   if (!u) {
     throw createError({
       statusCode: 403,
@@ -27,7 +34,7 @@ export default defineEventHandler(async (event) => {
       console.log('Processing Product Stat: ', item._id);
 
       return await API.graphql({
-        query: updateProduct,
+        query: productMutations[q || 'create'],
         variables: {
           input: Object.fromEntries(setItem)
         },
