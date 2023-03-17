@@ -3,8 +3,7 @@
 //  This file was automatically generated and should not be edited.
 
 export type CreateProductInput = {
-  id: string,
-  type: DataType,
+  id?: string | null,
   owner: string,
   name?: string | null,
   price?: number | null,
@@ -18,40 +17,7 @@ export type CreateProductInput = {
   dailyStat?: Array< ProductStatDateInput | null > | null,
 };
 
-export enum DataType {
-  PRODUCT = "PRODUCT",
-  PRODUCTSTAT = "PRODUCTSTAT",
-}
-
-
 export type ProductStatDateInput = {
-  month?: string | null,
-  date?: string | null,
-  totalSales: number,
-  totalUnits: number,
-};
-
-export type Product = {
-  __typename: "Product",
-  id: string,
-  type: DataType,
-  owner: string,
-  name?: string | null,
-  price?: number | null,
-  description?: string | null,
-  category?: string | null,
-  rating?: number | null,
-  supply?: number | null,
-  yearlySalesTotal?: number | null,
-  yearlyTotalSoldUnits?: number | null,
-  monthlyStat?:  Array<ProductStatDate | null > | null,
-  dailyStat?:  Array<ProductStatDate | null > | null,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type ProductStatDate = {
-  __typename: "ProductStatDate",
   month?: string | null,
   date?: string | null,
   totalSales: number,
@@ -137,9 +103,63 @@ export type ModelIntInput = {
   attributeType?: ModelAttributeTypes | null,
 };
 
+export type Product = {
+  __typename: "Product",
+  id: string,
+  owner: string,
+  name?: string | null,
+  price?: number | null,
+  description?: string | null,
+  category?: string | null,
+  rating?: number | null,
+  supply?: number | null,
+  yearlySalesTotal?: number | null,
+  yearlyTotalSoldUnits?: number | null,
+  monthlyStat?:  Array<ProductStatDate | null > | null,
+  dailyStat?:  Array<ProductStatDate | null > | null,
+  transactions?: ModelProductTransactionsConnection | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ProductStatDate = {
+  __typename: "ProductStatDate",
+  month?: string | null,
+  date?: string | null,
+  totalSales: number,
+  totalUnits: number,
+};
+
+export type ModelProductTransactionsConnection = {
+  __typename: "ModelProductTransactionsConnection",
+  items:  Array<ProductTransactions | null >,
+  nextToken?: string | null,
+};
+
+export type ProductTransactions = {
+  __typename: "ProductTransactions",
+  id: string,
+  productId: string,
+  transactionId: string,
+  product: Product,
+  transaction: Transaction,
+  createdAt: string,
+  updatedAt: string,
+  owner?: string | null,
+};
+
+export type Transaction = {
+  __typename: "Transaction",
+  id: string,
+  userId: string,
+  cost?: number | null,
+  products?: ModelProductTransactionsConnection | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
 export type UpdateProductInput = {
   id: string,
-  type: DataType,
   owner?: string | null,
   name?: string | null,
   price?: number | null,
@@ -155,34 +175,95 @@ export type UpdateProductInput = {
 
 export type DeleteProductInput = {
   id: string,
-  type: DataType,
 };
 
-export type ModelStringKeyConditionInput = {
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
+export type CreateUserInput = {
+  id?: string | null,
+  name?: string | null,
+  email: string,
+  city?: string | null,
+  state?: string | null,
+  country?: string | null,
+  occupation?: string | null,
+  phoneNumber?: string | null,
+  role: UserRoles,
 };
 
-export type ModelProductFilterInput = {
-  id?: ModelIDInput | null,
-  type?: ModelDataTypeInput | null,
-  owner?: ModelStringInput | null,
+export enum UserRoles {
+  user = "user",
+  admin = "admin",
+}
+
+
+export type ModelUserConditionInput = {
   name?: ModelStringInput | null,
-  price?: ModelFloatInput | null,
-  description?: ModelStringInput | null,
-  category?: ModelStringInput | null,
-  rating?: ModelFloatInput | null,
-  supply?: ModelIntInput | null,
-  yearlySalesTotal?: ModelIntInput | null,
-  yearlyTotalSoldUnits?: ModelIntInput | null,
-  and?: Array< ModelProductFilterInput | null > | null,
-  or?: Array< ModelProductFilterInput | null > | null,
-  not?: ModelProductFilterInput | null,
+  email?: ModelStringInput | null,
+  city?: ModelStringInput | null,
+  state?: ModelStringInput | null,
+  country?: ModelStringInput | null,
+  occupation?: ModelStringInput | null,
+  phoneNumber?: ModelStringInput | null,
+  role?: ModelUserRolesInput | null,
+  and?: Array< ModelUserConditionInput | null > | null,
+  or?: Array< ModelUserConditionInput | null > | null,
+  not?: ModelUserConditionInput | null,
+};
+
+export type ModelUserRolesInput = {
+  eq?: UserRoles | null,
+  ne?: UserRoles | null,
+};
+
+export type User = {
+  __typename: "User",
+  id: string,
+  name?: string | null,
+  email: string,
+  city?: string | null,
+  state?: string | null,
+  country?: string | null,
+  occupation?: string | null,
+  phoneNumber?: string | null,
+  transactions?: ModelTransactionConnection | null,
+  role: UserRoles,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ModelTransactionConnection = {
+  __typename: "ModelTransactionConnection",
+  items:  Array<Transaction | null >,
+  nextToken?: string | null,
+};
+
+export type UpdateUserInput = {
+  id: string,
+  name?: string | null,
+  email?: string | null,
+  city?: string | null,
+  state?: string | null,
+  country?: string | null,
+  occupation?: string | null,
+  phoneNumber?: string | null,
+  role?: UserRoles | null,
+};
+
+export type DeleteUserInput = {
+  id: string,
+};
+
+export type CreateTransactionInput = {
+  id?: string | null,
+  userId: string,
+  cost?: number | null,
+};
+
+export type ModelTransactionConditionInput = {
+  userId?: ModelIDInput | null,
+  cost?: ModelFloatInput | null,
+  and?: Array< ModelTransactionConditionInput | null > | null,
+  or?: Array< ModelTransactionConditionInput | null > | null,
+  not?: ModelTransactionConditionInput | null,
 };
 
 export type ModelIDInput = {
@@ -201,9 +282,81 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export type ModelDataTypeInput = {
-  eq?: DataType | null,
-  ne?: DataType | null,
+export type UpdateTransactionInput = {
+  id: string,
+  userId?: string | null,
+  cost?: number | null,
+};
+
+export type DeleteTransactionInput = {
+  id: string,
+};
+
+export type CreateProductTransactionsInput = {
+  id?: string | null,
+  productId: string,
+  transactionId: string,
+};
+
+export type ModelProductTransactionsConditionInput = {
+  productId?: ModelIDInput | null,
+  transactionId?: ModelIDInput | null,
+  and?: Array< ModelProductTransactionsConditionInput | null > | null,
+  or?: Array< ModelProductTransactionsConditionInput | null > | null,
+  not?: ModelProductTransactionsConditionInput | null,
+};
+
+export type UpdateProductTransactionsInput = {
+  id: string,
+  productId?: string | null,
+  transactionId?: string | null,
+};
+
+export type DeleteProductTransactionsInput = {
+  id: string,
+};
+
+export type ModelProductFilterInput = {
+  id?: ModelIDInput | null,
+  owner?: ModelStringInput | null,
+  name?: ModelStringInput | null,
+  price?: ModelFloatInput | null,
+  description?: ModelStringInput | null,
+  category?: ModelStringInput | null,
+  rating?: ModelFloatInput | null,
+  supply?: ModelIntInput | null,
+  yearlySalesTotal?: ModelIntInput | null,
+  yearlyTotalSoldUnits?: ModelIntInput | null,
+  and?: Array< ModelProductFilterInput | null > | null,
+  or?: Array< ModelProductFilterInput | null > | null,
+  not?: ModelProductFilterInput | null,
+};
+
+export type ModelProductConnection = {
+  __typename: "ModelProductConnection",
+  items:  Array<Product | null >,
+  nextToken?: string | null,
+};
+
+export type ModelUserFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  email?: ModelStringInput | null,
+  city?: ModelStringInput | null,
+  state?: ModelStringInput | null,
+  country?: ModelStringInput | null,
+  occupation?: ModelStringInput | null,
+  phoneNumber?: ModelStringInput | null,
+  role?: ModelUserRolesInput | null,
+  and?: Array< ModelUserFilterInput | null > | null,
+  or?: Array< ModelUserFilterInput | null > | null,
+  not?: ModelUserFilterInput | null,
+};
+
+export type ModelUserConnection = {
+  __typename: "ModelUserConnection",
+  items:  Array<User | null >,
+  nextToken?: string | null,
 };
 
 export enum ModelSortDirection {
@@ -212,15 +365,26 @@ export enum ModelSortDirection {
 }
 
 
-export type ModelProductConnection = {
-  __typename: "ModelProductConnection",
-  items:  Array<Product | null >,
-  nextToken?: string | null,
+export type ModelTransactionFilterInput = {
+  id?: ModelIDInput | null,
+  userId?: ModelIDInput | null,
+  cost?: ModelFloatInput | null,
+  and?: Array< ModelTransactionFilterInput | null > | null,
+  or?: Array< ModelTransactionFilterInput | null > | null,
+  not?: ModelTransactionFilterInput | null,
+};
+
+export type ModelProductTransactionsFilterInput = {
+  id?: ModelIDInput | null,
+  productId?: ModelIDInput | null,
+  transactionId?: ModelIDInput | null,
+  and?: Array< ModelProductTransactionsFilterInput | null > | null,
+  or?: Array< ModelProductTransactionsFilterInput | null > | null,
+  not?: ModelProductTransactionsFilterInput | null,
 };
 
 export type ModelSubscriptionProductFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  type?: ModelSubscriptionStringInput | null,
   name?: ModelSubscriptionStringInput | null,
   price?: ModelSubscriptionFloatInput | null,
   description?: ModelSubscriptionStringInput | null,
@@ -287,41 +451,34 @@ export type ModelSubscriptionIntInput = {
   notIn?: Array< number | null > | null,
 };
 
-export type BatchAddProductsMutationVariables = {
-  posts?: Array< CreateProductInput | null > | null,
+export type ModelSubscriptionUserFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  name?: ModelSubscriptionStringInput | null,
+  email?: ModelSubscriptionStringInput | null,
+  city?: ModelSubscriptionStringInput | null,
+  state?: ModelSubscriptionStringInput | null,
+  country?: ModelSubscriptionStringInput | null,
+  occupation?: ModelSubscriptionStringInput | null,
+  phoneNumber?: ModelSubscriptionStringInput | null,
+  role?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionUserFilterInput | null > | null,
+  or?: Array< ModelSubscriptionUserFilterInput | null > | null,
 };
 
-export type BatchAddProductsMutation = {
-  batchAddProducts?:  Array< {
-    __typename: "Product",
-    id: string,
-    type: DataType,
-    owner: string,
-    name?: string | null,
-    price?: number | null,
-    description?: string | null,
-    category?: string | null,
-    rating?: number | null,
-    supply?: number | null,
-    yearlySalesTotal?: number | null,
-    yearlyTotalSoldUnits?: number | null,
-    monthlyStat?:  Array< {
-      __typename: "ProductStatDate",
-      month?: string | null,
-      date?: string | null,
-      totalSales: number,
-      totalUnits: number,
-    } | null > | null,
-    dailyStat?:  Array< {
-      __typename: "ProductStatDate",
-      month?: string | null,
-      date?: string | null,
-      totalSales: number,
-      totalUnits: number,
-    } | null > | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null > | null,
+export type ModelSubscriptionTransactionFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  userId?: ModelSubscriptionIDInput | null,
+  cost?: ModelSubscriptionFloatInput | null,
+  and?: Array< ModelSubscriptionTransactionFilterInput | null > | null,
+  or?: Array< ModelSubscriptionTransactionFilterInput | null > | null,
+};
+
+export type ModelSubscriptionProductTransactionsFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  productId?: ModelSubscriptionIDInput | null,
+  transactionId?: ModelSubscriptionIDInput | null,
+  and?: Array< ModelSubscriptionProductTransactionsFilterInput | null > | null,
+  or?: Array< ModelSubscriptionProductTransactionsFilterInput | null > | null,
 };
 
 export type CreateProductMutationVariables = {
@@ -333,7 +490,6 @@ export type CreateProductMutation = {
   createProduct?:  {
     __typename: "Product",
     id: string,
-    type: DataType,
     owner: string,
     name?: string | null,
     price?: number | null,
@@ -357,6 +513,19 @@ export type CreateProductMutation = {
       totalSales: number,
       totalUnits: number,
     } | null > | null,
+    transactions?:  {
+      __typename: "ModelProductTransactionsConnection",
+      items:  Array< {
+        __typename: "ProductTransactions",
+        id: string,
+        productId: string,
+        transactionId: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -371,7 +540,6 @@ export type UpdateProductMutation = {
   updateProduct?:  {
     __typename: "Product",
     id: string,
-    type: DataType,
     owner: string,
     name?: string | null,
     price?: number | null,
@@ -395,6 +563,19 @@ export type UpdateProductMutation = {
       totalSales: number,
       totalUnits: number,
     } | null > | null,
+    transactions?:  {
+      __typename: "ModelProductTransactionsConnection",
+      items:  Array< {
+        __typename: "ProductTransactions",
+        id: string,
+        productId: string,
+        transactionId: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -409,7 +590,6 @@ export type DeleteProductMutation = {
   deleteProduct?:  {
     __typename: "Product",
     id: string,
-    type: DataType,
     owner: string,
     name?: string | null,
     price?: number | null,
@@ -433,65 +613,227 @@ export type DeleteProductMutation = {
       totalSales: number,
       totalUnits: number,
     } | null > | null,
+    transactions?:  {
+      __typename: "ModelProductTransactionsConnection",
+      items:  Array< {
+        __typename: "ProductTransactions",
+        id: string,
+        productId: string,
+        transactionId: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type GetProductQueryVariables = {
-  id: string,
-  type: DataType,
+export type CreateUserMutationVariables = {
+  input: CreateUserInput,
+  condition?: ModelUserConditionInput | null,
 };
 
-export type GetProductQuery = {
-  getProduct?:  {
-    __typename: "Product",
+export type CreateUserMutation = {
+  createUser?:  {
+    __typename: "User",
     id: string,
-    type: DataType,
-    owner: string,
     name?: string | null,
-    price?: number | null,
-    description?: string | null,
-    category?: string | null,
-    rating?: number | null,
-    supply?: number | null,
-    yearlySalesTotal?: number | null,
-    yearlyTotalSoldUnits?: number | null,
-    monthlyStat?:  Array< {
-      __typename: "ProductStatDate",
-      month?: string | null,
-      date?: string | null,
-      totalSales: number,
-      totalUnits: number,
-    } | null > | null,
-    dailyStat?:  Array< {
-      __typename: "ProductStatDate",
-      month?: string | null,
-      date?: string | null,
-      totalSales: number,
-      totalUnits: number,
-    } | null > | null,
+    email: string,
+    city?: string | null,
+    state?: string | null,
+    country?: string | null,
+    occupation?: string | null,
+    phoneNumber?: string | null,
+    transactions?:  {
+      __typename: "ModelTransactionConnection",
+      items:  Array< {
+        __typename: "Transaction",
+        id: string,
+        userId: string,
+        cost?: number | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    role: UserRoles,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type ListProductsQueryVariables = {
-  id?: string | null,
-  type?: ModelStringKeyConditionInput | null,
-  filter?: ModelProductFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  sortDirection?: ModelSortDirection | null,
+export type UpdateUserMutationVariables = {
+  input: UpdateUserInput,
+  condition?: ModelUserConditionInput | null,
 };
 
-export type ListProductsQuery = {
-  listProducts?:  {
-    __typename: "ModelProductConnection",
-    items:  Array< {
+export type UpdateUserMutation = {
+  updateUser?:  {
+    __typename: "User",
+    id: string,
+    name?: string | null,
+    email: string,
+    city?: string | null,
+    state?: string | null,
+    country?: string | null,
+    occupation?: string | null,
+    phoneNumber?: string | null,
+    transactions?:  {
+      __typename: "ModelTransactionConnection",
+      items:  Array< {
+        __typename: "Transaction",
+        id: string,
+        userId: string,
+        cost?: number | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    role: UserRoles,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteUserMutationVariables = {
+  input: DeleteUserInput,
+  condition?: ModelUserConditionInput | null,
+};
+
+export type DeleteUserMutation = {
+  deleteUser?:  {
+    __typename: "User",
+    id: string,
+    name?: string | null,
+    email: string,
+    city?: string | null,
+    state?: string | null,
+    country?: string | null,
+    occupation?: string | null,
+    phoneNumber?: string | null,
+    transactions?:  {
+      __typename: "ModelTransactionConnection",
+      items:  Array< {
+        __typename: "Transaction",
+        id: string,
+        userId: string,
+        cost?: number | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    role: UserRoles,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateTransactionMutationVariables = {
+  input: CreateTransactionInput,
+  condition?: ModelTransactionConditionInput | null,
+};
+
+export type CreateTransactionMutation = {
+  createTransaction?:  {
+    __typename: "Transaction",
+    id: string,
+    userId: string,
+    cost?: number | null,
+    products?:  {
+      __typename: "ModelProductTransactionsConnection",
+      items:  Array< {
+        __typename: "ProductTransactions",
+        id: string,
+        productId: string,
+        transactionId: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateTransactionMutationVariables = {
+  input: UpdateTransactionInput,
+  condition?: ModelTransactionConditionInput | null,
+};
+
+export type UpdateTransactionMutation = {
+  updateTransaction?:  {
+    __typename: "Transaction",
+    id: string,
+    userId: string,
+    cost?: number | null,
+    products?:  {
+      __typename: "ModelProductTransactionsConnection",
+      items:  Array< {
+        __typename: "ProductTransactions",
+        id: string,
+        productId: string,
+        transactionId: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteTransactionMutationVariables = {
+  input: DeleteTransactionInput,
+  condition?: ModelTransactionConditionInput | null,
+};
+
+export type DeleteTransactionMutation = {
+  deleteTransaction?:  {
+    __typename: "Transaction",
+    id: string,
+    userId: string,
+    cost?: number | null,
+    products?:  {
+      __typename: "ModelProductTransactionsConnection",
+      items:  Array< {
+        __typename: "ProductTransactions",
+        id: string,
+        productId: string,
+        transactionId: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateProductTransactionsMutationVariables = {
+  input: CreateProductTransactionsInput,
+  condition?: ModelProductTransactionsConditionInput | null,
+};
+
+export type CreateProductTransactionsMutation = {
+  createProductTransactions?:  {
+    __typename: "ProductTransactions",
+    id: string,
+    productId: string,
+    transactionId: string,
+    product:  {
       __typename: "Product",
       id: string,
-      type: DataType,
       owner: string,
       name?: string | null,
       price?: number | null,
@@ -515,8 +857,622 @@ export type ListProductsQuery = {
         totalSales: number,
         totalUnits: number,
       } | null > | null,
+      transactions?:  {
+        __typename: "ModelProductTransactionsConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
+    },
+    transaction:  {
+      __typename: "Transaction",
+      id: string,
+      userId: string,
+      cost?: number | null,
+      products?:  {
+        __typename: "ModelProductTransactionsConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type UpdateProductTransactionsMutationVariables = {
+  input: UpdateProductTransactionsInput,
+  condition?: ModelProductTransactionsConditionInput | null,
+};
+
+export type UpdateProductTransactionsMutation = {
+  updateProductTransactions?:  {
+    __typename: "ProductTransactions",
+    id: string,
+    productId: string,
+    transactionId: string,
+    product:  {
+      __typename: "Product",
+      id: string,
+      owner: string,
+      name?: string | null,
+      price?: number | null,
+      description?: string | null,
+      category?: string | null,
+      rating?: number | null,
+      supply?: number | null,
+      yearlySalesTotal?: number | null,
+      yearlyTotalSoldUnits?: number | null,
+      monthlyStat?:  Array< {
+        __typename: "ProductStatDate",
+        month?: string | null,
+        date?: string | null,
+        totalSales: number,
+        totalUnits: number,
+      } | null > | null,
+      dailyStat?:  Array< {
+        __typename: "ProductStatDate",
+        month?: string | null,
+        date?: string | null,
+        totalSales: number,
+        totalUnits: number,
+      } | null > | null,
+      transactions?:  {
+        __typename: "ModelProductTransactionsConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    transaction:  {
+      __typename: "Transaction",
+      id: string,
+      userId: string,
+      cost?: number | null,
+      products?:  {
+        __typename: "ModelProductTransactionsConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type DeleteProductTransactionsMutationVariables = {
+  input: DeleteProductTransactionsInput,
+  condition?: ModelProductTransactionsConditionInput | null,
+};
+
+export type DeleteProductTransactionsMutation = {
+  deleteProductTransactions?:  {
+    __typename: "ProductTransactions",
+    id: string,
+    productId: string,
+    transactionId: string,
+    product:  {
+      __typename: "Product",
+      id: string,
+      owner: string,
+      name?: string | null,
+      price?: number | null,
+      description?: string | null,
+      category?: string | null,
+      rating?: number | null,
+      supply?: number | null,
+      yearlySalesTotal?: number | null,
+      yearlyTotalSoldUnits?: number | null,
+      monthlyStat?:  Array< {
+        __typename: "ProductStatDate",
+        month?: string | null,
+        date?: string | null,
+        totalSales: number,
+        totalUnits: number,
+      } | null > | null,
+      dailyStat?:  Array< {
+        __typename: "ProductStatDate",
+        month?: string | null,
+        date?: string | null,
+        totalSales: number,
+        totalUnits: number,
+      } | null > | null,
+      transactions?:  {
+        __typename: "ModelProductTransactionsConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    transaction:  {
+      __typename: "Transaction",
+      id: string,
+      userId: string,
+      cost?: number | null,
+      products?:  {
+        __typename: "ModelProductTransactionsConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type GetProductQueryVariables = {
+  id: string,
+};
+
+export type GetProductQuery = {
+  getProduct?:  {
+    __typename: "Product",
+    id: string,
+    owner: string,
+    name?: string | null,
+    price?: number | null,
+    description?: string | null,
+    category?: string | null,
+    rating?: number | null,
+    supply?: number | null,
+    yearlySalesTotal?: number | null,
+    yearlyTotalSoldUnits?: number | null,
+    monthlyStat?:  Array< {
+      __typename: "ProductStatDate",
+      month?: string | null,
+      date?: string | null,
+      totalSales: number,
+      totalUnits: number,
+    } | null > | null,
+    dailyStat?:  Array< {
+      __typename: "ProductStatDate",
+      month?: string | null,
+      date?: string | null,
+      totalSales: number,
+      totalUnits: number,
+    } | null > | null,
+    transactions?:  {
+      __typename: "ModelProductTransactionsConnection",
+      items:  Array< {
+        __typename: "ProductTransactions",
+        id: string,
+        productId: string,
+        transactionId: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListProductsQueryVariables = {
+  filter?: ModelProductFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListProductsQuery = {
+  listProducts?:  {
+    __typename: "ModelProductConnection",
+    items:  Array< {
+      __typename: "Product",
+      id: string,
+      owner: string,
+      name?: string | null,
+      price?: number | null,
+      description?: string | null,
+      category?: string | null,
+      rating?: number | null,
+      supply?: number | null,
+      yearlySalesTotal?: number | null,
+      yearlyTotalSoldUnits?: number | null,
+      monthlyStat?:  Array< {
+        __typename: "ProductStatDate",
+        month?: string | null,
+        date?: string | null,
+        totalSales: number,
+        totalUnits: number,
+      } | null > | null,
+      dailyStat?:  Array< {
+        __typename: "ProductStatDate",
+        month?: string | null,
+        date?: string | null,
+        totalSales: number,
+        totalUnits: number,
+      } | null > | null,
+      transactions?:  {
+        __typename: "ModelProductTransactionsConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetUserQueryVariables = {
+  id: string,
+};
+
+export type GetUserQuery = {
+  getUser?:  {
+    __typename: "User",
+    id: string,
+    name?: string | null,
+    email: string,
+    city?: string | null,
+    state?: string | null,
+    country?: string | null,
+    occupation?: string | null,
+    phoneNumber?: string | null,
+    transactions?:  {
+      __typename: "ModelTransactionConnection",
+      items:  Array< {
+        __typename: "Transaction",
+        id: string,
+        userId: string,
+        cost?: number | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    role: UserRoles,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListUsersQueryVariables = {
+  filter?: ModelUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListUsersQuery = {
+  listUsers?:  {
+    __typename: "ModelUserConnection",
+    items:  Array< {
+      __typename: "User",
+      id: string,
+      name?: string | null,
+      email: string,
+      city?: string | null,
+      state?: string | null,
+      country?: string | null,
+      occupation?: string | null,
+      phoneNumber?: string | null,
+      transactions?:  {
+        __typename: "ModelTransactionConnection",
+        nextToken?: string | null,
+      } | null,
+      role: UserRoles,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type UserByRoleQueryVariables = {
+  role: UserRoles,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type UserByRoleQuery = {
+  userByRole?:  {
+    __typename: "ModelUserConnection",
+    items:  Array< {
+      __typename: "User",
+      id: string,
+      name?: string | null,
+      email: string,
+      city?: string | null,
+      state?: string | null,
+      country?: string | null,
+      occupation?: string | null,
+      phoneNumber?: string | null,
+      transactions?:  {
+        __typename: "ModelTransactionConnection",
+        nextToken?: string | null,
+      } | null,
+      role: UserRoles,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetTransactionQueryVariables = {
+  id: string,
+};
+
+export type GetTransactionQuery = {
+  getTransaction?:  {
+    __typename: "Transaction",
+    id: string,
+    userId: string,
+    cost?: number | null,
+    products?:  {
+      __typename: "ModelProductTransactionsConnection",
+      items:  Array< {
+        __typename: "ProductTransactions",
+        id: string,
+        productId: string,
+        transactionId: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListTransactionsQueryVariables = {
+  filter?: ModelTransactionFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListTransactionsQuery = {
+  listTransactions?:  {
+    __typename: "ModelTransactionConnection",
+    items:  Array< {
+      __typename: "Transaction",
+      id: string,
+      userId: string,
+      cost?: number | null,
+      products?:  {
+        __typename: "ModelProductTransactionsConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type TransactionsByUserIdQueryVariables = {
+  userId: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelTransactionFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type TransactionsByUserIdQuery = {
+  transactionsByUserId?:  {
+    __typename: "ModelTransactionConnection",
+    items:  Array< {
+      __typename: "Transaction",
+      id: string,
+      userId: string,
+      cost?: number | null,
+      products?:  {
+        __typename: "ModelProductTransactionsConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetProductTransactionsQueryVariables = {
+  id: string,
+};
+
+export type GetProductTransactionsQuery = {
+  getProductTransactions?:  {
+    __typename: "ProductTransactions",
+    id: string,
+    productId: string,
+    transactionId: string,
+    product:  {
+      __typename: "Product",
+      id: string,
+      owner: string,
+      name?: string | null,
+      price?: number | null,
+      description?: string | null,
+      category?: string | null,
+      rating?: number | null,
+      supply?: number | null,
+      yearlySalesTotal?: number | null,
+      yearlyTotalSoldUnits?: number | null,
+      monthlyStat?:  Array< {
+        __typename: "ProductStatDate",
+        month?: string | null,
+        date?: string | null,
+        totalSales: number,
+        totalUnits: number,
+      } | null > | null,
+      dailyStat?:  Array< {
+        __typename: "ProductStatDate",
+        month?: string | null,
+        date?: string | null,
+        totalSales: number,
+        totalUnits: number,
+      } | null > | null,
+      transactions?:  {
+        __typename: "ModelProductTransactionsConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    transaction:  {
+      __typename: "Transaction",
+      id: string,
+      userId: string,
+      cost?: number | null,
+      products?:  {
+        __typename: "ModelProductTransactionsConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListProductTransactionsQueryVariables = {
+  filter?: ModelProductTransactionsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListProductTransactionsQuery = {
+  listProductTransactions?:  {
+    __typename: "ModelProductTransactionsConnection",
+    items:  Array< {
+      __typename: "ProductTransactions",
+      id: string,
+      productId: string,
+      transactionId: string,
+      product:  {
+        __typename: "Product",
+        id: string,
+        owner: string,
+        name?: string | null,
+        price?: number | null,
+        description?: string | null,
+        category?: string | null,
+        rating?: number | null,
+        supply?: number | null,
+        yearlySalesTotal?: number | null,
+        yearlyTotalSoldUnits?: number | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      transaction:  {
+        __typename: "Transaction",
+        id: string,
+        userId: string,
+        cost?: number | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ProductTransactionsByProductIdQueryVariables = {
+  productId: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelProductTransactionsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ProductTransactionsByProductIdQuery = {
+  productTransactionsByProductId?:  {
+    __typename: "ModelProductTransactionsConnection",
+    items:  Array< {
+      __typename: "ProductTransactions",
+      id: string,
+      productId: string,
+      transactionId: string,
+      product:  {
+        __typename: "Product",
+        id: string,
+        owner: string,
+        name?: string | null,
+        price?: number | null,
+        description?: string | null,
+        category?: string | null,
+        rating?: number | null,
+        supply?: number | null,
+        yearlySalesTotal?: number | null,
+        yearlyTotalSoldUnits?: number | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      transaction:  {
+        __typename: "Transaction",
+        id: string,
+        userId: string,
+        cost?: number | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ProductTransactionsByTransactionIdQueryVariables = {
+  transactionId: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelProductTransactionsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ProductTransactionsByTransactionIdQuery = {
+  productTransactionsByTransactionId?:  {
+    __typename: "ModelProductTransactionsConnection",
+    items:  Array< {
+      __typename: "ProductTransactions",
+      id: string,
+      productId: string,
+      transactionId: string,
+      product:  {
+        __typename: "Product",
+        id: string,
+        owner: string,
+        name?: string | null,
+        price?: number | null,
+        description?: string | null,
+        category?: string | null,
+        rating?: number | null,
+        supply?: number | null,
+        yearlySalesTotal?: number | null,
+        yearlyTotalSoldUnits?: number | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      transaction:  {
+        __typename: "Transaction",
+        id: string,
+        userId: string,
+        cost?: number | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -531,7 +1487,6 @@ export type OnCreateProductSubscription = {
   onCreateProduct?:  {
     __typename: "Product",
     id: string,
-    type: DataType,
     owner: string,
     name?: string | null,
     price?: number | null,
@@ -555,6 +1510,19 @@ export type OnCreateProductSubscription = {
       totalSales: number,
       totalUnits: number,
     } | null > | null,
+    transactions?:  {
+      __typename: "ModelProductTransactionsConnection",
+      items:  Array< {
+        __typename: "ProductTransactions",
+        id: string,
+        productId: string,
+        transactionId: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -569,7 +1537,6 @@ export type OnUpdateProductSubscription = {
   onUpdateProduct?:  {
     __typename: "Product",
     id: string,
-    type: DataType,
     owner: string,
     name?: string | null,
     price?: number | null,
@@ -593,6 +1560,19 @@ export type OnUpdateProductSubscription = {
       totalSales: number,
       totalUnits: number,
     } | null > | null,
+    transactions?:  {
+      __typename: "ModelProductTransactionsConnection",
+      items:  Array< {
+        __typename: "ProductTransactions",
+        id: string,
+        productId: string,
+        transactionId: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -607,7 +1587,6 @@ export type OnDeleteProductSubscription = {
   onDeleteProduct?:  {
     __typename: "Product",
     id: string,
-    type: DataType,
     owner: string,
     name?: string | null,
     price?: number | null,
@@ -631,7 +1610,389 @@ export type OnDeleteProductSubscription = {
       totalSales: number,
       totalUnits: number,
     } | null > | null,
+    transactions?:  {
+      __typename: "ModelProductTransactionsConnection",
+      items:  Array< {
+        __typename: "ProductTransactions",
+        id: string,
+        productId: string,
+        transactionId: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
+  } | null,
+};
+
+export type OnCreateUserSubscriptionVariables = {
+  filter?: ModelSubscriptionUserFilterInput | null,
+};
+
+export type OnCreateUserSubscription = {
+  onCreateUser?:  {
+    __typename: "User",
+    id: string,
+    name?: string | null,
+    email: string,
+    city?: string | null,
+    state?: string | null,
+    country?: string | null,
+    occupation?: string | null,
+    phoneNumber?: string | null,
+    transactions?:  {
+      __typename: "ModelTransactionConnection",
+      items:  Array< {
+        __typename: "Transaction",
+        id: string,
+        userId: string,
+        cost?: number | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    role: UserRoles,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateUserSubscriptionVariables = {
+  filter?: ModelSubscriptionUserFilterInput | null,
+};
+
+export type OnUpdateUserSubscription = {
+  onUpdateUser?:  {
+    __typename: "User",
+    id: string,
+    name?: string | null,
+    email: string,
+    city?: string | null,
+    state?: string | null,
+    country?: string | null,
+    occupation?: string | null,
+    phoneNumber?: string | null,
+    transactions?:  {
+      __typename: "ModelTransactionConnection",
+      items:  Array< {
+        __typename: "Transaction",
+        id: string,
+        userId: string,
+        cost?: number | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    role: UserRoles,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteUserSubscriptionVariables = {
+  filter?: ModelSubscriptionUserFilterInput | null,
+};
+
+export type OnDeleteUserSubscription = {
+  onDeleteUser?:  {
+    __typename: "User",
+    id: string,
+    name?: string | null,
+    email: string,
+    city?: string | null,
+    state?: string | null,
+    country?: string | null,
+    occupation?: string | null,
+    phoneNumber?: string | null,
+    transactions?:  {
+      __typename: "ModelTransactionConnection",
+      items:  Array< {
+        __typename: "Transaction",
+        id: string,
+        userId: string,
+        cost?: number | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    role: UserRoles,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateTransactionSubscriptionVariables = {
+  filter?: ModelSubscriptionTransactionFilterInput | null,
+};
+
+export type OnCreateTransactionSubscription = {
+  onCreateTransaction?:  {
+    __typename: "Transaction",
+    id: string,
+    userId: string,
+    cost?: number | null,
+    products?:  {
+      __typename: "ModelProductTransactionsConnection",
+      items:  Array< {
+        __typename: "ProductTransactions",
+        id: string,
+        productId: string,
+        transactionId: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateTransactionSubscriptionVariables = {
+  filter?: ModelSubscriptionTransactionFilterInput | null,
+};
+
+export type OnUpdateTransactionSubscription = {
+  onUpdateTransaction?:  {
+    __typename: "Transaction",
+    id: string,
+    userId: string,
+    cost?: number | null,
+    products?:  {
+      __typename: "ModelProductTransactionsConnection",
+      items:  Array< {
+        __typename: "ProductTransactions",
+        id: string,
+        productId: string,
+        transactionId: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteTransactionSubscriptionVariables = {
+  filter?: ModelSubscriptionTransactionFilterInput | null,
+};
+
+export type OnDeleteTransactionSubscription = {
+  onDeleteTransaction?:  {
+    __typename: "Transaction",
+    id: string,
+    userId: string,
+    cost?: number | null,
+    products?:  {
+      __typename: "ModelProductTransactionsConnection",
+      items:  Array< {
+        __typename: "ProductTransactions",
+        id: string,
+        productId: string,
+        transactionId: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateProductTransactionsSubscriptionVariables = {
+  filter?: ModelSubscriptionProductTransactionsFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnCreateProductTransactionsSubscription = {
+  onCreateProductTransactions?:  {
+    __typename: "ProductTransactions",
+    id: string,
+    productId: string,
+    transactionId: string,
+    product:  {
+      __typename: "Product",
+      id: string,
+      owner: string,
+      name?: string | null,
+      price?: number | null,
+      description?: string | null,
+      category?: string | null,
+      rating?: number | null,
+      supply?: number | null,
+      yearlySalesTotal?: number | null,
+      yearlyTotalSoldUnits?: number | null,
+      monthlyStat?:  Array< {
+        __typename: "ProductStatDate",
+        month?: string | null,
+        date?: string | null,
+        totalSales: number,
+        totalUnits: number,
+      } | null > | null,
+      dailyStat?:  Array< {
+        __typename: "ProductStatDate",
+        month?: string | null,
+        date?: string | null,
+        totalSales: number,
+        totalUnits: number,
+      } | null > | null,
+      transactions?:  {
+        __typename: "ModelProductTransactionsConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    transaction:  {
+      __typename: "Transaction",
+      id: string,
+      userId: string,
+      cost?: number | null,
+      products?:  {
+        __typename: "ModelProductTransactionsConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdateProductTransactionsSubscriptionVariables = {
+  filter?: ModelSubscriptionProductTransactionsFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdateProductTransactionsSubscription = {
+  onUpdateProductTransactions?:  {
+    __typename: "ProductTransactions",
+    id: string,
+    productId: string,
+    transactionId: string,
+    product:  {
+      __typename: "Product",
+      id: string,
+      owner: string,
+      name?: string | null,
+      price?: number | null,
+      description?: string | null,
+      category?: string | null,
+      rating?: number | null,
+      supply?: number | null,
+      yearlySalesTotal?: number | null,
+      yearlyTotalSoldUnits?: number | null,
+      monthlyStat?:  Array< {
+        __typename: "ProductStatDate",
+        month?: string | null,
+        date?: string | null,
+        totalSales: number,
+        totalUnits: number,
+      } | null > | null,
+      dailyStat?:  Array< {
+        __typename: "ProductStatDate",
+        month?: string | null,
+        date?: string | null,
+        totalSales: number,
+        totalUnits: number,
+      } | null > | null,
+      transactions?:  {
+        __typename: "ModelProductTransactionsConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    transaction:  {
+      __typename: "Transaction",
+      id: string,
+      userId: string,
+      cost?: number | null,
+      products?:  {
+        __typename: "ModelProductTransactionsConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeleteProductTransactionsSubscriptionVariables = {
+  filter?: ModelSubscriptionProductTransactionsFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeleteProductTransactionsSubscription = {
+  onDeleteProductTransactions?:  {
+    __typename: "ProductTransactions",
+    id: string,
+    productId: string,
+    transactionId: string,
+    product:  {
+      __typename: "Product",
+      id: string,
+      owner: string,
+      name?: string | null,
+      price?: number | null,
+      description?: string | null,
+      category?: string | null,
+      rating?: number | null,
+      supply?: number | null,
+      yearlySalesTotal?: number | null,
+      yearlyTotalSoldUnits?: number | null,
+      monthlyStat?:  Array< {
+        __typename: "ProductStatDate",
+        month?: string | null,
+        date?: string | null,
+        totalSales: number,
+        totalUnits: number,
+      } | null > | null,
+      dailyStat?:  Array< {
+        __typename: "ProductStatDate",
+        month?: string | null,
+        date?: string | null,
+        totalSales: number,
+        totalUnits: number,
+      } | null > | null,
+      transactions?:  {
+        __typename: "ModelProductTransactionsConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    transaction:  {
+      __typename: "Transaction",
+      id: string,
+      userId: string,
+      cost?: number | null,
+      products?:  {
+        __typename: "ModelProductTransactionsConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
   } | null,
 };
