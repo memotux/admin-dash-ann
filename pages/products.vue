@@ -30,7 +30,7 @@ const uploadProducts = async () => {
 <template>
   <VContainer style="min-height: 80vh; height: 100%;">
     <VRow align="center" justify="end">
-      <VBtn @click="uploadProducts" color="secondary" disabled>Load Products</VBtn>
+      <VBtn @click="uploadProducts" color="secondary">Load Products</VBtn>
     </VRow>
     <VRow v-if="Boolean(products?.length) || !pending" align="stretch" justify="start">
       <VCol v-for="product in products"

@@ -84,7 +84,7 @@ const loadCustomers = () => {
 <template>
   <VContainer>
     <VRow align="center" justify="end" class="mb-8">
-      <VBtn @click="loadCustomers" color="secondary" disabled>
+      <VBtn @click="loadCustomers" color="secondary">
         Load Customers
       </VBtn>
     </VRow>

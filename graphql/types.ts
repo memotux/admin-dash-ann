@@ -2,6 +2,142 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
+export type CreateProductTransactionsInput = {
+  id?: string | null,
+  productId: string,
+  transactionId: string,
+};
+
+export type ModelProductTransactionsConditionInput = {
+  productId?: ModelIDInput | null,
+  transactionId?: ModelIDInput | null,
+  and?: Array< ModelProductTransactionsConditionInput | null > | null,
+  or?: Array< ModelProductTransactionsConditionInput | null > | null,
+  not?: ModelProductTransactionsConditionInput | null,
+};
+
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
+};
+
+export enum ModelAttributeTypes {
+  binary = "binary",
+  binarySet = "binarySet",
+  bool = "bool",
+  list = "list",
+  map = "map",
+  number = "number",
+  numberSet = "numberSet",
+  string = "string",
+  stringSet = "stringSet",
+  _null = "_null",
+}
+
+
+export type ModelSizeInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+};
+
+export type ProductTransactions = {
+  __typename: "ProductTransactions",
+  id: string,
+  productId: string,
+  transactionId: string,
+  product: Product,
+  transaction: Transaction,
+  createdAt: string,
+  updatedAt: string,
+  owner?: string | null,
+};
+
+export type Product = {
+  __typename: "Product",
+  id: string,
+  owner: string,
+  name?: string | null,
+  price?: number | null,
+  description?: string | null,
+  category?: string | null,
+  rating?: number | null,
+  supply?: number | null,
+  yearlySalesTotal?: number | null,
+  yearlyTotalSoldUnits?: number | null,
+  monthlyStat?:  Array<ProductStatDate | null > | null,
+  dailyStat?:  Array<ProductStatDate | null > | null,
+  transactions?: ModelProductTransactionsConnection | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ProductStatDate = {
+  __typename: "ProductStatDate",
+  month?: string | null,
+  date?: string | null,
+  totalSales: number,
+  totalUnits: number,
+};
+
+export type ModelProductTransactionsConnection = {
+  __typename: "ModelProductTransactionsConnection",
+  items:  Array<ProductTransactions | null >,
+  nextToken?: string | null,
+};
+
+export type Transaction = {
+  __typename: "Transaction",
+  id: string,
+  userId: string,
+  cost?: number | null,
+  products?: ModelProductTransactionsConnection | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ModelTransactionFilterInput = {
+  id?: ModelIDInput | null,
+  userId?: ModelIDInput | null,
+  cost?: ModelFloatInput | null,
+  and?: Array< ModelTransactionFilterInput | null > | null,
+  or?: Array< ModelTransactionFilterInput | null > | null,
+  not?: ModelTransactionFilterInput | null,
+};
+
+export type ModelFloatInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type ModelTransactionConnection = {
+  __typename: "ModelTransactionConnection",
+  items:  Array<Transaction | null >,
+  nextToken?: string | null,
+};
+
 export type CreateProductInput = {
   id?: string | null,
   owner: string,
@@ -55,42 +191,6 @@ export type ModelStringInput = {
   size?: ModelSizeInput | null,
 };
 
-export enum ModelAttributeTypes {
-  binary = "binary",
-  binarySet = "binarySet",
-  bool = "bool",
-  list = "list",
-  map = "map",
-  number = "number",
-  numberSet = "numberSet",
-  string = "string",
-  stringSet = "stringSet",
-  _null = "_null",
-}
-
-
-export type ModelSizeInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-};
-
-export type ModelFloatInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
 export type ModelIntInput = {
   ne?: number | null,
   eq?: number | null,
@@ -101,61 +201,6 @@ export type ModelIntInput = {
   between?: Array< number | null > | null,
   attributeExists?: boolean | null,
   attributeType?: ModelAttributeTypes | null,
-};
-
-export type Product = {
-  __typename: "Product",
-  id: string,
-  owner: string,
-  name?: string | null,
-  price?: number | null,
-  description?: string | null,
-  category?: string | null,
-  rating?: number | null,
-  supply?: number | null,
-  yearlySalesTotal?: number | null,
-  yearlyTotalSoldUnits?: number | null,
-  monthlyStat?:  Array<ProductStatDate | null > | null,
-  dailyStat?:  Array<ProductStatDate | null > | null,
-  transactions?: ModelProductTransactionsConnection | null,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type ProductStatDate = {
-  __typename: "ProductStatDate",
-  month?: string | null,
-  date?: string | null,
-  totalSales: number,
-  totalUnits: number,
-};
-
-export type ModelProductTransactionsConnection = {
-  __typename: "ModelProductTransactionsConnection",
-  items:  Array<ProductTransactions | null >,
-  nextToken?: string | null,
-};
-
-export type ProductTransactions = {
-  __typename: "ProductTransactions",
-  id: string,
-  productId: string,
-  transactionId: string,
-  product: Product,
-  transaction: Transaction,
-  createdAt: string,
-  updatedAt: string,
-  owner?: string | null,
-};
-
-export type Transaction = {
-  __typename: "Transaction",
-  id: string,
-  userId: string,
-  cost?: number | null,
-  products?: ModelProductTransactionsConnection | null,
-  createdAt: string,
-  updatedAt: string,
 };
 
 export type UpdateProductInput = {
@@ -230,12 +275,6 @@ export type User = {
   updatedAt: string,
 };
 
-export type ModelTransactionConnection = {
-  __typename: "ModelTransactionConnection",
-  items:  Array<Transaction | null >,
-  nextToken?: string | null,
-};
-
 export type UpdateUserInput = {
   id: string,
   name?: string | null,
@@ -266,22 +305,6 @@ export type ModelTransactionConditionInput = {
   not?: ModelTransactionConditionInput | null,
 };
 
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
-};
-
 export type UpdateTransactionInput = {
   id: string,
   userId?: string | null,
@@ -290,20 +313,6 @@ export type UpdateTransactionInput = {
 
 export type DeleteTransactionInput = {
   id: string,
-};
-
-export type CreateProductTransactionsInput = {
-  id?: string | null,
-  productId: string,
-  transactionId: string,
-};
-
-export type ModelProductTransactionsConditionInput = {
-  productId?: ModelIDInput | null,
-  transactionId?: ModelIDInput | null,
-  and?: Array< ModelProductTransactionsConditionInput | null > | null,
-  or?: Array< ModelProductTransactionsConditionInput | null > | null,
-  not?: ModelProductTransactionsConditionInput | null,
 };
 
 export type UpdateProductTransactionsInput = {
@@ -364,15 +373,6 @@ export enum ModelSortDirection {
   DESC = "DESC",
 }
 
-
-export type ModelTransactionFilterInput = {
-  id?: ModelIDInput | null,
-  userId?: ModelIDInput | null,
-  cost?: ModelFloatInput | null,
-  and?: Array< ModelTransactionFilterInput | null > | null,
-  or?: Array< ModelTransactionFilterInput | null > | null,
-  not?: ModelTransactionFilterInput | null,
-};
 
 export type ModelProductTransactionsFilterInput = {
   id?: ModelIDInput | null,
@@ -479,6 +479,65 @@ export type ModelSubscriptionProductTransactionsFilterInput = {
   transactionId?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionProductTransactionsFilterInput | null > | null,
   or?: Array< ModelSubscriptionProductTransactionsFilterInput | null > | null,
+};
+
+export type CustomCreateProductTransactionsMutationVariables = {
+  input: CreateProductTransactionsInput,
+  condition?: ModelProductTransactionsConditionInput | null,
+};
+
+export type CustomCreateProductTransactionsMutation = {
+  createProductTransactions?:  {
+    __typename: "ProductTransactions",
+    id: string,
+    productId: string,
+    transactionId: string,
+  } | null,
+};
+
+export type CustomListTransactionsQueryVariables = {
+  filter?: ModelTransactionFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type CustomListTransactionsQuery = {
+  listTransactions?:  {
+    __typename: "ModelTransactionConnection",
+    items:  Array< {
+      __typename: "Transaction",
+      id: string,
+      userId: string,
+      cost?: number | null,
+      products?:  {
+        __typename: "ModelProductTransactionsConnection",
+        items:  Array< {
+          __typename: "ProductTransactions",
+          productId: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type CustomCountTransactionsQueryVariables = {
+  filter?: ModelTransactionFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type CustomCountTransactionsQuery = {
+  listTransactions?:  {
+    __typename: "ModelTransactionConnection",
+    items:  Array< {
+      __typename: "Transaction",
+      id: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
 };
 
 export type CreateProductMutationVariables = {
