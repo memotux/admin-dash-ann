@@ -1,6 +1,15 @@
-# Nuxt 3 Minimal Starter
+# Portafolio Project: FullStack Admin Dashboard
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Portafolio Project using Nuxt 3, Vuetify and AWS Amplify to create an Admin Dashboard.
+
+This project it is inspired by [FullStack Admin](https://github.com/ed-roh/fullstack-admin) by [EdRoh](https://github.com/ed-roh): [Youtube](https://youtu.be/0cPCMIuDk2I).
+
+## Features
+
+- Use Nuxt 3 with Server API
+- Use Vuetify 3 for Framework and Theme
+- Use AWS Amplify as backend (DynamoDB, AppSync, Cognito) and Deployment
+- Use [ObservableHQ/Plot](https://github.com/observablehq/plot/) for data visualization
 
 ## Setup
 
@@ -23,20 +32,6 @@ Start the development server on http://localhost:3000
 
 ```bash
 npm run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
