@@ -20,12 +20,14 @@ export const getProduct = /* GraphQL */ `
         date
         totalSales
         totalUnits
+        _id
       }
       dailyStat {
         month
         date
         totalSales
         totalUnits
+        _id
       }
       transactions {
         items {
@@ -66,12 +68,14 @@ export const listProducts = /* GraphQL */ `
           date
           totalSales
           totalUnits
+          _id
         }
         dailyStat {
           month
           date
           totalSales
           totalUnits
+          _id
         }
         transactions {
           nextToken
@@ -244,6 +248,81 @@ export const transactionsByUserId = /* GraphQL */ `
     }
   }
 `;
+export const getOverallSales = /* GraphQL */ `
+  query GetOverallSales($id: ID!) {
+    getOverallSales(id: $id) {
+      year
+      id
+      totalCustomers
+      yearlySalesTotal
+      yearlyTotalSoldUnits
+      monthlyData {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      dailyData {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      salesByCategory {
+        shoes
+        clothing
+        accessories
+        misc
+      }
+      createdAt
+      updatedAt
+      v
+    }
+  }
+`;
+export const listOverallSales = /* GraphQL */ `
+  query ListOverallSales(
+    $filter: ModelOverallSalesFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listOverallSales(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        year
+        id
+        totalCustomers
+        yearlySalesTotal
+        yearlyTotalSoldUnits
+        monthlyData {
+          month
+          date
+          totalSales
+          totalUnits
+          _id
+        }
+        dailyData {
+          month
+          date
+          totalSales
+          totalUnits
+          _id
+        }
+        salesByCategory {
+          shoes
+          clothing
+          accessories
+          misc
+        }
+        createdAt
+        updatedAt
+        v
+      }
+      nextToken
+    }
+  }
+`;
 export const getProductTransactions = /* GraphQL */ `
   query GetProductTransactions($id: ID!) {
     getProductTransactions(id: $id) {
@@ -266,12 +345,14 @@ export const getProductTransactions = /* GraphQL */ `
           date
           totalSales
           totalUnits
+          _id
         }
         dailyStat {
           month
           date
           totalSales
           totalUnits
+          _id
         }
         transactions {
           nextToken

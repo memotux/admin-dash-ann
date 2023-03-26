@@ -23,12 +23,14 @@ export const onCreateProduct = /* GraphQL */ `
         date
         totalSales
         totalUnits
+        _id
       }
       dailyStat {
         month
         date
         totalSales
         totalUnits
+        _id
       }
       transactions {
         items {
@@ -67,12 +69,14 @@ export const onUpdateProduct = /* GraphQL */ `
         date
         totalSales
         totalUnits
+        _id
       }
       dailyStat {
         month
         date
         totalSales
         totalUnits
+        _id
       }
       transactions {
         items {
@@ -111,12 +115,14 @@ export const onDeleteProduct = /* GraphQL */ `
         date
         totalSales
         totalUnits
+        _id
       }
       dailyStat {
         month
         date
         totalSales
         totalUnits
+        _id
       }
       transactions {
         items {
@@ -287,6 +293,114 @@ export const onDeleteTransaction = /* GraphQL */ `
     }
   }
 `;
+export const onCreateOverallSales = /* GraphQL */ `
+  subscription OnCreateOverallSales(
+    $filter: ModelSubscriptionOverallSalesFilterInput
+  ) {
+    onCreateOverallSales(filter: $filter) {
+      year
+      id
+      totalCustomers
+      yearlySalesTotal
+      yearlyTotalSoldUnits
+      monthlyData {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      dailyData {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      salesByCategory {
+        shoes
+        clothing
+        accessories
+        misc
+      }
+      createdAt
+      updatedAt
+      v
+    }
+  }
+`;
+export const onUpdateOverallSales = /* GraphQL */ `
+  subscription OnUpdateOverallSales(
+    $filter: ModelSubscriptionOverallSalesFilterInput
+  ) {
+    onUpdateOverallSales(filter: $filter) {
+      year
+      id
+      totalCustomers
+      yearlySalesTotal
+      yearlyTotalSoldUnits
+      monthlyData {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      dailyData {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      salesByCategory {
+        shoes
+        clothing
+        accessories
+        misc
+      }
+      createdAt
+      updatedAt
+      v
+    }
+  }
+`;
+export const onDeleteOverallSales = /* GraphQL */ `
+  subscription OnDeleteOverallSales(
+    $filter: ModelSubscriptionOverallSalesFilterInput
+  ) {
+    onDeleteOverallSales(filter: $filter) {
+      year
+      id
+      totalCustomers
+      yearlySalesTotal
+      yearlyTotalSoldUnits
+      monthlyData {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      dailyData {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      salesByCategory {
+        shoes
+        clothing
+        accessories
+        misc
+      }
+      createdAt
+      updatedAt
+      v
+    }
+  }
+`;
 export const onCreateProductTransactions = /* GraphQL */ `
   subscription OnCreateProductTransactions(
     $filter: ModelSubscriptionProductTransactionsFilterInput
@@ -312,12 +426,14 @@ export const onCreateProductTransactions = /* GraphQL */ `
           date
           totalSales
           totalUnits
+          _id
         }
         dailyStat {
           month
           date
           totalSales
           totalUnits
+          _id
         }
         transactions {
           nextToken
@@ -366,12 +482,14 @@ export const onUpdateProductTransactions = /* GraphQL */ `
           date
           totalSales
           totalUnits
+          _id
         }
         dailyStat {
           month
           date
           totalSales
           totalUnits
+          _id
         }
         transactions {
           nextToken
@@ -420,12 +538,14 @@ export const onDeleteProductTransactions = /* GraphQL */ `
           date
           totalSales
           totalUnits
+          _id
         }
         dailyStat {
           month
           date
           totalSales
           totalUnits
+          _id
         }
         transactions {
           nextToken

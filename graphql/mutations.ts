@@ -23,12 +23,14 @@ export const createProduct = /* GraphQL */ `
         date
         totalSales
         totalUnits
+        _id
       }
       dailyStat {
         month
         date
         totalSales
         totalUnits
+        _id
       }
       transactions {
         items {
@@ -67,12 +69,14 @@ export const updateProduct = /* GraphQL */ `
         date
         totalSales
         totalUnits
+        _id
       }
       dailyStat {
         month
         date
         totalSales
         totalUnits
+        _id
       }
       transactions {
         items {
@@ -111,12 +115,14 @@ export const deleteProduct = /* GraphQL */ `
         date
         totalSales
         totalUnits
+        _id
       }
       dailyStat {
         month
         date
         totalSales
         totalUnits
+        _id
       }
       transactions {
         items {
@@ -299,6 +305,117 @@ export const deleteTransaction = /* GraphQL */ `
     }
   }
 `;
+export const createOverallSales = /* GraphQL */ `
+  mutation CreateOverallSales(
+    $input: CreateOverallSalesInput!
+    $condition: ModelOverallSalesConditionInput
+  ) {
+    createOverallSales(input: $input, condition: $condition) {
+      year
+      id
+      totalCustomers
+      yearlySalesTotal
+      yearlyTotalSoldUnits
+      monthlyData {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      dailyData {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      salesByCategory {
+        shoes
+        clothing
+        accessories
+        misc
+      }
+      createdAt
+      updatedAt
+      v
+    }
+  }
+`;
+export const updateOverallSales = /* GraphQL */ `
+  mutation UpdateOverallSales(
+    $input: UpdateOverallSalesInput!
+    $condition: ModelOverallSalesConditionInput
+  ) {
+    updateOverallSales(input: $input, condition: $condition) {
+      year
+      id
+      totalCustomers
+      yearlySalesTotal
+      yearlyTotalSoldUnits
+      monthlyData {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      dailyData {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      salesByCategory {
+        shoes
+        clothing
+        accessories
+        misc
+      }
+      createdAt
+      updatedAt
+      v
+    }
+  }
+`;
+export const deleteOverallSales = /* GraphQL */ `
+  mutation DeleteOverallSales(
+    $input: DeleteOverallSalesInput!
+    $condition: ModelOverallSalesConditionInput
+  ) {
+    deleteOverallSales(input: $input, condition: $condition) {
+      year
+      id
+      totalCustomers
+      yearlySalesTotal
+      yearlyTotalSoldUnits
+      monthlyData {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      dailyData {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      salesByCategory {
+        shoes
+        clothing
+        accessories
+        misc
+      }
+      createdAt
+      updatedAt
+      v
+    }
+  }
+`;
 export const createProductTransactions = /* GraphQL */ `
   mutation CreateProductTransactions(
     $input: CreateProductTransactionsInput!
@@ -324,12 +441,14 @@ export const createProductTransactions = /* GraphQL */ `
           date
           totalSales
           totalUnits
+          _id
         }
         dailyStat {
           month
           date
           totalSales
           totalUnits
+          _id
         }
         transactions {
           nextToken
@@ -378,12 +497,14 @@ export const updateProductTransactions = /* GraphQL */ `
           date
           totalSales
           totalUnits
+          _id
         }
         dailyStat {
           month
           date
           totalSales
           totalUnits
+          _id
         }
         transactions {
           nextToken
@@ -432,12 +553,14 @@ export const deleteProductTransactions = /* GraphQL */ `
           date
           totalSales
           totalUnits
+          _id
         }
         dailyStat {
           month
           date
           totalSales
           totalUnits
+          _id
         }
         transactions {
           nextToken

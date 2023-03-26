@@ -3,6 +3,7 @@ type ProductStatDate {
   date: AWSDate
   totalSales: Int!
   totalUnits: Int!
+  _id: ID
 }
 
 enum DataType {
@@ -75,4 +76,33 @@ type Transaction
   userId: ID! @index(name: "transactionsByUser")
   cost: Float
   products: [Product] @manyToMany(relationName: "ProductTransactions")
+}
+
+type OverallSales
+  @model
+  @auth(
+    rules: [
+      { allow: public }
+      { allow: groups, groups: ["admin"] }
+      { allow: groups, groups: ["user"], operations: [read, create, update] }
+    ]
+  ) {
+  year: Int!
+  id: ID!
+  totalCustomers: Int
+  yearlySalesTotal: Int
+  yearlyTotalSoldUnits: Int
+  monthlyData: [ProductStatDate]
+  dailyData: [ProductStatDate]
+  salesByCategory: SalesCategories
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  v: Int
+}
+
+type SalesCategories {
+  shoes: Int
+  clothing: Int
+  accessories: Int
+  misc: Int
 }

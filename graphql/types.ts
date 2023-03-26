@@ -93,6 +93,7 @@ export type ProductStatDate = {
   date?: string | null,
   totalSales: number,
   totalUnits: number,
+  _id?: string | null,
 };
 
 export type ModelProductTransactionsConnection = {
@@ -222,6 +223,7 @@ export type ProductStatDateInput = {
   date?: string | null,
   totalSales: number,
   totalUnits: number,
+  _id?: string | null,
 };
 
 export type ModelProductConditionInput = {
@@ -336,6 +338,81 @@ export type DeleteTransactionInput = {
   id: string,
 };
 
+export type CreateOverallSalesInput = {
+  year: number,
+  id?: string | null,
+  totalCustomers?: number | null,
+  yearlySalesTotal?: number | null,
+  yearlyTotalSoldUnits?: number | null,
+  monthlyData?: Array< ProductStatDateInput | null > | null,
+  dailyData?: Array< ProductStatDateInput | null > | null,
+  salesByCategory?: SalesCategoriesInput | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  v?: number | null,
+};
+
+export type SalesCategoriesInput = {
+  shoes?: number | null,
+  clothing?: number | null,
+  accessories?: number | null,
+  misc?: number | null,
+};
+
+export type ModelOverallSalesConditionInput = {
+  year?: ModelIntInput | null,
+  totalCustomers?: ModelIntInput | null,
+  yearlySalesTotal?: ModelIntInput | null,
+  yearlyTotalSoldUnits?: ModelIntInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  v?: ModelIntInput | null,
+  and?: Array< ModelOverallSalesConditionInput | null > | null,
+  or?: Array< ModelOverallSalesConditionInput | null > | null,
+  not?: ModelOverallSalesConditionInput | null,
+};
+
+export type OverallSales = {
+  __typename: "OverallSales",
+  year: number,
+  id: string,
+  totalCustomers?: number | null,
+  yearlySalesTotal?: number | null,
+  yearlyTotalSoldUnits?: number | null,
+  monthlyData?:  Array<ProductStatDate | null > | null,
+  dailyData?:  Array<ProductStatDate | null > | null,
+  salesByCategory?: SalesCategories | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  v?: number | null,
+};
+
+export type SalesCategories = {
+  __typename: "SalesCategories",
+  shoes?: number | null,
+  clothing?: number | null,
+  accessories?: number | null,
+  misc?: number | null,
+};
+
+export type UpdateOverallSalesInput = {
+  year?: number | null,
+  id: string,
+  totalCustomers?: number | null,
+  yearlySalesTotal?: number | null,
+  yearlyTotalSoldUnits?: number | null,
+  monthlyData?: Array< ProductStatDateInput | null > | null,
+  dailyData?: Array< ProductStatDateInput | null > | null,
+  salesByCategory?: SalesCategoriesInput | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  v?: number | null,
+};
+
+export type DeleteOverallSalesInput = {
+  id: string,
+};
+
 export type UpdateProductTransactionsInput = {
   id: string,
   productId?: string | null,
@@ -373,6 +450,26 @@ export enum ModelSortDirection {
   DESC = "DESC",
 }
 
+
+export type ModelOverallSalesFilterInput = {
+  year?: ModelIntInput | null,
+  id?: ModelIDInput | null,
+  totalCustomers?: ModelIntInput | null,
+  yearlySalesTotal?: ModelIntInput | null,
+  yearlyTotalSoldUnits?: ModelIntInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  v?: ModelIntInput | null,
+  and?: Array< ModelOverallSalesFilterInput | null > | null,
+  or?: Array< ModelOverallSalesFilterInput | null > | null,
+  not?: ModelOverallSalesFilterInput | null,
+};
+
+export type ModelOverallSalesConnection = {
+  __typename: "ModelOverallSalesConnection",
+  items:  Array<OverallSales | null >,
+  nextToken?: string | null,
+};
 
 export type ModelProductTransactionsFilterInput = {
   id?: ModelIDInput | null,
@@ -471,6 +568,19 @@ export type ModelSubscriptionTransactionFilterInput = {
   cost?: ModelSubscriptionFloatInput | null,
   and?: Array< ModelSubscriptionTransactionFilterInput | null > | null,
   or?: Array< ModelSubscriptionTransactionFilterInput | null > | null,
+};
+
+export type ModelSubscriptionOverallSalesFilterInput = {
+  year?: ModelSubscriptionIntInput | null,
+  id?: ModelSubscriptionIDInput | null,
+  totalCustomers?: ModelSubscriptionIntInput | null,
+  yearlySalesTotal?: ModelSubscriptionIntInput | null,
+  yearlyTotalSoldUnits?: ModelSubscriptionIntInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
+  v?: ModelSubscriptionIntInput | null,
+  and?: Array< ModelSubscriptionOverallSalesFilterInput | null > | null,
+  or?: Array< ModelSubscriptionOverallSalesFilterInput | null > | null,
 };
 
 export type ModelSubscriptionProductTransactionsFilterInput = {
@@ -581,6 +691,7 @@ export type CreateProductMutation = {
       date?: string | null,
       totalSales: number,
       totalUnits: number,
+      _id?: string | null,
     } | null > | null,
     dailyStat?:  Array< {
       __typename: "ProductStatDate",
@@ -588,6 +699,7 @@ export type CreateProductMutation = {
       date?: string | null,
       totalSales: number,
       totalUnits: number,
+      _id?: string | null,
     } | null > | null,
     transactions?:  {
       __typename: "ModelProductTransactionsConnection",
@@ -631,6 +743,7 @@ export type UpdateProductMutation = {
       date?: string | null,
       totalSales: number,
       totalUnits: number,
+      _id?: string | null,
     } | null > | null,
     dailyStat?:  Array< {
       __typename: "ProductStatDate",
@@ -638,6 +751,7 @@ export type UpdateProductMutation = {
       date?: string | null,
       totalSales: number,
       totalUnits: number,
+      _id?: string | null,
     } | null > | null,
     transactions?:  {
       __typename: "ModelProductTransactionsConnection",
@@ -681,6 +795,7 @@ export type DeleteProductMutation = {
       date?: string | null,
       totalSales: number,
       totalUnits: number,
+      _id?: string | null,
     } | null > | null,
     dailyStat?:  Array< {
       __typename: "ProductStatDate",
@@ -688,6 +803,7 @@ export type DeleteProductMutation = {
       date?: string | null,
       totalSales: number,
       totalUnits: number,
+      _id?: string | null,
     } | null > | null,
     transactions?:  {
       __typename: "ModelProductTransactionsConnection",
@@ -896,6 +1012,132 @@ export type DeleteTransactionMutation = {
   } | null,
 };
 
+export type CreateOverallSalesMutationVariables = {
+  input: CreateOverallSalesInput,
+  condition?: ModelOverallSalesConditionInput | null,
+};
+
+export type CreateOverallSalesMutation = {
+  createOverallSales?:  {
+    __typename: "OverallSales",
+    year: number,
+    id: string,
+    totalCustomers?: number | null,
+    yearlySalesTotal?: number | null,
+    yearlyTotalSoldUnits?: number | null,
+    monthlyData?:  Array< {
+      __typename: "ProductStatDate",
+      month?: string | null,
+      date?: string | null,
+      totalSales: number,
+      totalUnits: number,
+      _id?: string | null,
+    } | null > | null,
+    dailyData?:  Array< {
+      __typename: "ProductStatDate",
+      month?: string | null,
+      date?: string | null,
+      totalSales: number,
+      totalUnits: number,
+      _id?: string | null,
+    } | null > | null,
+    salesByCategory?:  {
+      __typename: "SalesCategories",
+      shoes?: number | null,
+      clothing?: number | null,
+      accessories?: number | null,
+      misc?: number | null,
+    } | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    v?: number | null,
+  } | null,
+};
+
+export type UpdateOverallSalesMutationVariables = {
+  input: UpdateOverallSalesInput,
+  condition?: ModelOverallSalesConditionInput | null,
+};
+
+export type UpdateOverallSalesMutation = {
+  updateOverallSales?:  {
+    __typename: "OverallSales",
+    year: number,
+    id: string,
+    totalCustomers?: number | null,
+    yearlySalesTotal?: number | null,
+    yearlyTotalSoldUnits?: number | null,
+    monthlyData?:  Array< {
+      __typename: "ProductStatDate",
+      month?: string | null,
+      date?: string | null,
+      totalSales: number,
+      totalUnits: number,
+      _id?: string | null,
+    } | null > | null,
+    dailyData?:  Array< {
+      __typename: "ProductStatDate",
+      month?: string | null,
+      date?: string | null,
+      totalSales: number,
+      totalUnits: number,
+      _id?: string | null,
+    } | null > | null,
+    salesByCategory?:  {
+      __typename: "SalesCategories",
+      shoes?: number | null,
+      clothing?: number | null,
+      accessories?: number | null,
+      misc?: number | null,
+    } | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    v?: number | null,
+  } | null,
+};
+
+export type DeleteOverallSalesMutationVariables = {
+  input: DeleteOverallSalesInput,
+  condition?: ModelOverallSalesConditionInput | null,
+};
+
+export type DeleteOverallSalesMutation = {
+  deleteOverallSales?:  {
+    __typename: "OverallSales",
+    year: number,
+    id: string,
+    totalCustomers?: number | null,
+    yearlySalesTotal?: number | null,
+    yearlyTotalSoldUnits?: number | null,
+    monthlyData?:  Array< {
+      __typename: "ProductStatDate",
+      month?: string | null,
+      date?: string | null,
+      totalSales: number,
+      totalUnits: number,
+      _id?: string | null,
+    } | null > | null,
+    dailyData?:  Array< {
+      __typename: "ProductStatDate",
+      month?: string | null,
+      date?: string | null,
+      totalSales: number,
+      totalUnits: number,
+      _id?: string | null,
+    } | null > | null,
+    salesByCategory?:  {
+      __typename: "SalesCategories",
+      shoes?: number | null,
+      clothing?: number | null,
+      accessories?: number | null,
+      misc?: number | null,
+    } | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    v?: number | null,
+  } | null,
+};
+
 export type CreateProductTransactionsMutationVariables = {
   input: CreateProductTransactionsInput,
   condition?: ModelProductTransactionsConditionInput | null,
@@ -925,6 +1167,7 @@ export type CreateProductTransactionsMutation = {
         date?: string | null,
         totalSales: number,
         totalUnits: number,
+        _id?: string | null,
       } | null > | null,
       dailyStat?:  Array< {
         __typename: "ProductStatDate",
@@ -932,6 +1175,7 @@ export type CreateProductTransactionsMutation = {
         date?: string | null,
         totalSales: number,
         totalUnits: number,
+        _id?: string | null,
       } | null > | null,
       transactions?:  {
         __typename: "ModelProductTransactionsConnection",
@@ -987,6 +1231,7 @@ export type UpdateProductTransactionsMutation = {
         date?: string | null,
         totalSales: number,
         totalUnits: number,
+        _id?: string | null,
       } | null > | null,
       dailyStat?:  Array< {
         __typename: "ProductStatDate",
@@ -994,6 +1239,7 @@ export type UpdateProductTransactionsMutation = {
         date?: string | null,
         totalSales: number,
         totalUnits: number,
+        _id?: string | null,
       } | null > | null,
       transactions?:  {
         __typename: "ModelProductTransactionsConnection",
@@ -1049,6 +1295,7 @@ export type DeleteProductTransactionsMutation = {
         date?: string | null,
         totalSales: number,
         totalUnits: number,
+        _id?: string | null,
       } | null > | null,
       dailyStat?:  Array< {
         __typename: "ProductStatDate",
@@ -1056,6 +1303,7 @@ export type DeleteProductTransactionsMutation = {
         date?: string | null,
         totalSales: number,
         totalUnits: number,
+        _id?: string | null,
       } | null > | null,
       transactions?:  {
         __typename: "ModelProductTransactionsConnection",
@@ -1105,6 +1353,7 @@ export type GetProductQuery = {
       date?: string | null,
       totalSales: number,
       totalUnits: number,
+      _id?: string | null,
     } | null > | null,
     dailyStat?:  Array< {
       __typename: "ProductStatDate",
@@ -1112,6 +1361,7 @@ export type GetProductQuery = {
       date?: string | null,
       totalSales: number,
       totalUnits: number,
+      _id?: string | null,
     } | null > | null,
     transactions?:  {
       __typename: "ModelProductTransactionsConnection",
@@ -1158,6 +1408,7 @@ export type ListProductsQuery = {
         date?: string | null,
         totalSales: number,
         totalUnits: number,
+        _id?: string | null,
       } | null > | null,
       dailyStat?:  Array< {
         __typename: "ProductStatDate",
@@ -1165,6 +1416,7 @@ export type ListProductsQuery = {
         date?: string | null,
         totalSales: number,
         totalUnits: number,
+        _id?: string | null,
       } | null > | null,
       transactions?:  {
         __typename: "ModelProductTransactionsConnection",
@@ -1354,6 +1606,94 @@ export type TransactionsByUserIdQuery = {
   } | null,
 };
 
+export type GetOverallSalesQueryVariables = {
+  id: string,
+};
+
+export type GetOverallSalesQuery = {
+  getOverallSales?:  {
+    __typename: "OverallSales",
+    year: number,
+    id: string,
+    totalCustomers?: number | null,
+    yearlySalesTotal?: number | null,
+    yearlyTotalSoldUnits?: number | null,
+    monthlyData?:  Array< {
+      __typename: "ProductStatDate",
+      month?: string | null,
+      date?: string | null,
+      totalSales: number,
+      totalUnits: number,
+      _id?: string | null,
+    } | null > | null,
+    dailyData?:  Array< {
+      __typename: "ProductStatDate",
+      month?: string | null,
+      date?: string | null,
+      totalSales: number,
+      totalUnits: number,
+      _id?: string | null,
+    } | null > | null,
+    salesByCategory?:  {
+      __typename: "SalesCategories",
+      shoes?: number | null,
+      clothing?: number | null,
+      accessories?: number | null,
+      misc?: number | null,
+    } | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    v?: number | null,
+  } | null,
+};
+
+export type ListOverallSalesQueryVariables = {
+  filter?: ModelOverallSalesFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListOverallSalesQuery = {
+  listOverallSales?:  {
+    __typename: "ModelOverallSalesConnection",
+    items:  Array< {
+      __typename: "OverallSales",
+      year: number,
+      id: string,
+      totalCustomers?: number | null,
+      yearlySalesTotal?: number | null,
+      yearlyTotalSoldUnits?: number | null,
+      monthlyData?:  Array< {
+        __typename: "ProductStatDate",
+        month?: string | null,
+        date?: string | null,
+        totalSales: number,
+        totalUnits: number,
+        _id?: string | null,
+      } | null > | null,
+      dailyData?:  Array< {
+        __typename: "ProductStatDate",
+        month?: string | null,
+        date?: string | null,
+        totalSales: number,
+        totalUnits: number,
+        _id?: string | null,
+      } | null > | null,
+      salesByCategory?:  {
+        __typename: "SalesCategories",
+        shoes?: number | null,
+        clothing?: number | null,
+        accessories?: number | null,
+        misc?: number | null,
+      } | null,
+      createdAt?: string | null,
+      updatedAt?: string | null,
+      v?: number | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type GetProductTransactionsQueryVariables = {
   id: string,
 };
@@ -1382,6 +1722,7 @@ export type GetProductTransactionsQuery = {
         date?: string | null,
         totalSales: number,
         totalUnits: number,
+        _id?: string | null,
       } | null > | null,
       dailyStat?:  Array< {
         __typename: "ProductStatDate",
@@ -1389,6 +1730,7 @@ export type GetProductTransactionsQuery = {
         date?: string | null,
         totalSales: number,
         totalUnits: number,
+        _id?: string | null,
       } | null > | null,
       transactions?:  {
         __typename: "ModelProductTransactionsConnection",
@@ -1578,6 +1920,7 @@ export type OnCreateProductSubscription = {
       date?: string | null,
       totalSales: number,
       totalUnits: number,
+      _id?: string | null,
     } | null > | null,
     dailyStat?:  Array< {
       __typename: "ProductStatDate",
@@ -1585,6 +1928,7 @@ export type OnCreateProductSubscription = {
       date?: string | null,
       totalSales: number,
       totalUnits: number,
+      _id?: string | null,
     } | null > | null,
     transactions?:  {
       __typename: "ModelProductTransactionsConnection",
@@ -1628,6 +1972,7 @@ export type OnUpdateProductSubscription = {
       date?: string | null,
       totalSales: number,
       totalUnits: number,
+      _id?: string | null,
     } | null > | null,
     dailyStat?:  Array< {
       __typename: "ProductStatDate",
@@ -1635,6 +1980,7 @@ export type OnUpdateProductSubscription = {
       date?: string | null,
       totalSales: number,
       totalUnits: number,
+      _id?: string | null,
     } | null > | null,
     transactions?:  {
       __typename: "ModelProductTransactionsConnection",
@@ -1678,6 +2024,7 @@ export type OnDeleteProductSubscription = {
       date?: string | null,
       totalSales: number,
       totalUnits: number,
+      _id?: string | null,
     } | null > | null,
     dailyStat?:  Array< {
       __typename: "ProductStatDate",
@@ -1685,6 +2032,7 @@ export type OnDeleteProductSubscription = {
       date?: string | null,
       totalSales: number,
       totalUnits: number,
+      _id?: string | null,
     } | null > | null,
     transactions?:  {
       __typename: "ModelProductTransactionsConnection",
@@ -1887,6 +2235,129 @@ export type OnDeleteTransactionSubscription = {
   } | null,
 };
 
+export type OnCreateOverallSalesSubscriptionVariables = {
+  filter?: ModelSubscriptionOverallSalesFilterInput | null,
+};
+
+export type OnCreateOverallSalesSubscription = {
+  onCreateOverallSales?:  {
+    __typename: "OverallSales",
+    year: number,
+    id: string,
+    totalCustomers?: number | null,
+    yearlySalesTotal?: number | null,
+    yearlyTotalSoldUnits?: number | null,
+    monthlyData?:  Array< {
+      __typename: "ProductStatDate",
+      month?: string | null,
+      date?: string | null,
+      totalSales: number,
+      totalUnits: number,
+      _id?: string | null,
+    } | null > | null,
+    dailyData?:  Array< {
+      __typename: "ProductStatDate",
+      month?: string | null,
+      date?: string | null,
+      totalSales: number,
+      totalUnits: number,
+      _id?: string | null,
+    } | null > | null,
+    salesByCategory?:  {
+      __typename: "SalesCategories",
+      shoes?: number | null,
+      clothing?: number | null,
+      accessories?: number | null,
+      misc?: number | null,
+    } | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    v?: number | null,
+  } | null,
+};
+
+export type OnUpdateOverallSalesSubscriptionVariables = {
+  filter?: ModelSubscriptionOverallSalesFilterInput | null,
+};
+
+export type OnUpdateOverallSalesSubscription = {
+  onUpdateOverallSales?:  {
+    __typename: "OverallSales",
+    year: number,
+    id: string,
+    totalCustomers?: number | null,
+    yearlySalesTotal?: number | null,
+    yearlyTotalSoldUnits?: number | null,
+    monthlyData?:  Array< {
+      __typename: "ProductStatDate",
+      month?: string | null,
+      date?: string | null,
+      totalSales: number,
+      totalUnits: number,
+      _id?: string | null,
+    } | null > | null,
+    dailyData?:  Array< {
+      __typename: "ProductStatDate",
+      month?: string | null,
+      date?: string | null,
+      totalSales: number,
+      totalUnits: number,
+      _id?: string | null,
+    } | null > | null,
+    salesByCategory?:  {
+      __typename: "SalesCategories",
+      shoes?: number | null,
+      clothing?: number | null,
+      accessories?: number | null,
+      misc?: number | null,
+    } | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    v?: number | null,
+  } | null,
+};
+
+export type OnDeleteOverallSalesSubscriptionVariables = {
+  filter?: ModelSubscriptionOverallSalesFilterInput | null,
+};
+
+export type OnDeleteOverallSalesSubscription = {
+  onDeleteOverallSales?:  {
+    __typename: "OverallSales",
+    year: number,
+    id: string,
+    totalCustomers?: number | null,
+    yearlySalesTotal?: number | null,
+    yearlyTotalSoldUnits?: number | null,
+    monthlyData?:  Array< {
+      __typename: "ProductStatDate",
+      month?: string | null,
+      date?: string | null,
+      totalSales: number,
+      totalUnits: number,
+      _id?: string | null,
+    } | null > | null,
+    dailyData?:  Array< {
+      __typename: "ProductStatDate",
+      month?: string | null,
+      date?: string | null,
+      totalSales: number,
+      totalUnits: number,
+      _id?: string | null,
+    } | null > | null,
+    salesByCategory?:  {
+      __typename: "SalesCategories",
+      shoes?: number | null,
+      clothing?: number | null,
+      accessories?: number | null,
+      misc?: number | null,
+    } | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    v?: number | null,
+  } | null,
+};
+
 export type OnCreateProductTransactionsSubscriptionVariables = {
   filter?: ModelSubscriptionProductTransactionsFilterInput | null,
   owner?: string | null,
@@ -1916,6 +2387,7 @@ export type OnCreateProductTransactionsSubscription = {
         date?: string | null,
         totalSales: number,
         totalUnits: number,
+        _id?: string | null,
       } | null > | null,
       dailyStat?:  Array< {
         __typename: "ProductStatDate",
@@ -1923,6 +2395,7 @@ export type OnCreateProductTransactionsSubscription = {
         date?: string | null,
         totalSales: number,
         totalUnits: number,
+        _id?: string | null,
       } | null > | null,
       transactions?:  {
         __typename: "ModelProductTransactionsConnection",
@@ -1978,6 +2451,7 @@ export type OnUpdateProductTransactionsSubscription = {
         date?: string | null,
         totalSales: number,
         totalUnits: number,
+        _id?: string | null,
       } | null > | null,
       dailyStat?:  Array< {
         __typename: "ProductStatDate",
@@ -1985,6 +2459,7 @@ export type OnUpdateProductTransactionsSubscription = {
         date?: string | null,
         totalSales: number,
         totalUnits: number,
+        _id?: string | null,
       } | null > | null,
       transactions?:  {
         __typename: "ModelProductTransactionsConnection",
@@ -2040,6 +2515,7 @@ export type OnDeleteProductTransactionsSubscription = {
         date?: string | null,
         totalSales: number,
         totalUnits: number,
+        _id?: string | null,
       } | null > | null,
       dailyStat?:  Array< {
         __typename: "ProductStatDate",
@@ -2047,6 +2523,7 @@ export type OnDeleteProductTransactionsSubscription = {
         date?: string | null,
         totalSales: number,
         totalUnits: number,
+        _id?: string | null,
       } | null > | null,
       transactions?:  {
         __typename: "ModelProductTransactionsConnection",

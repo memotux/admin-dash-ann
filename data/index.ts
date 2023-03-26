@@ -1945,7 +1945,6 @@ export const dataOverallStat = [
       { date: "2021-02-26", totalSales: 9667, totalUnits: 843 },
       { date: "2021-02-27", totalSales: 4472, totalUnits: 469 },
       { date: "2021-02-28", totalSales: 3017, totalUnits: 922 },
-      { date: "2021-02-29", totalSales: 2851, totalUnits: 802 },
       { date: "2021-03-01", totalSales: 8296, totalUnits: 768 },
       { date: "2021-03-02", totalSales: 5479, totalUnits: 340 },
       { date: "2021-03-03", totalSales: 9791, totalUnits: 712 },
