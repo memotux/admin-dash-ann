@@ -6,7 +6,8 @@ import type { ListUsersQuery } from "@/graphql/types";
 import type { ExtendedFeatureCollection } from "d3-geo";
 
 definePageMeta({
-  title: 'Geography'
+  title: 'Geography',
+  description: 'Find where your users are located'
 })
 
 const { data, pending } = await useFetch<ListUsersQuery>('/api/listCustomers', {
