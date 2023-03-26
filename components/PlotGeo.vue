@@ -50,7 +50,8 @@ onMounted(() => {
       legend: true,
       style: {
         background: 'transparent'
-      }
+      },
+      ticks: [0, 5, 15, 25, 35, 50]
     }
   })
 
