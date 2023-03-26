@@ -540,13 +540,13 @@ export type CustomCountTransactionsQuery = {
   } | null,
 };
 
-export type CountUsersCountryQueryVariables = {
+export type CountUsersQueryVariables = {
   filter?: ModelUserFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type CountUsersCountryQuery = {
+export type CountUsersQuery = {
   listUsers?:  {
     __typename: "ModelUserConnection",
     items:  Array< {

@@ -4,7 +4,7 @@ import { countUsers } from "@/graphql/customs";
 import type { ListUsersQuery, ListUsersQueryVariables, UserByRoleQuery, UserRoles } from '~~/graphql/types';
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 
-const usersQuery = { listUsers, userByRole, countCountry: countUsersContry }
+const usersQuery = { listUsers, userByRole, countCountry: countUsers }
 
 interface ListCustomersParams extends ListUsersQueryVariables {
   query: 'listUsers' | 'userByRole' | 'countCountry'
