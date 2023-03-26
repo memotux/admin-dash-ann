@@ -1,13 +1,14 @@
 import { API } from 'aws-amplify'
 import { listUsers, userByRole } from "@/graphql/queries";
+import { countUsers } from "@/graphql/customs";
 import type { ListUsersQuery, ListUsersQueryVariables, UserByRoleQuery, UserRoles } from '~~/graphql/types';
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 
-const usersQuery = { listUsers, userByRole }
+const usersQuery = { listUsers, userByRole, countCountry: countUsersContry }
 
 interface ListCustomersParams extends ListUsersQueryVariables {
-  query: 'listUsers' | 'userByRole'
-  role: UserRoles
+  query: 'listUsers' | 'userByRole' | 'countCountry'
+  role?: UserRoles
 }
 
 export default defineEventHandler(async (event) => {
@@ -37,7 +38,7 @@ export default defineEventHandler(async (event) => {
     console.error(error);
 
     throw createError({
-      statusCode: 400,
+      statusCode: 404,
       statusMessage: error.errors[0].message
     })
   }

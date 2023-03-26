@@ -49,3 +49,18 @@ export const customCountTransactions = /* GraphQL */ `
     }
   }
 `;
+
+export const countUsers = /* GraphQL */ `
+  query CountUsers(
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        country
+      }
+      nextToken
+    }
+  }
+`;

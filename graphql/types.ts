@@ -138,6 +138,70 @@ export type ModelTransactionConnection = {
   nextToken?: string | null,
 };
 
+export type ModelUserFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  email?: ModelStringInput | null,
+  city?: ModelStringInput | null,
+  state?: ModelStringInput | null,
+  country?: ModelStringInput | null,
+  occupation?: ModelStringInput | null,
+  phoneNumber?: ModelStringInput | null,
+  role?: ModelUserRolesInput | null,
+  and?: Array< ModelUserFilterInput | null > | null,
+  or?: Array< ModelUserFilterInput | null > | null,
+  not?: ModelUserFilterInput | null,
+};
+
+export type ModelStringInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
+};
+
+export type ModelUserRolesInput = {
+  eq?: UserRoles | null,
+  ne?: UserRoles | null,
+};
+
+export enum UserRoles {
+  user = "user",
+  admin = "admin",
+}
+
+
+export type ModelUserConnection = {
+  __typename: "ModelUserConnection",
+  items:  Array<User | null >,
+  nextToken?: string | null,
+};
+
+export type User = {
+  __typename: "User",
+  id: string,
+  name?: string | null,
+  email: string,
+  city?: string | null,
+  state?: string | null,
+  country?: string | null,
+  occupation?: string | null,
+  phoneNumber?: string | null,
+  transactions?: ModelTransactionConnection | null,
+  role: UserRoles,
+  createdAt: string,
+  updatedAt: string,
+};
+
 export type CreateProductInput = {
   id?: string | null,
   owner: string,
@@ -173,22 +237,6 @@ export type ModelProductConditionInput = {
   and?: Array< ModelProductConditionInput | null > | null,
   or?: Array< ModelProductConditionInput | null > | null,
   not?: ModelProductConditionInput | null,
-};
-
-export type ModelStringInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
 };
 
 export type ModelIntInput = {
@@ -234,12 +282,6 @@ export type CreateUserInput = {
   role: UserRoles,
 };
 
-export enum UserRoles {
-  user = "user",
-  admin = "admin",
-}
-
-
 export type ModelUserConditionInput = {
   name?: ModelStringInput | null,
   email?: ModelStringInput | null,
@@ -252,27 +294,6 @@ export type ModelUserConditionInput = {
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
   not?: ModelUserConditionInput | null,
-};
-
-export type ModelUserRolesInput = {
-  eq?: UserRoles | null,
-  ne?: UserRoles | null,
-};
-
-export type User = {
-  __typename: "User",
-  id: string,
-  name?: string | null,
-  email: string,
-  city?: string | null,
-  state?: string | null,
-  country?: string | null,
-  occupation?: string | null,
-  phoneNumber?: string | null,
-  transactions?: ModelTransactionConnection | null,
-  role: UserRoles,
-  createdAt: string,
-  updatedAt: string,
 };
 
 export type UpdateUserInput = {
@@ -344,27 +365,6 @@ export type ModelProductFilterInput = {
 export type ModelProductConnection = {
   __typename: "ModelProductConnection",
   items:  Array<Product | null >,
-  nextToken?: string | null,
-};
-
-export type ModelUserFilterInput = {
-  id?: ModelIDInput | null,
-  name?: ModelStringInput | null,
-  email?: ModelStringInput | null,
-  city?: ModelStringInput | null,
-  state?: ModelStringInput | null,
-  country?: ModelStringInput | null,
-  occupation?: ModelStringInput | null,
-  phoneNumber?: ModelStringInput | null,
-  role?: ModelUserRolesInput | null,
-  and?: Array< ModelUserFilterInput | null > | null,
-  or?: Array< ModelUserFilterInput | null > | null,
-  not?: ModelUserFilterInput | null,
-};
-
-export type ModelUserConnection = {
-  __typename: "ModelUserConnection",
-  items:  Array<User | null >,
   nextToken?: string | null,
 };
 
@@ -535,6 +535,23 @@ export type CustomCountTransactionsQuery = {
     items:  Array< {
       __typename: "Transaction",
       id: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type CountUsersCountryQueryVariables = {
+  filter?: ModelUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type CountUsersCountryQuery = {
+  listUsers?:  {
+    __typename: "ModelUserConnection",
+    items:  Array< {
+      __typename: "User",
+      country?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
