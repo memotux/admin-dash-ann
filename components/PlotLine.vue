@@ -1,26 +1,27 @@
 <script lang="ts" setup>
-import { plot, line, text } from "@observablehq/plot";
+import { plot, line, text, ruleY } from "@observablehq/plot";
 
-const props = defineProps<{ data: any, view: 'sales' | 'units' }>()
+const props = defineProps<{ data: [Date, number][], view: 'sales' | 'units', isDashboard?: boolean }>()
 
 const container = ref<HTMLDivElement | null>(null)
 const yLabel = {
-  sales: 'Revenue',
-  units: 'Units solds'
+  sales: 'Total Revenue for Year',
+  units: 'Total Units for Year'
 }
 
 const lineChart = computed(() => plot({
   inset: 10,
   grid: true,
   x: {
-    label: "Months →"
+    label: props.isDashboard ? "" : "Month →"
   },
   y: {
-    label: `↑ ${yLabel[props.view]}`,
+    label: props.isDashboard ? "" : `↑ ${yLabel[props.view]}`,
   },
   style: {
     background: "transparent",
-    width: '100%'
+    width: '100%',
+    height: '75vh'
   },
   className: 'plot-line-chart',
   marks: [
@@ -29,9 +30,10 @@ const lineChart = computed(() => plot({
       marker: "circle"
     }),
     text(props.data, {
-      text: (d: any) => new Intl.DateTimeFormat("en-US", { month: 'long' }).format(d[0]),
+      text: (d: typeof props.data[0]) => new Intl.DateTimeFormat("en-US", { month: props.isDashboard ? 'short' : 'long' }).format(d[0]),
       dy: -8
-    })
+    }),
+    ruleY([0], {})
   ]
 }))
 

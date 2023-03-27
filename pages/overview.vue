@@ -19,7 +19,7 @@ const { data, pending } = await useFetch<ListOverallSalesQuery>('/api/list/overa
 
 const views = ref<'sales' | 'units'>('units')
 
-const lineData = computed(() => {
+const lineData = computed<[Date, number][]>(() => {
   if (!data.value?.listOverallSales?.items[0]?.monthlyData) return []
 
   if (views.value === 'sales') {
@@ -51,6 +51,7 @@ const lineData = computed(() => {
           name="overall-sales-views"
           label="Select View..."
           prepend-inner-icon="fa-solid fa-chart-line"
+          prefix="Chart:"
           :items="[{ title: 'Sales', value: 'sales' }, { title: 'Units', value: 'units' }]"
           single-line />
       </VCol>
