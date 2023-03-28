@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-import { ListOverallSalesQuery, OverallSales } from '~~/graphql/types';
+// @ts-ignore
+import { line, text, ruleY } from "@observablehq/plot";
+import { ListOverallSalesQuery } from '~~/graphql/types';
 
 definePageMeta({
   title: 'Overview',
@@ -10,6 +12,13 @@ const loadOverAllData = async () => {
   await useFetch('/api/load/overall')
 }
 
+const yLabel = {
+  sales: 'Revenue',
+  units: 'Units'
+}
+
+const views = ref<'sales' | 'units'>('units')
+
 const { data, pending } = await useFetch<ListOverallSalesQuery>('/api/list/overall', {
   key: 'api:list:overall',
   query: {
@@ -17,19 +26,38 @@ const { data, pending } = await useFetch<ListOverallSalesQuery>('/api/list/overa
   }
 })
 
-const views = ref<'sales' | 'units'>('units')
+const plot = computed(() => {
+  if (!data.value?.listOverallSales?.items[0]?.monthlyData?.length) return { marks: [] }
 
-const lineData = computed<[Date, number][]>(() => {
-  if (!data.value?.listOverallSales?.items[0]?.monthlyData) return []
+  const { monthlyData } = data.value.listOverallSales.items[0]
+
+  let lineData: [Date, number][] = []
 
   if (views.value === 'sales') {
-    return data.value.listOverallSales.items[0].monthlyData.map((data) => {
+    lineData = monthlyData.map((data) => {
       return [new Date(`${data!.month} 1, 2021`), data!.totalSales]
     })
   } else {
-    return data.value.listOverallSales.items[0].monthlyData.map((data) => {
+    lineData = monthlyData.map((data) => {
       return [new Date(`${data!.month} 1, 2021`), data!.totalUnits]
     })
+  }
+
+  return {
+    y: {
+      label: `↑ Total ${yLabel[views.value]} for Year`
+    },
+    marks: [
+      line(lineData, {
+        curve: "catmull-rom",
+        marker: "circle"
+      }),
+      text(lineData, {
+        text: (d: typeof lineData[0]) => new Intl.DateTimeFormat("en-US", { month: 'short' }).format(d[0]),
+        dy: -8
+      }),
+      ruleY([0], {})
+    ]
   }
 })
 </script>
@@ -57,7 +85,7 @@ const lineData = computed<[Date, number][]>(() => {
       </VCol>
       <VDivider />
       <VCol cols="12">
-        <PlotLine :data="lineData" :view="views" />
+        <PlotLine v-bind="plot" />
       </VCol>
     </VRow>
   </VContainer>

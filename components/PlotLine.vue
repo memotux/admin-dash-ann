@@ -1,51 +1,43 @@
 <script lang="ts" setup>
-import { plot, line, text, ruleY } from "@observablehq/plot";
+// @ts-ignore
+import { plot } from "@observablehq/plot";
 
-const props = defineProps<{ data: [Date, number][], view: 'sales' | 'units', isDashboard?: boolean }>()
-
-const container = ref<HTMLDivElement | null>(null)
-const yLabel = {
-  sales: 'Total Revenue for Year',
-  units: 'Total Units for Year'
-}
-
-const lineChart = computed(() => plot({
+const props = withDefaults(defineProps<{
+  marks: any[]
+  inset?: number
+  grid?: boolean
+  color?: Record<string, unknown>
+  x?: Record<string, unknown>
+  y?: Record<string, unknown>
+  style?: Record<string, unknown>
+  name?: string
+}>(), {
   inset: 10,
   grid: true,
-  x: {
-    label: props.isDashboard ? "" : "Month →"
-  },
-  y: {
-    label: props.isDashboard ? "" : `↑ ${yLabel[props.view]}`,
-  },
-  style: {
+  x: () => ({
+    label: "Month →"
+  }),
+  y: () => ({
+    label: '↑ Total',
+  }),
+  style: () => ({
     background: "transparent",
     width: '100%',
     height: '75vh'
-  },
+  }),
   className: 'plot-line-chart',
-  marks: [
-    line(props.data, {
-      curve: "catmull-rom",
-      marker: "circle"
-    }),
-    text(props.data, {
-      text: (d: typeof props.data[0]) => new Intl.DateTimeFormat("en-US", { month: props.isDashboard ? 'short' : 'long' }).format(d[0]),
-      dy: -8
-    }),
-    ruleY([0], {})
-  ]
-}))
+  marks: () => []
+})
+
+const container = ref<HTMLDivElement | null>(null)
+
+const lineChart = computed(() => plot(props))
 
 onMounted(() => {
   container.value?.append(lineChart.value)
 })
 onUpdated(() => {
-  const current = container.value?.querySelector('.plot-line-chart')
-  if (current) {
-    container.value?.removeChild(current)
-  }
-  container.value?.append(lineChart.value)
+  container.value?.replaceChildren(lineChart.value)
 })
 </script>
 
