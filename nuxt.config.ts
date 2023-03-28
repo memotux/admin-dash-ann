@@ -11,7 +11,7 @@ export default defineNuxtConfig({
       { charset: "utf-8" }],
     }
   },
-  css: ['@aws-amplify/ui-vue/styles.css'],
+  css: ['@aws-amplify/ui-vue/styles.css', 'v-calendar/style.css'],
   imports: {
     dirs: ['./graphql', './data']
   },
