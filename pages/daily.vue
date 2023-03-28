@@ -57,9 +57,10 @@ const plot = computed(() => {
     color: {
       legend: true,
       scheme: 'oranges',
-      tickFormat: (l: string) => l.toLocaleUpperCase(),
+      tickFormat: (l: string) => `${l.toLocaleUpperCase()} ${l === 'sales' ? '($)' : '(Q)'}`,
       style: {
-        paddingLeft: '80%'
+        float: 'right',
+        fontSize: '1rem'
       }
     },
     marks: [
@@ -83,16 +84,16 @@ const masks = ref({
         <PlotLine v-bind="plot" />
       </VCol>
       <VCol cols="3">
-        <h5 class="text-center mb-2">Pick a range of date</h5>
+        <h5 class="text-center mb-2">Pick a date range</h5>
         <DatePicker v-model.range="dates" :masks="masks">
           <template #default="{ inputValue, inputEvents }">
             <div class="flex justify-center items-center">
               <VTextField v-model="inputValue.start" v-on="inputEvents.start"
                 label="Start:"
-                prependInnerIcon="fa-solid fa-calendar-days" />
+                prependInnerIcon="fa-solid fa-calendar-days" readonly />
               <VTextField v-model="inputValue.end" v-on="inputEvents.end"
                 label="End:"
-                prependInnerIcon="fa-solid fa-calendar-days" />
+                prependInnerIcon="fa-solid fa-calendar-days" readonly />
             </div>
           </template>
         </DatePicker>
