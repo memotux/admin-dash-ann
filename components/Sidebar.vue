@@ -10,7 +10,7 @@ const items = [
   { title: 'Geography', prependIcon: 'fa-solid fa-globe', to: '/geo' },
   { title: 'Sales', type: 'subheader' },
   { title: 'Overview', prependIcon: 'fa-solid fa-store', to: '/overview' },
-  { title: 'Daily', prependIcon: 'fa-solid fa-calendar-day', to: '/today' },
+  { title: 'Daily', prependIcon: 'fa-solid fa-calendar-day', to: '/daily' },
   { title: 'Monthly', prependIcon: 'fa-solid fa-calendar-days', to: '/monthly' },
   { title: 'Breakdown', prependIcon: 'fa-solid fa-chart-pie', to: '/breakdown' },
   { title: 'Management', type: 'subheader' },
