@@ -81,7 +81,7 @@ const masks = ref({
     </VRow>
     <VRow v-else>
       <VCol>
-        <PlotLine v-bind="plot" />
+        <Plot v-bind="plot" />
       </VCol>
       <VCol cols="3">
         <h5 class="text-center mb-2">Pick a date range</h5>

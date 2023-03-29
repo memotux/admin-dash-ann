@@ -4,13 +4,14 @@ import { plot } from "@observablehq/plot";
 
 const props = withDefaults(defineProps<{
   marks: any[]
+  projection?: string
   inset?: number
   grid?: boolean
   color?: Record<string, unknown>
   x?: Record<string, unknown>
   y?: Record<string, unknown>
   style?: Record<string, unknown>
-  name?: string
+  className?: string
 }>(), {
   inset: 10,
   grid: true,
@@ -25,7 +26,7 @@ const props = withDefaults(defineProps<{
     width: '100%',
     height: '75vh'
   }),
-  className: 'plot-line-chart',
+  className: 'plot-chart',
   marks: () => []
 })
 

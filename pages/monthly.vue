@@ -62,7 +62,7 @@ const masks = ref({
     </VRow>
     <VRow v-else>
       <VCol cols="12">
-        <PlotLine v-bind="plot" />
+        <Plot v-bind="plot" />
       </VCol>
     </VRow>
   </VContainer>
