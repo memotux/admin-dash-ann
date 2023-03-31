@@ -712,6 +712,74 @@ export type UserTransactionsQuery = {
   } | null,
 };
 
+export type GetUserTransactionsQueryVariables = {
+  id: string,
+};
+
+export type GetUserTransactionsQuery = {
+  getUser?:  {
+    __typename: "User",
+    id: string,
+    name?: string | null,
+    email: string,
+    city?: string | null,
+    state?: string | null,
+    country?: string | null,
+    occupation?: string | null,
+    phoneNumber?: string | null,
+    transactions?:  {
+      __typename: "ModelTransactionConnection",
+      items:  Array< {
+        __typename: "Transaction",
+        id: string,
+        cost?: number | null,
+        products?:  {
+          __typename: "ModelProductTransactionsConnection",
+          items:  Array< {
+            __typename: "ProductTransactions",
+            id: string,
+          } | null >,
+          nextToken?: string | null,
+        } | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    role: UserRoles,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type TransactionsByUserQueryVariables = {
+  userId: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelTransactionFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type TransactionsByUserQuery = {
+  transactionsByUserId?:  {
+    __typename: "ModelTransactionConnection",
+    items:  Array< {
+      __typename: "Transaction",
+      id: string,
+      userId: string,
+      cost?: number | null,
+      products?:  {
+        __typename: "ModelProductTransactionsConnection",
+        items:  Array< {
+          __typename: "ProductTransactions",
+          id: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type CreateProductMutationVariables = {
   input: CreateProductInput,
   condition?: ModelProductConditionInput | null,
