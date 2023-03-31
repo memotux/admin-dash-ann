@@ -203,6 +203,12 @@ export type User = {
   updatedAt: string,
 };
 
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
 export type CreateProductInput = {
   id?: string | null,
   owner: string,
@@ -445,12 +451,6 @@ export type ModelProductConnection = {
   nextToken?: string | null,
 };
 
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
-
 export type ModelOverallSalesFilterInput = {
   year?: ModelIntInput | null,
   id?: ModelIDInput | null,
@@ -662,6 +662,51 @@ export type CountUsersQuery = {
     items:  Array< {
       __typename: "User",
       country?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type UserTransactionsQueryVariables = {
+  role: UserRoles,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type UserTransactionsQuery = {
+  userByRole?:  {
+    __typename: "ModelUserConnection",
+    items:  Array< {
+      __typename: "User",
+      id: string,
+      name?: string | null,
+      email: string,
+      city?: string | null,
+      state?: string | null,
+      country?: string | null,
+      occupation?: string | null,
+      phoneNumber?: string | null,
+      transactions?:  {
+        __typename: "ModelTransactionConnection",
+        items:  Array< {
+          __typename: "Transaction",
+          id: string,
+          userId: string,
+          cost?: number | null,
+          products?:  {
+            __typename: "ModelProductTransactionsConnection",
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      role: UserRoles,
+      createdAt: string,
+      updatedAt: string,
     } | null >,
     nextToken?: string | null,
   } | null,
