@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useTheme } from "vuetify";
-import { line, text, ruleY, ruleX } from "@observablehq/plot"
+import { line, text, ruleY } from "@observablehq/plot"
 
 const props = defineProps<{ isDashboard?: boolean }>()
 
@@ -54,7 +54,6 @@ const plot = computed(() => {
       line(lineData, {
         curve: "catmull-rom",
         marker: "circle",
-        // stroke: theme.current.value.colors['secondary']
       }),
       text(lineData, {
         text: (d: typeof lineData[0]) => new Intl.DateTimeFormat("en-US", { month: 'short' }).format(d[0]),

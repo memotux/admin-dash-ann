@@ -1,5 +1,5 @@
-import * as d3 from "d3";
-import { DefaultArcObject } from "d3";
+import { map, range, InternSet, schemeSpectral, quantize, interpolateSpectral, scaleOrdinal, format as d3format, pie, arc, create } from "d3";
+import type { DefaultArcObject } from "d3";
 
 type PlotPieData = [string, number]
 interface PlotPieOptions {
@@ -44,46 +44,44 @@ export function DonutChart(
   }: PlotPieOptions
 ) {
   // Compute values.
-  const N = d3.map(data, name)
-  const V = d3.map(data, value)
-  const I = d3.range(N.length).filter((i) => !isNaN(V[i]))
+  const N = map(data, name)
+  const V = map(data, value)
+  const I = range(N.length).filter((i) => !isNaN(V[i]))
 
   // Unique the names.
   if (names === undefined) names = N
-  names = new d3.InternSet(names)
+  names = new InternSet(names)
 
   // Chose a default color scheme based on cardinality.
-  if (colors === undefined) colors = d3.schemeSpectral[names.size]
+  if (colors === undefined) colors = schemeSpectral[names.size]
   if (colors === undefined)
-    colors = d3.quantize(
-      (t) => d3.interpolateSpectral(t * 0.8 + 0.1),
+    colors = quantize(
+      (t) => interpolateSpectral(t * 0.8 + 0.1),
       names.size
     )
 
   // Construct scales.
-  const color = d3.scaleOrdinal(names, colors as string[])
+  const color = scaleOrdinal(names, colors as string[])
 
   // Compute titles.
   if (title === undefined) {
-    const formatValue = d3.format(format)
+    const formatValue = d3format(format)
     title = (i: number) => `${N[i]}\n${formatValue(V[i])}`
   } else {
-    const O = d3.map(data, (d) => d)
+    const O = map(data, (d) => d)
     const T = title
     title = (i: number) => T(O[i], i, data)
   }
 
   // Construct arcs.
-  const arcs = d3
-    .pie()
+  const arcs = pie()
     .padAngle(padAngle)
     .sort(null)
     .value((i) => V[i as number])(I)
-  const arc = d3.arc().innerRadius(innerRadius).outerRadius(outerRadius)
-  const arcLabel = d3.arc().innerRadius(labelRadius).outerRadius(labelRadius)
+  const arc2 = arc().innerRadius(innerRadius).outerRadius(outerRadius)
+  const arcLabel = arc().innerRadius(labelRadius).outerRadius(labelRadius)
 
-  const svg = d3
-    .create('svg')
+  const svg = create('svg')
     .attr('width', width)
     .attr('height', height)
     .attr('viewBox', [-width / 2, -height / 2, width, height])
@@ -98,7 +96,7 @@ export function DonutChart(
     .data(arcs)
     .join('path')
     .attr('fill', (d) => color(N[d.data as number]))
-    .attr('d', arc as unknown as number)
+    .attr('d', arc2 as unknown as number)
     .append('title')
     .text((d) => title!(d.data))
 
