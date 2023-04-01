@@ -1,5 +1,5 @@
 import { defineNuxtModule, addPlugin, createResolver } from '@nuxt/kit'
-import vuetify from 'vite-plugin-vuetify'
+import vitePlugin from 'vite-plugin-vuetify'
 
 export default defineNuxtModule({
   meta: {
@@ -17,11 +17,13 @@ export default defineNuxtModule({
   defaults: {},
   hooks: {
     'vite:extendConfig': (config) => {
-      config.plugins?.push(vuetify({ autoImport: true }))
+      config.plugins?.push(vitePlugin({ autoImport: true }))
     }
   },
   async setup(opts, nuxt) {
     const { resolve } = createResolver(import.meta.url)
+
+    nuxt.options.build.transpile.push('vuetify')
 
     addPlugin(resolve('./plugins/vuetify.ts'))
   }
