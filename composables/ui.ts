@@ -19,9 +19,6 @@ export const useUser = async () => {
 export const authListener = (data: any) => {
   const ui = useUi()
 
-  console.log('auth listener payload: ', data.payload.event);
-
-
   if (data.payload.event === 'configured') {
     if (process.server) return
 
