@@ -12,8 +12,8 @@ defineProps<{
   <VCard class="text-secondary">
     <VCardTitle>
       <VRow class="pa-4" align="center" justify="space-between">
-        <h6>{{ title }}</h6>
-        <VIcon :icon="icon" size="1.25rem" />
+        <h2 class="text-h6">{{ title }}</h2>
+        <VIcon :icon="icon" size="1.125rem" />
       </VRow>
     </VCardTitle>
     <VCardSubtitle>
