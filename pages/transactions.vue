@@ -16,10 +16,10 @@ const headers = [
 ]
 
 const loadTransactions = async () => {
-  await useFetch('/api/loadTransactions')
+  await useFetch('/api/load/transactions')
 }
 const loadPTs = async () => {
-  await useFetch('/api/loadpst')
+  await useFetch('/api/load/pst')
 }
 
 /**
@@ -30,12 +30,12 @@ const query = ref<ListTransactionsQueryVariables & { query: string }>({
   limit: 10,
   query: 'customListT',
 })
-const { data, pending, refresh } = await useFetch<ListTransactionsQuery>('/api/listTransactions', {
+const { data, pending, refresh } = await useFetch<ListTransactionsQuery>('/api/list/transactions', {
   key: 'api:listT',
   query
 })
 
-const { data: count } = await useFetch<ListTransactionsQuery>('/api/listTransactions', {
+const { data: count } = await useFetch<ListTransactionsQuery>('/api/list/transactions', {
   key: 'api:listT:count',
   query: {
     query: 'countT'

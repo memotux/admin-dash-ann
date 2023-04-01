@@ -2,19 +2,13 @@
 import { ListOverallSalesQuery } from '~~/graphql/types';
 // @ts-ignore
 import { lineY, ruleY } from "@observablehq/plot";
-import { DatePicker } from "v-calendar";
 
 definePageMeta({
   title: 'Monthly Sales',
   description: 'Chart of monthly sales'
 })
 
-const { data, pending } = await useFetch<ListOverallSalesQuery>('/api/list/overall', {
-  key: 'api:list:overall',
-  query: {
-    query: 'listOverallSales'
-  }
-})
+const { data, pending } = await useOverallStats()
 
 const plot = computed(() => {
   if (!data.value?.listOverallSales?.items[0]?.dailyData?.length) return { marks: [] }
@@ -46,13 +40,10 @@ const plot = computed(() => {
     },
     marks: [
       lineY(linesData, { x: "date", y: "total", stroke: "type", marker: "circle" }),
-      ruleY([0])
+      ruleY([0], {})
     ]
   }
 })
-const masks = ref({
-  modelValue: 'YYYY-MM-DD',
-});
 </script>
 
 <template>

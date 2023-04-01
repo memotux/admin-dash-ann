@@ -16,8 +16,8 @@ const headers = [
 
 const itemsPerPage = ref(10)
 
-const { data } = useFetch<UserByRoleQuery>('/api/listCustomers', {
-  key: 'api:listCustomers:counts',
+const { data } = useFetch<UserByRoleQuery>('/api/list/users', {
+  key: 'api:list:users:admin',
   query: {
     role: UserRoles.admin,
     query: 'userByRole'

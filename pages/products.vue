@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { Product } from '~~/graphql/types';
+import type { ListProductsQuery } from '~~/graphql/types';
 
 type ProductsProps = Omit<Required<Product>, '__typename' | 'owner' | 'createdAt' | 'updatedAt' | 'monthlyStat' | 'dailyStat' | 'transactions'>
 
@@ -8,7 +9,7 @@ definePageMeta({
   description: 'See your list of products'
 })
 
-const { data, pending } = await useFetch('/api/listProducts')
+const { data, pending } = await useFetch<ListProductsQuery>('/api/list/products')
 
 const products = computed(() => data.value?.listProducts?.items as Array<ProductsProps> | undefined)
 // const isLoading = computed(() => {
@@ -18,13 +19,12 @@ const products = computed(() => data.value?.listProducts?.items as Array<Product
 
 const uploadProducts = async () => {
   const user = await useUser()
-  await useFetch('/api/loadProducts', {
+  await useFetch('/api/load/proudcts', {
     query: {
       u: user.username
     }
   })
 }
-
 </script>
 
 <template>

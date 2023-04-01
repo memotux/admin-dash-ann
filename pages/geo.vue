@@ -14,8 +14,8 @@ definePageMeta({
 
 const theme = useTheme()
 
-const { data, pending } = await useFetch<ListUsersQuery>('/api/listCustomers', {
-  key: 'api:listCustomer:countCountry',
+const { data, pending } = await useFetch<ListUsersQuery>('/api/list/users', {
+  key: 'api:list:users:countCountry',
   query: {
     query: 'countCountry'
   }
@@ -43,6 +43,7 @@ const plot = {
   marks: [
     graticule(),
     geo(geoFeat, {
+      // @ts-ignore
       fill: (d: any) => d.properties.users,
       title: (d: any) => d.properties.name + ": " + d.properties.users,
       stroke: theme.current.value.colors.primary,

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { UserByRoleQueryVariables, UserByRoleQuery } from '~~/graphql/types';
+import type { /* UserByRoleQueryVariables, */ UserByRoleQuery } from '~~/graphql/types';
 
 definePageMeta({
   title: 'Customers',
@@ -16,8 +16,8 @@ const headers = [
 
 const itemsPerPage = ref(10)
 
-const { data: counts } = useFetch<UserByRoleQuery>('/api/listCustomers', {
-  key: 'api:listCustomers:counts',
+const { data: counts } = useFetch<UserByRoleQuery>('/api/list/users', {
+  key: 'api:list:users',
   query: {
     role: UserRoles.user,
     query: 'userByRole'
@@ -25,7 +25,7 @@ const { data: counts } = useFetch<UserByRoleQuery>('/api/listCustomers', {
 })
 
 const loadCustomers = () => {
-  useFetch('/api/loadCustomers')
+  useFetch('/api/load/users')
 }
 
 /**

@@ -65,7 +65,7 @@ const plot = computed(() => {
     },
     marks: [
       lineY(linesData, { x: "date", y: "total", stroke: "type", marker: "circle" }),
-      ruleY([0])
+      ruleY([0], {})
     ]
   }
 })
