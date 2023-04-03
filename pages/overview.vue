@@ -6,7 +6,7 @@ definePageMeta({
 })
 
 const loadOverAllData = async () => {
-  await useFetch('/api/load/overall')
+  await useLoadOverall()
 }
 </script>
 

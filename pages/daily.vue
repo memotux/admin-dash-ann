@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { ListOverallSalesQuery } from '~~/graphql/types';
 // @ts-ignore
 import { lineY, ruleY } from "@observablehq/plot";
 import { DatePicker } from "v-calendar";
+import type { ListOverallSalesQuery } from "~~/graphql/types";
 
 definePageMeta({
   title: 'Daily Sales',
@@ -17,28 +17,25 @@ const dates = ref<{
   end: ''
 })
 
-const { data, pending } = await useFetch<ListOverallSalesQuery>('/api/list/overall', {
-  key: 'api:list:overall',
-  query: {
-    query: 'listOverallSales'
-  }
+const data = await useListOverall<ListOverallSalesQuery>({
+  query: 'listOverallSales'
 })
 
 onBeforeMount(() => {
-  if (!data.value?.listOverallSales?.items[0]?.dailyData?.length) return
+  if (!data?.listOverallSales?.items[0]?.dailyData?.length) return
 
-  const { dailyData } = data.value.listOverallSales.items[0]
+  const { dailyData } = data.listOverallSales.items[0]
 
   dates.value.start = new Date(dailyData[0]!.date!)
   dates.value.end = new Date(dailyData[dailyData.length - 1]!.date!)
 })
 
 const plot = computed(() => {
-  if (!data.value?.listOverallSales?.items[0]?.dailyData?.length) return { marks: [] }
+  if (!data?.listOverallSales?.items[0]?.dailyData?.length) return { marks: [] }
 
   const linesData: { date: Date, total: number, type: 'sales' | 'units' }[] = []
 
-  const { dailyData } = data.value.listOverallSales.items[0]
+  const { dailyData } = data.listOverallSales.items[0]
 
   dailyData.forEach((data) => {
     if (!data || !data.date) return
@@ -76,7 +73,7 @@ const masks = ref({
 
 <template>
   <VContainer>
-    <VRow v-if="pending || !data" justify="center" align="center">
+    <VRow v-if="!data" justify="center" align="center">
       <VProgressCircular size="65" color="secondary" indeterminate />
     </VRow>
     <VRow v-else>

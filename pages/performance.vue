@@ -6,12 +6,9 @@ definePageMeta({
   description: 'Track your Affilate Sales Performance'
 })
 
-const { data, pending } = await useFetch<TransactionsByUserIdQuery>('/api/list/users', {
-  key: 'list:user:transactions',
-  query: {
-    userId: '63701cc1f03239c72c000184',
-    query: 'transactionsByUser'
-  }
+const data = await useListUsers<TransactionsByUserIdQuery>({
+  userId: '63701cc1f03239c72c000184',
+  query: 'transactionsByUser'
 })
 const headers = [
   { title: 'ID', key: 'id', sortable: false },
@@ -26,7 +23,7 @@ const itemsPerPage = ref(10)
 
 <template>
   <VContainer>
-    <VRow v-if="pending || !data" justify="center" align="center">
+    <VRow v-if="!data" justify="center" align="center">
       <VProgressCircular color="secondary" indeterminate />
     </VRow>
     <VRow v-else>

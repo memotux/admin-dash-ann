@@ -1,26 +1,23 @@
 <script lang="ts" setup>
-import { ListTransactionsQuery } from '~~/graphql/types';
+import { ListOverallSalesQuery, ListTransactionsQuery } from '~~/graphql/types';
 
 definePageMeta({
   title: 'Dashboard',
   description: 'Welcome to your Dashboard'
 })
 
-const { data: overallStats } = await useOverallStats()
-const { data: transactions } = await useFetch<ListTransactionsQuery>(
-  '/api/list/transactions',
-  {
-    query: {
-      limit: 50,
-      query: 'customListT',
-    }
-  }
-)
+const overallStats = await useListOverall<ListOverallSalesQuery>({
+  query: 'listOverallSales'
+})
+const { data: transactions } = await useListTransactions<ListTransactionsQuery>({
+  limit: 50,
+  query: 'customListT',
+})
 
 const {
   totalCustomers,
   yearlySalesTotal,
-  monthlyData, dailyData } = overallStats.value!.listOverallSales!.items[0]!
+  monthlyData, dailyData } = overallStats.listOverallSales!.items[0]!
 
 const monthStats = monthlyData!.find((monthly) => monthly!.month === new Intl.DateTimeFormat('en-US', { month: 'long' }).format(new Date()))
 const todayStats = dailyData!.find((daily) => daily!.date === '2021-11-15')
@@ -106,7 +103,7 @@ const itemsPerPage = ref(5)
         <VDataTable
           :items-per-page="itemsPerPage"
           :headers="headers"
-          :items="transactions?.listTransactions?.items"
+          :items="transactions?.data.listTransactions?.items"
           item-title="userId"
           item-value="id"
           class="elevation-1 rounded-lg">

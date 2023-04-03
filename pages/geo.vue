@@ -14,14 +14,11 @@ definePageMeta({
 
 const theme = useTheme()
 
-const { data, pending } = await useFetch<ListUsersQuery>('/api/list/users', {
-  key: 'api:list:users:countCountry',
-  query: {
-    query: 'countCountry'
-  }
+const data = await useListUsers<ListUsersQuery>({
+  query: 'countCountry'
 })
 
-const dataMap = data.value!.listUsers!.items.reduce<Map<string, number>>((acc, cur) => {
+const dataMap = data.listUsers!.items.reduce<Map<string, number>>((acc, cur) => {
   const nameIso3 = getCountyIso(cur!.country!)
   if (!acc.has(nameIso3)) {
     acc.set(nameIso3, 0)
@@ -87,7 +84,7 @@ const plot = {
 
 <template>
   <VContainer>
-    <VRow v-if="pending" justify="center" align="center">
+    <VRow v-if="!data" justify="center" align="center">
       <VProgressCircular color="secondary" indeterminate />
     </VRow>
     <VRow v-else>

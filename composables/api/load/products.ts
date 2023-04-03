@@ -6,7 +6,7 @@ const productMutations = { create: createProduct, update: updateProduct }
 
 interface CreateProductsPayload {
   u: string
-  q: 'create' | 'update'
+  q?: 'create' | 'update'
 }
 
 export async function useLoadProducts({ u, q }: CreateProductsPayload) {

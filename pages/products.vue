@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { Product } from '~~/graphql/types';
-import type { ListProductsQuery } from '~~/graphql/types';
 
 type ProductsProps = Omit<Required<Product>, '__typename' | 'owner' | 'createdAt' | 'updatedAt' | 'monthlyStat' | 'dailyStat' | 'transactions'>
 
@@ -9,9 +8,9 @@ definePageMeta({
   description: 'See your list of products'
 })
 
-const { data, pending } = await useFetch<ListProductsQuery>('/api/list/products')
+const data = await useListProducts({})
 
-const products = computed(() => data.value?.listProducts?.items as Array<ProductsProps> | undefined)
+const products = computed(() => data?.listProducts?.items as Array<ProductsProps> | undefined)
 // const isLoading = computed(() => {
 //   console.log(!Boolean(products.value?.length), pending.value);
 //   return !Boolean(products.value?.length) || !pending.value
@@ -19,10 +18,8 @@ const products = computed(() => data.value?.listProducts?.items as Array<Product
 
 const uploadProducts = async () => {
   const user = await useUser()
-  await useFetch('/api/load/proudcts', {
-    query: {
-      u: user.username
-    }
+  await useLoadProducts({
+    u: user.username as string
   })
 }
 </script>
@@ -32,7 +29,7 @@ const uploadProducts = async () => {
     <VRow align="center" justify="end">
       <VBtn @click="uploadProducts" color="secondary">Load Products</VBtn>
     </VRow>
-    <VRow v-if="Boolean(products?.length) || !pending" align="stretch" justify="start">
+    <VRow v-if="Boolean(products?.length)" align="stretch" justify="start">
       <VCol v-for="product in products"
         :key="product!.id" cols="12" md="4" lg="3">
         <ProductCard v-bind="product" />

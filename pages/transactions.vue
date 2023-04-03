@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import type { ListTransactionsQuery, ListTransactionsQueryVariables, Transaction } from '~~/graphql/types';
-import type { SortItem } from '@/composables/utils'
+import type { ListTransactionsQuery, Transaction } from '~~/graphql/types';
+import type { ListTransactionsParams } from '~~/composables/api/list/transactions';
+import type { SortItem } from '~~/utils';
 
 definePageMeta({
   title: 'Transactions',
@@ -26,37 +27,31 @@ const loadPTs = async () => {
  * VDataTableServer Conf Functions & Variables
  */
 
-const query = ref<ListTransactionsQueryVariables & { query: string }>({
+const query = ref<ListTransactionsParams>({
   limit: 10,
   query: 'customListT',
 })
-const { data, pending, refresh } = await useFetch<ListTransactionsQuery>('/api/list/transactions', {
-  key: 'api:listT',
-  query
-})
+const { data, pending, refresh } = await useListTransactions<ListTransactionsQuery>(query.value)
 
-const { data: count } = await useFetch<ListTransactionsQuery>('/api/list/transactions', {
-  key: 'api:listT:count',
-  query: {
-    query: 'countT'
-  }
+const { data: count } = await useListTransactions<ListTransactionsQuery>({
+  query: 'countT'
 })
 
 const totalItems = computed(() => {
   if (query.value.filter) {
-    return data.value?.listTransactions?.items.length
+    return data.value?.data.listTransactions?.items.length
   } else {
-    return count.value?.listTransactions?.items?.length || 0
+    return count.value?.data.listTransactions?.items?.length || 0
   }
 })
-const nextToken = computed(() => data.value?.listTransactions?.nextToken)
+const nextToken = computed(() => data.value?.data.listTransactions?.nextToken)
 
 const search = ref('')
 const sortedTransactions = ref<Transaction[] | null>(null)
 const pageToken = reactive(new Map<number, string | null>([[1, null]]))
 
 const loadNextItems = (page: number) => {
-  if (data.value?.listTransactions?.items?.length && data.value?.listTransactions?.nextToken) {
+  if (data.value?.data.listTransactions?.items?.length && data.value?.data.listTransactions.nextToken) {
 
     if (!pageToken.has(page)) {
       pageToken.set(page, nextToken.value as string)
@@ -69,7 +64,7 @@ const loadNextItems = (page: number) => {
   }
 }
 const refreshPerPage = (itemsPerPage: number) => {
-  if (data.value?.listTransactions?.items?.length) {
+  if (data.value?.data.listTransactions?.items?.length) {
     query.value.limit = itemsPerPage
     refresh()
   }
@@ -82,6 +77,7 @@ const handleSortBy = (data: Transaction[], sort: SortItem[]) => {
 
 const onClickSearch = () => {
   query.value.filter = {
+    // @ts-ignore
     or: [
       { id: { contains: search.value } },
       { userId: { contains: search.value } },
@@ -108,12 +104,13 @@ const onClickClear = () => {
       </VBtn>
     </VRow>
     <!-- <pre>{{ data }}</pre> -->
-    <VRow v-if="data?.listTransactions && data.listTransactions.items.length > 0">
+    <VRow
+      v-if="data?.data.listTransactions && data?.data.listTransactions.items.length > 0">
       <VDataTableServer
         :items-per-page="query.limit"
         :headers="headers"
         :items-length="totalItems"
-        :items="sortedTransactions || data.listTransactions.items"
+        :items="sortedTransactions || data?.data.listTransactions.items"
         :loading="pending"
         :search="search"
         class="elevation-1"
@@ -121,7 +118,7 @@ const onClickClear = () => {
         item-value="id"
         @update:page="loadNextItems"
         @update:itemsPerPage="refreshPerPage"
-        @update:sortBy="(sort: SortItem[]) => { handleSortBy(data!.listTransactions!.items as Transaction[], sort) }">
+        @update:sortBy="(sort: SortItem[]) => { handleSortBy(data!.data.listTransactions!.items as Transaction[], sort) }">
         <template #top>
           <VToolbar color="primary-500" class="pa-2">
             <VSpacer />

@@ -8,14 +8,16 @@ definePageMeta({
   description: 'Chart of monthly sales'
 })
 
-const { data, pending } = await useOverallStats()
+const data = await useListOverall<ListOverallSalesQuery>({
+  query: 'listOverallSales'
+})
 
 const plot = computed(() => {
-  if (!data.value?.listOverallSales?.items[0]?.dailyData?.length) return { marks: [] }
+  if (!data?.listOverallSales?.items[0]?.dailyData?.length) return { marks: [] }
 
   const linesData: { date: Date, total: number, type: 'sales' | 'units' }[] = []
 
-  const { monthlyData, year } = data.value.listOverallSales.items[0]
+  const { monthlyData, year } = data.listOverallSales.items[0]
 
   if (!monthlyData?.length) return { marks: [] }
 
@@ -48,7 +50,7 @@ const plot = computed(() => {
 
 <template>
   <VContainer>
-    <VRow v-if="pending || !data" justify="center" align="center">
+    <VRow v-if="!data" justify="center" align="center">
       <VProgressCircular size="65" color="secondary" indeterminate />
     </VRow>
     <VRow v-else>
