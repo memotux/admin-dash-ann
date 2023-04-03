@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useTheme } from "vuetify";
+// @ts-ignore
 import { line, text, ruleY } from "@observablehq/plot"
+import { ListOverallSalesQuery } from "~~/graphql/types";
 
 const props = defineProps<{ isDashboard?: boolean }>()
 
@@ -13,12 +15,14 @@ const yLabel = {
 
 const views = ref<'sales' | 'units'>('units')
 
-const { data, pending } = await useOverallStats()
+const data = await useListOverall<ListOverallSalesQuery>({
+  query: 'listOverallSales'
+})
 
 const plot = computed(() => {
-  if (!data.value?.listOverallSales?.items[0]?.monthlyData?.length) return null
+  if (!data?.listOverallSales?.items[0]?.monthlyData?.length) return null
 
-  const { monthlyData } = data.value.listOverallSales.items[0]
+  const { monthlyData } = data.listOverallSales.items[0]
 
   let lineData: [Date, number][] = []
 
@@ -66,7 +70,7 @@ const plot = computed(() => {
 </script>
 
 <template>
-  <VRow v-if="pending || !plot" justify="center" align="center">
+  <VRow v-if="!plot" justify="center" align="center">
     <VProgressCircular color="secondary" indeterminate />
   </VRow>
   <VRow v-else>

@@ -3,7 +3,7 @@ import { createOverallSales } from '@/graphql/mutations';
 import { dataOverallStat } from '@/data'
 import type { CreateOverallSalesMutation } from "~~/graphql/types";
 
-export default defineEventHandler(async () => {
+export async function useLoadOverall() {
   try {
     const overallSales = dataOverallStat.map(async (item, idx) => {
       const setItem = new Map(Object.entries(item)) as Map<keyof typeof item | 'id' | 'v', string | number | unknown>
@@ -32,4 +32,4 @@ export default defineEventHandler(async () => {
     //   statusMessage: error.errors[0].message
     // })
   }
-})
+}

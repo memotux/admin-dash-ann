@@ -10,15 +10,11 @@ const theme = useTheme()
 
 const container = ref<HTMLDivElement | null>(null)
 
-const { data, pending } = await useFetch('/api/list/overall', {
-  key: 'api:list:overall',
-  query: {
-    query: 'listOverallSales'
-  },
-  transform: (data) => data.listOverallSales?.items[0]?.salesByCategory
+const data = await useListOverall({
+  query: 'listOverallSales'
 })
 
-const cats = Object.entries(data.value!).map(([cat, val]) => ([cat, val] as [string, number]))
+const cats = Object.entries(data.listOverallSales!.items[0]!.salesByCategory!).map(([cat, val]) => ([cat, val] as [string, number]))
 
 const plot = DonutChart(cats, {
   width: props.width || 1024,
@@ -37,6 +33,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <VProgressCircular v-if="pending || !data" size="65" color="secondary" indeterminate />
+  <VProgressCircular v-if="!data" size="65" color="secondary" indeterminate />
   <div v-else ref="container"></div>
 </template>

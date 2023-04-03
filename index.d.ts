@@ -5,5 +5,4 @@ declare module '#app' {
   }
 }
 
-// It is always important to ensure you import/export something when augmenting a type
-export { }
+export type Optional<T, K extends keyof T> = Omit<T, K> & { [P in keyof T]?: T[P] | undefined; }

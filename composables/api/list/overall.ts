@@ -1,7 +1,7 @@
 import { API } from 'aws-amplify'
 import { listOverallSales } from "@/graphql/queries";
-import type { ListOverallSalesQuery, ListOverallSalesQueryVariables } from '~~/graphql/types';
-import { GraphQLResult } from "@aws-amplify/api-graphql";
+import type { ListOverallSalesQueryVariables } from '~~/graphql/types';
+import type { GraphQLResult } from "@aws-amplify/api-graphql";
 
 const overallQueries = { listOverallSales }
 
@@ -9,9 +9,7 @@ interface ListCustomersParams extends ListOverallSalesQueryVariables {
   query: 'listOverallSales'
 }
 
-export default defineEventHandler(async (event) => {
-  const { filter, limit, nextToken, query } = getQuery(event) as unknown as ListCustomersParams
-
+export async function useListOverall<T>({ filter, limit, nextToken, query }: ListCustomersParams) {
   try {
     const { data, errors } = await API.graphql({
       query: overallQueries[query],
@@ -21,7 +19,7 @@ export default defineEventHandler(async (event) => {
         limit: limit !== undefined && typeof limit === 'string' ? parseInt(limit) : limit,
       },
       authMode: 'API_KEY'
-    }) as GraphQLResult<ListOverallSalesQuery>
+    }) as GraphQLResult<T>
 
     if (errors) {
       throw errors
@@ -38,5 +36,6 @@ export default defineEventHandler(async (event) => {
       statusCode: 404,
       statusMessage: error.errors[0].message
     })
+
   }
-})
+}

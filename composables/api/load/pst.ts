@@ -2,9 +2,7 @@ import { API } from "aws-amplify";
 import { customCreateProductTransactions } from "@/graphql/customs";
 import { dataTransaction } from '@/data'
 
-export default defineEventHandler(async () => {
-  console.log('starting loadTransactions');
-
+export async function useLoadPst() {
   try {
     const productsTransactions: any[] = []
 
@@ -30,4 +28,4 @@ export default defineEventHandler(async () => {
     console.info('We have a problem...')
     console.error(error);
   }
-})
+}

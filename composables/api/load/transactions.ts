@@ -2,7 +2,7 @@ import { API } from "aws-amplify";
 import { createTransaction } from '@/graphql/mutations';
 import { dataTransaction } from '@/data'
 
-export default defineEventHandler(async () => {
+export async function useLoadTransactions() {
   console.log('starting loadTransactions');
 
   try {
@@ -27,4 +27,4 @@ export default defineEventHandler(async () => {
     console.info('We have a problem...')
     console.error(error);
   }
-})
+}

@@ -3,9 +3,13 @@ import { listProducts } from "@/graphql/queries";
 import type { ListProductsQuery } from '~~/graphql/types';
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 
-export default defineEventHandler(async (event) => {
-  const { f, l, nt } = getQuery(event)
+interface ListProductsCustomQuery {
+  f?: string
+  l?: string
+  nt?: string
+}
 
+export async function useListProducts({ f, l, nt }: ListProductsCustomQuery) {
   const variables = {
     filter: Boolean(f) ? JSON.parse(f as string) : undefined,
     limit: Boolean(l) ? JSON.parse(l as string) : undefined,
@@ -34,4 +38,4 @@ export default defineEventHandler(async (event) => {
       stack: error.errors[0].locations
     })
   }
-})
+}

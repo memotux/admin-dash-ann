@@ -2,7 +2,7 @@ import { API } from "aws-amplify";
 import { createUser } from '@/graphql/mutations';
 import { dataUser } from '@/data'
 
-export default defineEventHandler(async () => {
+export async function useLoadUsers() {
   try {
     const slice = dataUser.map(async (item) => {
       const setItem = new Map(Object.entries(item)) as Map<keyof typeof item | 'id', string | number | unknown>
@@ -30,4 +30,4 @@ export default defineEventHandler(async () => {
     console.info('We have a problem...')
     console.error(error);
   }
-})
+}

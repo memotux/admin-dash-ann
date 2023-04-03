@@ -9,8 +9,7 @@ interface CreateProductsPayload {
   q: 'create' | 'update'
 }
 
-export default defineEventHandler(async (event) => {
-  const { u, q } = getQuery(event) as unknown as CreateProductsPayload
+export async function useLoadProducts({ u, q }: CreateProductsPayload) {
   if (!u) {
     throw createError({
       statusCode: 403,
@@ -47,4 +46,4 @@ export default defineEventHandler(async (event) => {
     console.info('We have a problem...')
     console.error(error);
   }
-})
+}
