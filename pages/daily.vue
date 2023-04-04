@@ -17,25 +17,25 @@ const dates = ref<{
   end: ''
 })
 
-const data = await useListOverall<ListOverallSalesQuery>({
+const { data, pending } = await useListOverall<ListOverallSalesQuery>({
   query: 'listOverallSales'
 })
 
 onBeforeMount(() => {
-  if (!data?.listOverallSales?.items[0]?.dailyData?.length) return
+  if (!data.value?.listOverallSales?.items[0]?.dailyData?.length) return
 
-  const { dailyData } = data.listOverallSales.items[0]
+  const { dailyData } = data.value.listOverallSales.items[0]
 
   dates.value.start = new Date(dailyData[0]!.date!)
   dates.value.end = new Date(dailyData[dailyData.length - 1]!.date!)
 })
 
 const plot = computed(() => {
-  if (!data?.listOverallSales?.items[0]?.dailyData?.length) return { marks: [] }
+  if (!data.value?.listOverallSales?.items[0]?.dailyData?.length) return { marks: [] }
 
   const linesData: { date: Date, total: number, type: 'sales' | 'units' }[] = []
 
-  const { dailyData } = data.listOverallSales.items[0]
+  const { dailyData } = data.value.listOverallSales.items[0]
 
   dailyData.forEach((data) => {
     if (!data || !data.date) return
@@ -73,7 +73,7 @@ const masks = ref({
 
 <template>
   <VContainer>
-    <VRow v-if="!data" justify="center" align="center">
+    <VRow v-if="pending || !data || plot.marks.length < 1" justify="center" align="center">
       <VProgressCircular size="65" color="secondary" indeterminate />
     </VRow>
     <VRow v-else>

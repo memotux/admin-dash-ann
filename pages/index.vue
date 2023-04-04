@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { ListOverallSalesQuery, ListTransactionsQuery } from '~~/graphql/types';
+import type { ListOverallSalesQuery, ListTransactionsQuery } from '~~/graphql/types';
 
 definePageMeta({
   title: 'Dashboard',
   description: 'Welcome to your Dashboard'
 })
 
-const overallStats = await useListOverall<ListOverallSalesQuery>({
+const { data: overallStats } = await useListOverall<ListOverallSalesQuery>({
   query: 'listOverallSales'
 })
 const { data: transactions } = await useListTransactions<ListTransactionsQuery>({
@@ -14,13 +14,8 @@ const { data: transactions } = await useListTransactions<ListTransactionsQuery>(
   query: 'customListT',
 })
 
-const {
-  totalCustomers,
-  yearlySalesTotal,
-  monthlyData, dailyData } = overallStats.listOverallSales!.items[0]!
-
-const monthStats = monthlyData!.find((monthly) => monthly!.month === new Intl.DateTimeFormat('en-US', { month: 'long' }).format(new Date()))
-const todayStats = dailyData!.find((daily) => daily!.date === '2021-11-15')
+const monthStats = computed(() => overallStats.value?.listOverallSales?.items[0]?.monthlyData?.find((monthly) => monthly!.month === new Intl.DateTimeFormat('en-US', { month: 'long' }).format(new Date())))
+const todayStats = computed(() => overallStats.value?.listOverallSales?.items[0]?.dailyData?.find((daily) => daily!.date === '2021-11-15'))
 
 const headers = [
   { title: 'ID', key: 'id', sortable: true },
@@ -36,7 +31,7 @@ const itemsPerPage = ref(5)
 <template>
   <VContainer>
     <VRow align="stretch" no-gutters>
-      <VCol cols="12" lg="4">
+      <VCol v-if="overallStats?.listOverallSales?.items[0]" cols="12" lg="4">
         <VRow align="center" no-gutters class="mb-2">
           <VCol cols="12" md="6">
             <StatBox
@@ -45,7 +40,7 @@ const itemsPerPage = ref(5)
               density="compact"
               style="height: 100%;"
               title="Total Customers"
-              :value="totalCustomers!"
+              :value="overallStats.listOverallSales.items[0].totalCustomers!"
               increase="+14%"
               description="Since last month"
               icon="fa-solid fa-envelope" />
@@ -83,7 +78,7 @@ const itemsPerPage = ref(5)
               density="compact"
               style="height: 100%;"
               title="Yearly Sales ($)"
-              :value="yearlySalesTotal!"
+              :value="overallStats.listOverallSales.items[0].yearlySalesTotal!"
               increase="+43%"
               description="Since last month"
               icon="fa-solid fa-traffic-light" />

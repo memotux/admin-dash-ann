@@ -15,14 +15,14 @@ const yLabel = {
 
 const views = ref<'sales' | 'units'>('units')
 
-const data = await useListOverall<ListOverallSalesQuery>({
+const { data, pending } = await useListOverall<ListOverallSalesQuery>({
   query: 'listOverallSales'
 })
 
 const plot = computed(() => {
-  if (!data?.listOverallSales?.items[0]?.monthlyData?.length) return null
+  if (!data.value?.listOverallSales?.items[0]?.monthlyData?.length) return null
 
-  const { monthlyData } = data.listOverallSales.items[0]
+  const { monthlyData } = data.value.listOverallSales.items[0]
 
   let lineData: [Date, number][] = []
 
@@ -70,7 +70,7 @@ const plot = computed(() => {
 </script>
 
 <template>
-  <VRow v-if="!plot" justify="center" align="center">
+  <VRow v-if="pending || !plot" justify="center" align="center">
     <VProgressCircular color="secondary" indeterminate />
   </VRow>
   <VRow v-else>

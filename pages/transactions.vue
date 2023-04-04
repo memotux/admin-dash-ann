@@ -105,12 +105,12 @@ const onClickClear = () => {
     </VRow>
     <!-- <pre>{{ data }}</pre> -->
     <VRow
-      v-if="data?.listTransactions && data?.listTransactions.items.length > 0">
+      v-if="data?.listTransactions && data.listTransactions.items.length > 0">
       <VDataTableServer
         :items-per-page="query.limit"
         :headers="headers"
         :items-length="totalItems"
-        :items="sortedTransactions || data?.listTransactions.items"
+        :items="sortedTransactions || data.listTransactions.items"
         :loading="pending"
         :search="search"
         class="elevation-1"
