@@ -39,19 +39,19 @@ const { data: count } = await useListTransactions<ListTransactionsQuery>({
 
 const totalItems = computed(() => {
   if (query.value.filter) {
-    return data.value?.data.listTransactions?.items.length
+    return data.value?.listTransactions?.items.length
   } else {
-    return count.value?.data.listTransactions?.items?.length || 0
+    return count.value?.listTransactions?.items?.length || 0
   }
 })
-const nextToken = computed(() => data.value?.data.listTransactions?.nextToken)
+const nextToken = computed(() => data.value?.listTransactions?.nextToken)
 
 const search = ref('')
 const sortedTransactions = ref<Transaction[] | null>(null)
 const pageToken = reactive(new Map<number, string | null>([[1, null]]))
 
 const loadNextItems = (page: number) => {
-  if (data.value?.data.listTransactions?.items?.length && data.value?.data.listTransactions.nextToken) {
+  if (data.value?.listTransactions?.items?.length && data.value?.listTransactions.nextToken) {
 
     if (!pageToken.has(page)) {
       pageToken.set(page, nextToken.value as string)
@@ -64,7 +64,7 @@ const loadNextItems = (page: number) => {
   }
 }
 const refreshPerPage = (itemsPerPage: number) => {
-  if (data.value?.data.listTransactions?.items?.length) {
+  if (data.value?.listTransactions?.items?.length) {
     query.value.limit = itemsPerPage
     refresh()
   }
@@ -105,12 +105,12 @@ const onClickClear = () => {
     </VRow>
     <!-- <pre>{{ data }}</pre> -->
     <VRow
-      v-if="data?.data.listTransactions && data?.data.listTransactions.items.length > 0">
+      v-if="data?.listTransactions && data?.listTransactions.items.length > 0">
       <VDataTableServer
         :items-per-page="query.limit"
         :headers="headers"
         :items-length="totalItems"
-        :items="sortedTransactions || data?.data.listTransactions.items"
+        :items="sortedTransactions || data?.listTransactions.items"
         :loading="pending"
         :search="search"
         class="elevation-1"
@@ -118,7 +118,7 @@ const onClickClear = () => {
         item-value="id"
         @update:page="loadNextItems"
         @update:itemsPerPage="refreshPerPage"
-        @update:sortBy="(sort: SortItem[]) => { handleSortBy(data!.data.listTransactions!.items as Transaction[], sort) }">
+        @update:sortBy="(sort: SortItem[]) => { handleSortBy(data!.listTransactions!.items as Transaction[], sort) }">
         <template #top>
           <VToolbar color="primary-500" class="pa-2">
             <VSpacer />

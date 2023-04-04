@@ -103,7 +103,7 @@ const itemsPerPage = ref(5)
         <VDataTable
           :items-per-page="itemsPerPage"
           :headers="headers"
-          :items="transactions?.data.listTransactions?.items"
+          :items="transactions?.listTransactions?.items"
           item-title="userId"
           item-value="id"
           class="elevation-1 rounded-lg">

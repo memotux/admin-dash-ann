@@ -34,7 +34,7 @@ const transactionQueries = {
 
 export function useListTransactions<D>({ id, filter, limit, nextToken, productId, sortDirection, transactionId, query }: ListTransactionsParams) {
 
-  return useFetch<{ data: D }, FetchError, string, 'post'>(awsconfig.aws_appsync_graphqlEndpoint, {
+  return useFetch<D, FetchError, string, 'post'>(awsconfig.aws_appsync_graphqlEndpoint, {
     key: `api:list:transactions:${unref(query)}`,
     method: 'post',
     headers: {
@@ -52,6 +52,8 @@ export function useListTransactions<D>({ id, filter, limit, nextToken, productId
         filter: filter !== undefined ? JSON.parse(filter as string) : filter,
         limit: limit !== undefined && typeof limit === 'string' ? parseInt(limit) : limit,
       }
-    })
+    }),
+    // @ts-ignore
+    transform: (input) => input.data
   })
 }
