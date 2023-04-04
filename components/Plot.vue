@@ -24,7 +24,6 @@ const props = withDefaults(defineProps<{
   style: () => ({
     background: "transparent",
     width: '100%',
-    height: '75vh'
   }),
   className: 'plot-chart',
   marks: () => []
