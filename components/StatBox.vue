@@ -20,7 +20,7 @@ defineProps<{
       <h3 class="text-center text-h3 font-weight-bold">{{ value }}</h3>
     </VCardSubtitle>
     <VCardText>
-      <VRow class="pa-4" justify="space-between">
+      <VRow class="pa-4" justify="space-between" align="center">
         <h5 class="text-h5">{{ increase }}</h5>
         {{ description }}
       </VRow>
