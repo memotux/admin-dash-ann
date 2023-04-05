@@ -53,6 +53,9 @@ const onClickDrawerBtn = () => {
         </template>
       </VListItem>
       <VListItem v-if="ui.isAuth" prepend-avatar="/favicon.ico" title="Romeo Méndez" />
+      <VListItem v-if="display.mobile.value">
+        <TopbarBtn />
+      </VListItem>
     </VList>
 
     <VDivider />
