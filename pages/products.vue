@@ -31,7 +31,7 @@ const uploadProducts = async () => {
     </VRow>
     <VRow v-if="Boolean(products?.length)" align="stretch" justify="start">
       <VCol v-for="product in products"
-        :key="product!.id" cols="12" md="4" lg="3">
+        :key="product!.id" cols="12" sm="6" md="4" lg="3">
         <ProductCard v-bind="product" />
       </VCol>
     </VRow>
