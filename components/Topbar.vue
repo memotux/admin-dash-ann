@@ -20,11 +20,12 @@ const drawerColor = computed(() => theme.global.current.value.dark ? 'primary-50
             single-line
             hide-details />
         </VCol>
-        <VCol cols="3" class="text-right">
-          <v-btn icon="fa-solid fa-circle-half-stroke" @click="toggleTheme" />
-          <v-btn icon="fa-regular fa-bell" />
-          <v-btn icon="fa-solid fa-gear" />
-          <v-btn icon="fa-regular fa-user" />
+        <VCol cols="9" class="text-right">
+          <VBtn icon="fa-solid fa-circle-half-stroke" @click="toggleTheme" />
+          <VBtn icon="fa-regular fa-bell" />
+          <VBtn icon="fa-solid fa-gear" />
+          <VBtn icon="fa-regular fa-user" />
+          <VAppBarNavIcon @click="() => { ui.drawer = !ui.drawer }" />
         </VCol>
       </VRow>
     </VContainer>

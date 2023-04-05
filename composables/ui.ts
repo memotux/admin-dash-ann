@@ -1,10 +1,14 @@
 import { Auth } from "aws-amplify";
+import { useDisplay } from "vuetify";
 
-export const useUi = () => useState('ui', () => ({
-  drawer: true,
-  rail: false,
-  isAuth: false
-}))
+export const useUi = () => useState('ui', () => {
+  const { mobile } = useDisplay()
+  return ({
+    drawer: !mobile.value,
+    rail: false,
+    isAuth: false
+  })
+})
 
 export const useUser = async () => {
   try {

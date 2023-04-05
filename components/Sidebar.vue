@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTheme } from 'vuetify'
+import { useTheme, useDisplay } from 'vuetify'
 
 const items = [
   { title: 'Dashboard', prependIcon: 'mdi:mdi-view-dashboard', to: '/' },
@@ -21,6 +21,18 @@ const items = [
 const ui = useUi()
 const theme = useTheme()
 const drawerColor = computed(() => theme.global.current.value.dark ? 'primary-500' : 'primary-600')
+const display = useDisplay()
+const drawerSide = computed(() => {
+  return display.mobile.value ? 'right' : 'start'
+})
+const drawerIcon = computed(() => display.mobile.value ? 'fa-solid fa-circle-xmark' : 'fa-solid fa-circle-chevron-left')
+const onClickDrawerBtn = () => {
+  if (display.mobile.value) {
+    ui.value.drawer = !ui.value.drawer
+  } else {
+    ui.value.rail = !ui.value.rail
+  }
+}
 </script>
 
 <template>
@@ -28,16 +40,16 @@ const drawerColor = computed(() => theme.global.current.value.dark ? 'primary-50
     :color="drawerColor"
     v-model="ui.drawer"
     :rail="ui.rail"
-    permanent
+    :location="drawerSide"
     @click="() => { ui.rail = false }">
     <VList>
       <VListItem v-show="!ui.rail">
         <h1>TUXMIN</h1>
         <template #append>
-          <v-btn
+          <VBtn
             variant="text"
-            icon="fa-solid fa-circle-chevron-left"
-            @click.stop="() => { ui.rail = !ui.rail }" />
+            :icon="drawerIcon"
+            @click.stop="onClickDrawerBtn" />
         </template>
       </VListItem>
       <VListItem v-if="ui.isAuth" prepend-avatar="/favicon.ico" title="Romeo Méndez" />
@@ -48,11 +60,11 @@ const drawerColor = computed(() => theme.global.current.value.dark ? 'primary-50
     <VList v-if="ui.isAuth" :lines="false" nav>
       <template v-for="(item) in items" :key="item.title">
         <VListSubheader
-          v-if="item.type === 'subheader'"
+          v-if="item.type === 'subheader' && !ui.rail"
           :title="item.title"
           class="text-h6" />
         <VListItem
-          v-else
+          v-if="item.type !== 'subheader'"
           :active-color="drawerColor ? 'secondary' : 'primary'"
           v-bind="item" />
       </template>
