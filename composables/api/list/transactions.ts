@@ -15,6 +15,7 @@ import type {
 } from '~~/graphql/types';
 import type { Optional } from '~~/index';
 import type { FetchError } from 'ofetch';
+import { Auth } from "aws-amplify";
 
 export type ListTransactionsParams = Optional<GetTransactionQueryVariables, 'id'> &
   ListTransactionsQueryVariables &
@@ -32,13 +33,16 @@ const transactionQueries = {
   countT: customCountTransactions
 }
 
-export function useListTransactions<D>({ id, filter, limit, nextToken, productId, sortDirection, transactionId, query }: ListTransactionsParams) {
+export async function useListTransactions<D>({ id, filter, limit, nextToken, productId, sortDirection, transactionId, query }: ListTransactionsParams) {
+
+  const session = await Auth.currentSession()
 
   return useFetch<{ data: D }, FetchError, string, 'post', { data: D }, D>(awsconfig.aws_appsync_graphqlEndpoint, {
     key: `api:list:transactions:${unref(query)}`,
     method: 'post',
     headers: {
-      'x-api-key': awsconfig.aws_appsync_apiKey,
+      // 'x-api-key': awsconfig.aws_appsync_apiKey,
+      Authorization: session.getAccessToken().getJwtToken(),
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({

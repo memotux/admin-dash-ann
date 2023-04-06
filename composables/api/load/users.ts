@@ -21,7 +21,6 @@ export async function useLoadUsers() {
         variables: {
           input: Object.fromEntries(setItem)
         },
-        authMode: 'API_KEY'
       })
     })
 

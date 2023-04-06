@@ -26,7 +26,6 @@ export async function useListUsers<T>({ filter, limit, nextToken, role, query, i
         filter: filter !== undefined ? JSON.parse(filter as string) : filter,
         limit: limit !== undefined && typeof limit === 'string' ? parseInt(limit) : limit,
       },
-      authMode: 'API_KEY'
     }) as GraphQLResult<T>
 
     if (errors) {

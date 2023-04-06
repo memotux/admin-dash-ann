@@ -37,7 +37,6 @@ export async function useLoadProducts({ u, q }: CreateProductsPayload) {
         variables: {
           input: Object.fromEntries(setItem)
         },
-        authMode: 'API_KEY'
       })
     })
 

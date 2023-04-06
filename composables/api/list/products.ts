@@ -20,7 +20,6 @@ export async function useListProducts({ f, l, nt }: ListProductsCustomQuery) {
     const { data, errors } = await API.graphql({
       query: listProducts,
       variables,
-      authMode: 'API_KEY'
     }) as GraphQLResult<ListProductsQuery>
 
     if (errors) {

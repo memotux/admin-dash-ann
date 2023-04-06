@@ -19,7 +19,6 @@ export async function useLoadOverall() {
         variables: {
           input: Object.fromEntries(setItem)
         },
-        authMode: 'API_KEY'
       })
     })
 

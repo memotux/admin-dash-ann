@@ -18,7 +18,6 @@ export async function useLoadTransactions() {
         variables: {
           input: Object.fromEntries(setItem)
         },
-        authMode: 'API_KEY'
       })
     })
 

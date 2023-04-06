@@ -17,7 +17,6 @@ export async function useLoadPst() {
               transactionId: transaction._id
             }
           },
-          authMode: 'API_KEY'
         })
         )
       })
