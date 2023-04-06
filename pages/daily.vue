@@ -26,8 +26,8 @@ onBeforeMount(() => {
 
   const { dailyData } = data.value.listOverallSales.items[0]
 
-  dates.value.start = new Date(dailyData[0]!.date!)
-  dates.value.end = new Date(dailyData[dailyData.length - 1]!.date!)
+  dates.value.start = new Date(dailyData[0]?.date || '')
+  dates.value.end = new Date(dailyData[dailyData.length - 1]?.date || '')
 })
 
 const plot = computed(() => {
@@ -76,24 +76,28 @@ const masks = ref({
     <VRow v-if="pending || !data || plot.marks.length < 1" justify="center" align="center">
       <VProgressCircular size="65" color="secondary" indeterminate />
     </VRow>
-    <VRow v-else>
-      <VCol>
-        <Plot v-bind="plot" />
-      </VCol>
-      <VCol cols="3">
-        <h5 class="text-center mb-2">Pick a date range</h5>
+    <VRow v-else class="flex-column">
+      <VCol cols="12" sm="9" md="6" class="mx-auto">
+        <h4 class="text-center mb-2">Pick a date range</h4>
         <DatePicker v-model.range="dates" :masks="masks">
           <template #default="{ inputValue, inputEvents }">
-            <div class="flex justify-center items-center">
-              <VTextField v-model="inputValue.start" v-on="inputEvents.start"
-                label="Start:"
-                prependInnerIcon="fa-solid fa-calendar-days" readonly />
-              <VTextField v-model="inputValue.end" v-on="inputEvents.end"
-                label="End:"
-                prependInnerIcon="fa-solid fa-calendar-days" readonly />
-            </div>
+            <VRow justify="space-around" align="center">
+              <VCol>
+                <VTextField v-model="inputValue.start" v-on="inputEvents.start"
+                  label="Start:"
+                  prependInnerIcon="fa-solid fa-calendar-days" readonly />
+              </VCol>
+              <VCol>
+                <VTextField v-model="inputValue.end" v-on="inputEvents.end"
+                  label="End:"
+                  prependInnerIcon="fa-solid fa-calendar-days" readonly />
+              </VCol>
+            </VRow>
           </template>
         </DatePicker>
+      </VCol>
+      <VCol>
+        <Plot v-bind="plot" />
       </VCol>
     </VRow>
   </VContainer>
