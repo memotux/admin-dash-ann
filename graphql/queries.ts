@@ -2,6 +2,91 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getProduct = /* GraphQL */ `
+  query GetProduct($id: ID!) {
+    getProduct(id: $id) {
+      id
+      owner
+      name
+      price
+      description
+      category
+      rating
+      supply
+      yearlySalesTotal
+      yearlyTotalSoldUnits
+      monthlyStat {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      dailyStat {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      transactions {
+        items {
+          id
+          productId
+          transactionId
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listProducts = /* GraphQL */ `
+  query ListProducts(
+    $filter: ModelProductFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listProducts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        owner
+        name
+        price
+        description
+        category
+        rating
+        supply
+        yearlySalesTotal
+        yearlyTotalSoldUnits
+        monthlyStat {
+          month
+          date
+          totalSales
+          totalUnits
+          _id
+        }
+        dailyStat {
+          month
+          date
+          totalSales
+          totalUnits
+          _id
+        }
+        transactions {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
@@ -174,155 +259,6 @@ export const listOverallSales = /* GraphQL */ `
     }
   }
 `;
-export const userByRole = /* GraphQL */ `
-  query UserByRole(
-    $role: UserRoles!
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    userByRole(
-      role: $role
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        name
-        email
-        city
-        state
-        country
-        occupation
-        phoneNumber
-        transactions {
-          nextToken
-        }
-        role
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const transactionsByUserId = /* GraphQL */ `
-  query TransactionsByUserId(
-    $userId: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelTransactionFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    transactionsByUserId(
-      userId: $userId
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        userId
-        cost
-        products {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getProduct = /* GraphQL */ `
-  query GetProduct($id: ID!) {
-    getProduct(id: $id) {
-      id
-      owner
-      name
-      price
-      description
-      category
-      rating
-      supply
-      yearlySalesTotal
-      yearlyTotalSoldUnits
-      monthlyStat {
-        month
-        date
-        totalSales
-        totalUnits
-        _id
-      }
-      dailyStat {
-        month
-        date
-        totalSales
-        totalUnits
-        _id
-      }
-      transactions {
-        items {
-          id
-          productId
-          transactionId
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listProducts = /* GraphQL */ `
-  query ListProducts(
-    $filter: ModelProductFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listProducts(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        owner
-        name
-        price
-        description
-        category
-        rating
-        supply
-        yearlySalesTotal
-        yearlyTotalSoldUnits
-        monthlyStat {
-          month
-          date
-          totalSales
-          totalUnits
-          _id
-        }
-        dailyStat {
-          month
-          date
-          totalSales
-          totalUnits
-          _id
-        }
-        transactions {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getProductTransactions = /* GraphQL */ `
   query GetProductTransactions($id: ID!) {
     getProductTransactions(id: $id) {
@@ -415,6 +351,70 @@ export const listProductTransactions = /* GraphQL */ `
         createdAt
         updatedAt
         owner
+      }
+      nextToken
+    }
+  }
+`;
+export const userByRole = /* GraphQL */ `
+  query UserByRole(
+    $role: UserRoles!
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    userByRole(
+      role: $role
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        email
+        city
+        state
+        country
+        occupation
+        phoneNumber
+        transactions {
+          nextToken
+        }
+        role
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const transactionsByUserId = /* GraphQL */ `
+  query TransactionsByUserId(
+    $userId: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelTransactionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    transactionsByUserId(
+      userId: $userId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userId
+        cost
+        products {
+          nextToken
+        }
+        createdAt
+        updatedAt
       }
       nextToken
     }

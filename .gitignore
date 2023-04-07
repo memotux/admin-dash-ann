@@ -31,8 +31,3 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
-
-amplify/mock-data
-amplify/mock-api-resources
-../../dev/admin-dash-ann/amplify/mock-data
-../../dev/admin-dash-ann/amplify/mock-api-resources

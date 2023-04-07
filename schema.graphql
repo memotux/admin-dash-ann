@@ -1,34 +1,9 @@
-type Mutation {
-  batchAddProducts(posts: [CreateProductInput]): [Product] @aws_cognito @aws_iam
-}
-
-input CreateProductInput {
-  id: ID
-  type: DataType!
-  name: String
-  price: Float
-  description: String
-  category: String
-  rating: Float
-  supply: Int
-  yearlySalesTotal: Int
-  yearlyTotalSoldUnits: Int
-  monthlyStat: [ProductStatDateInput]
-  dailyStat: [ProductStatDateInput]
-}
-
-input ProductStatDateInput {
-  month: String
-  date: AWSDate
-  totalSales: Int!
-  totalUnits: Int!
-}
-
 type ProductStatDate {
   month: String
   date: AWSDate
   totalSales: Int!
   totalUnits: Int!
+  _id: ID
 }
 
 enum DataType {
@@ -36,9 +11,23 @@ enum DataType {
   PRODUCTSTAT
 }
 
-type Product @model @auth(rules: [{ allow: public }]) {
-  id: ID! @primaryKey(sortKeyFields: ["type"])
-  type: DataType!
+enum UserRoles {
+  user
+  admin
+}
+
+type Product
+  @model
+  @auth(
+    rules: [
+      { allow: groups, groups: ["admin"] }
+      { allow: groups, groups: ["user"], operations: [read, create] }
+      { allow: owner, operations: [update, delete] }
+      { allow: public, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  owner: String!
   name: String
   price: Float
   description: String
@@ -49,4 +38,68 @@ type Product @model @auth(rules: [{ allow: public }]) {
   yearlyTotalSoldUnits: Int
   monthlyStat: [ProductStatDate]
   dailyStat: [ProductStatDate]
+  transactions: [Transaction] @manyToMany(relationName: "ProductTransactions")
+}
+
+type User
+  @model
+  @auth(
+    rules: [
+      { allow: groups, groups: ["admin"] }
+      { allow: groups, groups: ["user"], operations: [read, create] }
+    ]
+  ) {
+  id: ID!
+  name: String
+  email: AWSEmail!
+  city: String
+  state: String
+  country: String
+  occupation: String
+  phoneNumber: AWSPhone
+  transactions: [Transaction]
+    @hasMany(indexName: "transactionsByUser", fields: ["id"])
+  role: UserRoles! @index(name: "usersByRole", queryField: "userByRole")
+}
+
+type Transaction
+  @model
+  @auth(
+    rules: [
+      { allow: groups, groups: ["admin"] }
+      { allow: groups, groups: ["user"], operations: [read, create] }
+    ]
+  ) {
+  id: ID!
+  userId: ID! @index(name: "transactionsByUser")
+  cost: Float
+  products: [Product] @manyToMany(relationName: "ProductTransactions")
+}
+
+type OverallSales
+  @model
+  @auth(
+    rules: [
+      { allow: groups, groups: ["admin"] }
+      { allow: groups, groups: ["user"], operations: [read, create] }
+    ]
+  ) {
+  year: Int!
+  id: ID!
+  totalCustomers: Int
+  yearlySalesTotal: Int
+  yearlyTotalSoldUnits: Int
+  monthlyData: [ProductStatDate]
+  dailyData: [ProductStatDate]
+  salesByCategory: SalesCategories
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  v: Int
+}
+
+type SalesCategories {
+  shoes: Int
+  clothing: Int
+  accessories: Int
+  misc: Int
 }

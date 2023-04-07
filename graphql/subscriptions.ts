@@ -2,6 +2,135 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateProduct = /* GraphQL */ `
+  subscription OnCreateProduct($filter: ModelSubscriptionProductFilterInput) {
+    onCreateProduct(filter: $filter) {
+      id
+      owner
+      name
+      price
+      description
+      category
+      rating
+      supply
+      yearlySalesTotal
+      yearlyTotalSoldUnits
+      monthlyStat {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      dailyStat {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      transactions {
+        items {
+          id
+          productId
+          transactionId
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateProduct = /* GraphQL */ `
+  subscription OnUpdateProduct($filter: ModelSubscriptionProductFilterInput) {
+    onUpdateProduct(filter: $filter) {
+      id
+      owner
+      name
+      price
+      description
+      category
+      rating
+      supply
+      yearlySalesTotal
+      yearlyTotalSoldUnits
+      monthlyStat {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      dailyStat {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      transactions {
+        items {
+          id
+          productId
+          transactionId
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteProduct = /* GraphQL */ `
+  subscription OnDeleteProduct($filter: ModelSubscriptionProductFilterInput) {
+    onDeleteProduct(filter: $filter) {
+      id
+      owner
+      name
+      price
+      description
+      category
+      rating
+      supply
+      yearlySalesTotal
+      yearlyTotalSoldUnits
+      monthlyStat {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      dailyStat {
+        month
+        date
+        totalSales
+        totalUnits
+        _id
+      }
+      transactions {
+        items {
+          id
+          productId
+          transactionId
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
     onCreateUser(filter: $filter) {
@@ -260,135 +389,6 @@ export const onDeleteOverallSales = /* GraphQL */ `
       createdAt
       updatedAt
       v
-    }
-  }
-`;
-export const onCreateProduct = /* GraphQL */ `
-  subscription OnCreateProduct($filter: ModelSubscriptionProductFilterInput) {
-    onCreateProduct(filter: $filter) {
-      id
-      owner
-      name
-      price
-      description
-      category
-      rating
-      supply
-      yearlySalesTotal
-      yearlyTotalSoldUnits
-      monthlyStat {
-        month
-        date
-        totalSales
-        totalUnits
-        _id
-      }
-      dailyStat {
-        month
-        date
-        totalSales
-        totalUnits
-        _id
-      }
-      transactions {
-        items {
-          id
-          productId
-          transactionId
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateProduct = /* GraphQL */ `
-  subscription OnUpdateProduct($filter: ModelSubscriptionProductFilterInput) {
-    onUpdateProduct(filter: $filter) {
-      id
-      owner
-      name
-      price
-      description
-      category
-      rating
-      supply
-      yearlySalesTotal
-      yearlyTotalSoldUnits
-      monthlyStat {
-        month
-        date
-        totalSales
-        totalUnits
-        _id
-      }
-      dailyStat {
-        month
-        date
-        totalSales
-        totalUnits
-        _id
-      }
-      transactions {
-        items {
-          id
-          productId
-          transactionId
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteProduct = /* GraphQL */ `
-  subscription OnDeleteProduct($filter: ModelSubscriptionProductFilterInput) {
-    onDeleteProduct(filter: $filter) {
-      id
-      owner
-      name
-      price
-      description
-      category
-      rating
-      supply
-      yearlySalesTotal
-      yearlyTotalSoldUnits
-      monthlyStat {
-        month
-        date
-        totalSales
-        totalUnits
-        _id
-      }
-      dailyStat {
-        month
-        date
-        totalSales
-        totalUnits
-        _id
-      }
-      transactions {
-        items {
-          id
-          productId
-          transactionId
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
     }
   }
 `;

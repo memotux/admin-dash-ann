@@ -6,11 +6,6 @@ type ProductStatDate {
   _id: ID
 }
 
-enum DataType {
-  PRODUCT
-  PRODUCTSTAT
-}
-
 enum UserRoles {
   user
   admin
@@ -23,7 +18,6 @@ type Product
       { allow: groups, groups: ["admin"] }
       { allow: groups, groups: ["user"], operations: [read, create] }
       { allow: owner, operations: [update, delete] }
-      { allow: public, operations: [read] }
     ]
   ) {
   id: ID!

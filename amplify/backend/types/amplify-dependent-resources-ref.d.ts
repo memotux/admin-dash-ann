@@ -1,18 +1,23 @@
 export type AmplifyDependentResourcesAttributes = {
   "api": {
-    "fullstackadmindash": {
+    "admindashann": {
       "GraphQLAPIEndpointOutput": "string",
-      "GraphQLAPIIdOutput": "string",
-      "GraphQLAPIKeyOutput": "string"
+      "GraphQLAPIIdOutput": "string"
     }
   },
   "auth": {
-    "fullstackadmindash72bd22b172bd22b1": {
+    "portfolio939ab895": {
       "AppClientID": "string",
       "AppClientIDWeb": "string",
+      "IdentityPoolId": "string",
+      "IdentityPoolName": "string",
       "UserPoolArn": "string",
       "UserPoolId": "string",
       "UserPoolName": "string"
+    },
+    "userPoolGroups": {
+      "adminGroupRole": "string",
+      "userGroupRole": "string"
     }
   }
 }

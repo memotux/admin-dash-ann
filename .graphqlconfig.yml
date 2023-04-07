@@ -1,6 +1,6 @@
 projects:
-  fullstackadmindash:
-    schemaPath: amplify/backend/api/fullstackadmindash/build/schema.graphql
+  admindashann:
+    schemaPath: amplify/backend/api/admindashann/build/schema.graphql
     includes:
       - graphql/**/*.ts
     excludes:
