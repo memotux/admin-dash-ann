@@ -17,38 +17,38 @@ const headers = [
 ]
 
 const loadTransactions = async () => {
-  await useFetch('/api/load/transactions')
+  await useLoadTransactions()
 }
 const loadPTs = async () => {
-  await useFetch('/api/load/pst')
+  await useLoadPst()
 }
 
 /**
  * VDataTableServer Conf Functions & Variables
  */
-
-const query = ref<ListTransactionsParams>({
+const search = ref('')
+const sortedTransactions = ref<Transaction[] | null>(null)
+const pageToken = reactive(new Map<number, string | null>([[1, null]]))
+const query = reactive<ListTransactionsParams>({
   limit: 10,
   query: 'customListT',
 })
-const { data, pending, refresh } = await useListTransactions<ListTransactionsQuery>(query.value)
 
-const { data: count } = await useListTransactions<ListTransactionsQuery>({
+const { data, pending } = await useListTransactions<ListTransactionsQuery>(query)
+
+const { data: count } = await useListTransactions<ListTransactionsQuery>(reactive<ListTransactionsParams>({
   query: 'countT'
-})
+}))
 
 const totalItems = computed(() => {
-  if (query.value.filter) {
+  if (query.filter) {
     return data.value?.listTransactions?.items.length
   } else {
     return count.value?.listTransactions?.items?.length || 0
   }
 })
-const nextToken = computed(() => data.value?.listTransactions?.nextToken)
 
-const search = ref('')
-const sortedTransactions = ref<Transaction[] | null>(null)
-const pageToken = reactive(new Map<number, string | null>([[1, null]]))
+const nextToken = computed(() => data.value?.listTransactions?.nextToken)
 
 const loadNextItems = (page: number) => {
   if (data.value?.listTransactions?.items?.length && data.value?.listTransactions.nextToken) {
@@ -57,16 +57,13 @@ const loadNextItems = (page: number) => {
       pageToken.set(page, nextToken.value as string)
     }
 
-    query.value.nextToken = pageToken.get(page)
+    query.nextToken = pageToken.get(page)
     sortedTransactions.value = null
-
-    refresh()
   }
 }
 const refreshPerPage = (itemsPerPage: number) => {
   if (data.value?.listTransactions?.items?.length) {
-    query.value.limit = itemsPerPage
-    refresh()
+    query.limit = itemsPerPage
   }
 }
 
@@ -76,7 +73,7 @@ const handleSortBy = (data: Transaction[], sort: SortItem[]) => {
 }
 
 const onClickSearch = () => {
-  query.value.filter = {
+  query.filter = {
     // @ts-ignore
     or: [
       { id: { contains: search.value } },
@@ -84,12 +81,10 @@ const onClickSearch = () => {
       { cost: { eq: parseFloat(search.value) || undefined } }
     ]
   }
-  refresh()
 
 }
 const onClickClear = () => {
-  query.value.filter = undefined
-  refresh()
+  query.filter = undefined
 }
 </script>
 

@@ -1,3 +1,6 @@
+import { hash } from "ohash";
+import { Auth } from "aws-amplify";
+
 import {
   listTransactions,
   listProductTransactions,
@@ -7,6 +10,7 @@ import {
 } from "@/graphql/queries";
 import { customListTransactions, customCountTransactions } from "@/graphql/customs";
 import awsconfig from '@/aws-exports'
+
 import type {
   ListTransactionsQueryVariables,
   ProductTransactionsByProductIdQueryVariables,
@@ -15,7 +19,6 @@ import type {
 } from '~~/graphql/types';
 import type { Optional } from '~~/index';
 import type { FetchError } from 'ofetch';
-import { Auth } from "aws-amplify";
 
 export type ListTransactionsParams = Optional<GetTransactionQueryVariables, 'id'> &
   ListTransactionsQueryVariables &
@@ -33,30 +36,36 @@ const transactionQueries = {
   countT: customCountTransactions
 }
 
-export async function useListTransactions<D>({ id, filter, limit, nextToken, productId, sortDirection, transactionId, query }: ListTransactionsParams) {
+export async function useListTransactions<D>(params: ListTransactionsParams) {
 
   const session = await Auth.currentSession()
 
-  return useFetch<{ data: D }, FetchError, string, 'post', { data: D }, D>(awsconfig.aws_appsync_graphqlEndpoint, {
-    key: `api:list:transactions:${unref(query)}`,
-    method: 'post',
-    headers: {
-      // 'x-api-key': awsconfig.aws_appsync_apiKey,
-      Authorization: session.getAccessToken().getJwtToken(),
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      query: transactionQueries[unref(query)],
-      variables: {
-        id,
-        nextToken,
-        productId,
-        transactionId,
-        sortDirection,
-        filter: filter !== undefined ? JSON.parse(filter as string) : filter,
-        limit: limit !== undefined && typeof limit === 'string' ? parseInt(limit) : limit,
-      }
-    }),
-    transform: (input) => input.data
+  const data = ref<Ref<D> | null>(null)
+  const pending = ref(true)
+  const error = ref<FetchError<any> | null>(null)
+
+  watchEffect(async () => {
+    const res = await useFetch<{ data: D }, FetchError, string, 'post', { data: D }, D>(awsconfig.aws_appsync_graphqlEndpoint, {
+      key: hash([`api:list:transactions`, { ...params }]),
+      method: 'post',
+      headers: {
+        // 'x-api-key': awsconfig.aws_appsync_apiKey,
+        Authorization: session.getAccessToken().getJwtToken(),
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        query: transactionQueries[params.query],
+        variables: {
+          ...params
+        }
+      }),
+      transform: (input) => input.data,
+    })
+
+    data.value = res.data.value as D
+    pending.value = res.pending.value
+    error.value = res.error.value
   })
+
+  return { data, error, pending }
 }
