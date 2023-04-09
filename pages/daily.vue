@@ -17,9 +17,7 @@ const dates = ref<{
   end: ''
 })
 
-const { data, pending } = await useListOverall<ListOverallSalesQuery>({
-  query: 'listOverallSales'
-})
+const { data, pending } = await useListOverall<ListOverallSalesQuery>(ref('listOverallSales'))
 
 onBeforeMount(() => {
   if (!data.value?.listOverallSales?.items[0]?.dailyData?.length) return

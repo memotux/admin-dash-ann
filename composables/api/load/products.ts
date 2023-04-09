@@ -4,20 +4,18 @@ import { dataProductStat, dataProduct } from '@/data'
 
 const productMutations = { create: createProduct, update: updateProduct }
 
-interface CreateProductsPayload {
-  u: string
-  q?: 'create' | 'update'
-}
-
-export async function useLoadProducts({ u, q }: CreateProductsPayload) {
+export async function useLoadProducts(
+  u: string,
+  q: 'create' | 'update' = 'create'
+) {
   if (!u) {
     throw createError({
       statusCode: 403,
-      statusMessage: 'Not a valid user...'
+      statusMessage: 'Not a valid query.'
     })
   }
   try {
-    const slice = dataProduct.map(async (item) => {
+    const slice = dataProduct.map(async (item, idx) => {
       const setItem = new Map(Object.entries(item)) as Map<keyof typeof item | 'id' | 'type' | 'owner' | 'monthlyStat' | 'dailyStat' | 'yearlyTotalSoldUnits' | 'yearlySalesTotal', string | number | unknown>
       const stats = dataProductStat.find((i) => i.productId === item._id)
       setItem.delete('_id')
@@ -30,10 +28,10 @@ export async function useLoadProducts({ u, q }: CreateProductsPayload) {
         setItem.set('yearlyTotalSoldUnits', stats.yearlyTotalSoldUnits)
       }
 
-      console.log('Processing Product Stat: ', item._id);
+      console.log('Processing Product: ', idx, item._id);
 
       return await API.graphql({
-        query: productMutations[q || 'create'],
+        query: productMutations[q],
         variables: {
           input: Object.fromEntries(setItem)
         },

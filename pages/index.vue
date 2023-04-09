@@ -6,9 +6,7 @@ definePageMeta({
   description: 'Welcome to your Dashboard'
 })
 
-const { data: overallStats } = await useListOverall<ListOverallSalesQuery>({
-  query: 'listOverallSales'
-})
+const { data: overallStats } = await useListOverall<ListOverallSalesQuery>(ref('listOverallSales'))
 const { data: transactions } = await useListTransactions<ListTransactionsQuery>({
   limit: 50,
   query: 'customListT',

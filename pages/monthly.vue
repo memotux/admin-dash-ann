@@ -8,9 +8,7 @@ definePageMeta({
   description: 'Chart of monthly sales'
 })
 
-const { data, pending } = await useListOverall<ListOverallSalesQuery>({
-  query: 'listOverallSales'
-})
+const { data, pending } = await useListOverall<ListOverallSalesQuery>(ref('listOverallSales'))
 
 const plot = computed(() => {
   if (!data.value?.listOverallSales?.items[0]?.dailyData?.length) return { marks: [] }

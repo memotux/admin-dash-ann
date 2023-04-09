@@ -16,26 +16,17 @@ interface ListCustomersParams extends ListUsersQueryVariables {
 export async function useListUsers<T>({ filter, limit, nextToken, role, query, id, userId }: ListCustomersParams) {
 
   try {
-    const { data, errors } = await API.graphql({
+    return await API.graphql({
       query: usersQuery[query],
       variables: {
         id,
         userId,
         role,
         nextToken,
-        filter: filter !== undefined ? JSON.parse(filter as string) : filter,
-        limit: limit !== undefined && typeof limit === 'string' ? parseInt(limit) : limit,
+        filter,
+        limit,
       },
     }) as GraphQLResult<T>
-
-    if (errors) {
-      throw errors
-    }
-    if (!data) {
-      throw new Error("There is no DATA!");
-    }
-
-    return data
   } catch (error: any) {
     console.error(error);
 

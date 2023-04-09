@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useAuthenticator } from '@aws-amplify/ui-vue';
 import type { Product } from '~~/graphql/types';
 
 type ProductsProps = Omit<Required<Product>, '__typename' | 'owner' | 'createdAt' | 'updatedAt' | 'monthlyStat' | 'dailyStat' | 'transactions'>
@@ -8,7 +9,14 @@ definePageMeta({
   description: 'See your list of products'
 })
 
-const data = await useListProducts({})
+const { data, errors } = await useListProducts()
+
+if (errors) {
+  throw createError({
+    statusCode: 403,
+    statusMessage: 'Error Listing Products.'
+  })
+}
 
 const products = computed(() => data?.listProducts?.items as Array<ProductsProps> | undefined)
 // const isLoading = computed(() => {
@@ -17,10 +25,9 @@ const products = computed(() => data?.listProducts?.items as Array<ProductsProps
 // })
 
 const uploadProducts = async () => {
-  const user = await useUser()
-  await useLoadProducts({
-    u: user.username as string
-  })
+  const auth = useAuthenticator()
+
+  await useLoadProducts(auth.user.username)
 }
 </script>
 

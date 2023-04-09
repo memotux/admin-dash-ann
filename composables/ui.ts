@@ -3,6 +3,7 @@ import { useDisplay } from "vuetify";
 
 export const useUi = () => useState('ui', () => {
   const { mobile } = useDisplay()
+
   return ({
     drawer: !mobile.value,
     rail: false,
@@ -40,6 +41,7 @@ export const authListener = (data: any) => {
         break
       case 'signOut':
         ui.value.isAuth = false
+        ui.value.drawer = false
         break
       default:
         ui.value.isAuth = false

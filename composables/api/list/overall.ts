@@ -10,17 +10,25 @@ interface ListCustomersParams extends ListOverallSalesQueryVariables {
   query: keyof typeof overallQueries
 }
 
-export function useListOverall<D>({ filter, limit, nextToken, query }: ListCustomersParams) {
-  return useAsyncData<GraphQLResult<D>, FetchError, D | undefined>(`api:list:overall:${unref(query)}`, async () => {
-    return await API.graphql<ListOverallSalesQueryVariables>({
-      query: overallQueries[unref(query)],
-      variables: {
-        nextToken,
-        filter: filter !== undefined ? JSON.parse(filter as string) : filter,
-        limit: limit !== undefined && typeof limit === 'string' ? parseInt(limit) : limit,
-      }
-    }) as GraphQLResult<D>
-  }, {
-    transform: (input) => input.data
+export function useListOverall<D>(
+  query: Ref<ListCustomersParams['query']>,
+  filter: Ref<ListCustomersParams['filter']> = ref(undefined),
+  nextToken: Ref<ListCustomersParams['nextToken']> = ref(undefined),
+  limit: Ref<ListCustomersParams['limit']> = ref(undefined)) {
+
+  return useAsyncData<GraphQLResult<D>, FetchError, D | undefined>(
+    `api:list:overall:${unref(query)}`,
+    async () => (
+      await API.graphql({
+        query: overallQueries[unref(query)],
+        variables: {
+          nextToken: unref(nextToken),
+          filter: unref(filter),
+          limit: unref(limit)
+        }
+      }) as GraphQLResult<D>
+    ), {
+    transform: (input) => input.data,
+    watch: [query, filter, limit, nextToken]
   })
 }

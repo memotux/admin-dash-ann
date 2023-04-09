@@ -6,7 +6,7 @@ definePageMeta({
   description: 'Track your Affilate Sales Performance'
 })
 
-const data = await useListUsers<TransactionsByUserIdQuery>({
+const { data } = await useListUsers<TransactionsByUserIdQuery>({
   userId: '63701cc1f03239c72c000184',
   query: 'transactionsByUser'
 })

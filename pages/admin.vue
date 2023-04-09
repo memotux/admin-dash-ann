@@ -16,7 +16,7 @@ const headers = [
 
 const itemsPerPage = ref(10)
 
-const data = await useListUsers<UserByRoleQuery>({
+const { data } = await useListUsers<UserByRoleQuery>({
   role: UserRoles.admin,
   query: 'userByRole'
 })

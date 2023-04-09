@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-// import type { /* UserByRoleQueryVariables, */ UserByRoleQuery } from '~~/graphql/types';
-
-import { UserByRoleQuery } from '~~/graphql/types';
+import type { UserByRoleQuery } from '~~/graphql/types';
 
 definePageMeta({
   title: 'Customers',
@@ -18,13 +16,13 @@ const headers = [
 
 const itemsPerPage = ref(10)
 
-const data = await useListUsers<UserByRoleQuery>({
+const { data } = await useListUsers<UserByRoleQuery>({
   role: UserRoles.user,
   query: 'userByRole'
 })
 
-const loadCustomers = () => {
-  useFetch('/api/load/users')
+const loadCustomers = async () => {
+  await useLoadUsers()
 }
 
 /**
@@ -87,7 +85,7 @@ const loadCustomers = () => {
         Load Customers
       </VBtn>
     </VRow>
-    <VRow v-if="data.userByRole && data.userByRole.items.length > 0">
+    <VRow v-if="data?.userByRole && data.userByRole.items.length > 0">
       <VDataTable
         :items-per-page="itemsPerPage"
         :headers="headers"

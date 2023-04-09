@@ -14,11 +14,11 @@ definePageMeta({
 
 const theme = useTheme()
 
-const data = await useListUsers<ListUsersQuery>({
+const { data } = await useListUsers<ListUsersQuery>({
   query: 'countCountry'
 })
 
-const dataMap = data.listUsers!.items.reduce<Map<string, number>>((acc, cur) => {
+const dataMap = data?.listUsers?.items.reduce<Map<string, number>>((acc, cur) => {
   const nameIso3 = getCountyIso(cur!.country!)
   if (!acc.has(nameIso3)) {
     acc.set(nameIso3, 0)
@@ -30,7 +30,7 @@ const dataMap = data.listUsers!.items.reduce<Map<string, number>>((acc, cur) => 
 }, new Map())
 
 geoFeat.features.forEach((country) => {
-  (country.properties as { name: string, users: number }).users = dataMap.get(country.id) || 0
+  (country.properties as { name: string, users: number }).users = dataMap?.get(country.id) || 0
 
   return country
 })

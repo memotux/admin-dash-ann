@@ -6,9 +6,9 @@ export async function useLoadPst() {
   try {
     const productsTransactions: any[] = []
 
-    dataTransaction.slice(1).forEach(transaction => {
+    dataTransaction.forEach((transaction, idx) => {
       transaction.products.forEach((product) => {
-        console.log('Processing product: ', product, '. Transaction: ', transaction._id);
+        console.log('Processing product: ', product, '. Transaction: ', transaction._id, idx);
         productsTransactions.push(API.graphql({
           query: customCreateProductTransactions,
           variables: {

@@ -1,36 +1,26 @@
 import { API } from 'aws-amplify'
 import { listProducts } from "@/graphql/queries";
-import type { ListProductsQuery } from '~~/graphql/types';
-import { GraphQLResult } from "@aws-amplify/api-graphql";
+import type { ListProductsQuery, ListProductsQueryVariables } from '~~/graphql/types';
+import type { GraphQLQuery } from "@aws-amplify/api";
 
-interface ListProductsCustomQuery {
-  f?: string
-  l?: string
-  nt?: string
-}
-
-export async function useListProducts({ f, l, nt }: ListProductsCustomQuery) {
-  const variables = {
-    filter: Boolean(f) ? JSON.parse(f as string) : undefined,
-    limit: Boolean(l) ? JSON.parse(l as string) : undefined,
-    nextToken: Boolean(nt) ? JSON.parse(nt as string) : undefined
-  }
+export async function useListProducts(
+  filter?: ListProductsQueryVariables['filter'],
+  limit?: ListProductsQueryVariables['limit'],
+  nextToken?: ListProductsQueryVariables['nextToken']
+) {
 
   try {
-    const { data, errors } = await API.graphql({
+    return await API.graphql<GraphQLQuery<ListProductsQuery>>({
       query: listProducts,
-      variables,
-    }) as GraphQLResult<ListProductsQuery>
-
-    if (errors) {
-      throw errors
-    }
-    if (!data) {
-      throw new Error("There is no DATA!");
-    }
-
-    return data
+      variables: {
+        filter,
+        limit,
+        nextToken
+      },
+    })
   } catch (error: any) {
+    console.error(error)
+
     throw createError({
       statusCode: 400,
       statusMessage: error.errors[0].message,

@@ -11,9 +11,7 @@ const theme = useTheme()
 
 const container = ref<HTMLDivElement | null>(null)
 
-const { data, pending } = await useListOverall<ListOverallSalesQuery>({
-  query: 'listOverallSales'
-})
+const { data, pending } = await useListOverall<ListOverallSalesQuery>(ref('listOverallSales'))
 
 const plot = computed(() => {
   const cats = Object.entries(data.value?.listOverallSales?.items[0]?.salesByCategory!).map(([cat, val]) => ([cat, val] as [string, number]))
