@@ -50,7 +50,7 @@ type User
   state: String
   country: String
   occupation: String
-  phoneNumber: AWSPhone
+  phoneNumber: String
   transactions: [Transaction]
     @hasMany(indexName: "transactionsByUser", fields: ["id"])
   role: UserRoles! @index(name: "usersByRole", queryField: "userByRole")
