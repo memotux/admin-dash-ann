@@ -27,7 +27,7 @@ const loadPTs = async () => {
  * VDataTableServer Conf Functions & Variables
  */
 const search = ref('')
-const sortedTransactions = ref<Transaction[] | null>(null)
+const sortedBy = ref<SortItem[]>([])
 const pageToken = reactive(new Map<number, string | null>([[1, null]]))
 const query = reactive<ListTransactionsParams>({
   limit: 10,
@@ -50,6 +50,14 @@ const totalItems = computed(() => {
 
 const nextToken = computed(() => data.value?.listTransactions?.nextToken)
 
+const transactions = computed(() => {
+  if (!sortedBy.value.length) {
+    return data.value?.listTransactions?.items
+  } else {
+    return sortItems(data.value!.listTransactions!.items! as Transaction[], sortedBy.value, 'en-US')
+  }
+})
+
 const loadNextItems = (page: number) => {
   if (data.value?.listTransactions?.items?.length && data.value?.listTransactions.nextToken) {
 
@@ -58,18 +66,12 @@ const loadNextItems = (page: number) => {
     }
 
     query.nextToken = pageToken.get(page)
-    sortedTransactions.value = null
   }
 }
 const refreshPerPage = (itemsPerPage: number) => {
   if (data.value?.listTransactions?.items?.length) {
     query.limit = itemsPerPage
   }
-}
-
-const handleSortBy = (data: Transaction[], sort: SortItem[]) => {
-  // TODO: Sort on other pages, not just on first.
-  sortedTransactions.value = sortItems(data, sort, 'en-US')
 }
 
 const onClickSearch = () => {
@@ -97,15 +99,15 @@ const onClickClear = () => {
         :items-per-page="query.limit"
         :headers="headers"
         :items-length="totalItems"
-        :items="sortedTransactions || data.listTransactions.items"
+        :items="transactions"
         :loading="pending"
         :search="search"
+        v-model:sortBy="sortedBy"
         class="elevation-1"
         item-title="name"
         item-value="id"
         @update:page="loadNextItems"
-        @update:itemsPerPage="refreshPerPage"
-        @update:sortBy="(sort: SortItem[]) => { handleSortBy(data!.listTransactions!.items as Transaction[], sort) }">
+        @update:itemsPerPage="refreshPerPage">
         <template #top>
           <VToolbar color="primary-500" class="pa-2">
             <VSpacer />
