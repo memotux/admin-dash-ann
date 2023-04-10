@@ -57,4 +57,8 @@ useSeoMeta({
 .amplify-label {
   --amplify-components-field-label-color: var(--amplify-colors-brand-primary-10);
 }
+
+.amplify-input {
+  color: var(--amplify-colors-brand-primary-10)
+}
 </style>
