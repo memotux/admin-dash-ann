@@ -47,6 +47,9 @@ const search = ref('')
         </template>
       </VDataTable>
     </VRow>
+    <VRow v-else justify="center" align="center">
+      <h2>Sorry! There is NO DATA to show.</h2>
+    </VRow>
   </VContainer>
 </template>
 

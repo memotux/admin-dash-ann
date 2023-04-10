@@ -34,6 +34,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <VProgressCircular v-if="pending || !data" size="65" color="secondary" indeterminate />
+  <h2 v-if="pending || !data?.listOverallSales?.items.length">
+    Sorry! There is NO DATA to show.
+  </h2>
   <div v-else ref="container"></div>
 </template>

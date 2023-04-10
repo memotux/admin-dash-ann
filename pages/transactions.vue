@@ -17,10 +17,10 @@ const headers = [
 ]
 
 const loadTransactions = async () => {
-  await useLoadTransactions()
+  await useFetch('/api/load/transactions')
 }
 const loadPTs = async () => {
-  await useLoadPst()
+  await useFetch('/api/load/pst')
 }
 
 /**
@@ -90,14 +90,6 @@ const onClickClear = () => {
 
 <template>
   <VContainer>
-    <VRow align="center" justify="end" class="mb-8">
-      <VBtn @click="loadTransactions" color="secondary" class="mr-4">
-        Load Transactions
-      </VBtn>
-      <VBtn @click="loadPTs" color="secondary">
-        Load PTs
-      </VBtn>
-    </VRow>
     <!-- <pre>{{ data }}</pre> -->
     <VRow
       v-if="data?.listTransactions && data.listTransactions.items.length > 0">
@@ -142,6 +134,14 @@ const onClickClear = () => {
           {{ formatCurrency(item.raw.cost) }}
         </template>
       </VDataTableServer>
+    </VRow>
+    <VRow v-else align="center" justify="center" class="mb-8">
+      <VBtn @click="loadTransactions" color="secondary" class="mr-4">
+        Load Transactions
+      </VBtn>
+      <VBtn @click="loadPTs" color="secondary">
+        Load PTs
+      </VBtn>
     </VRow>
   </VContainer>
 </template>

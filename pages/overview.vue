@@ -6,17 +6,18 @@ definePageMeta({
 })
 
 const loadOverAllData = async () => {
-  await useLoadOverall()
+  await useFetch('/api/load/overall', { method: 'post' })
 }
 </script>
 
 <template>
   <VContainer>
-    <VRow align="center" justify="end" class="mb-8">
-      <VBtn @click="loadOverAllData" color="secondary">
-        Load Overall Sales
-      </VBtn>
-    </VRow>
-    <GraphOverall />
+    <GraphOverall>
+      <template #no-data>
+        <VBtn @click="loadOverAllData" color="secondary">
+          Load Overall Sales
+        </VBtn>
+      </template>
+    </GraphOverall>
   </VContainer>
 </template>

@@ -69,22 +69,24 @@ const plot = computed(() => {
 
 <template>
   <VRow v-if="pending || !plot" justify="center" align="center">
-    <VProgressCircular color="secondary" indeterminate />
+    <slot name="no-data" />
   </VRow>
   <VRow v-else>
-    <VCol v-if="!isDashboard" cols="3">
-      <VSelect
-        v-model="views"
-        name="overall-sales-views"
-        label="Select View..."
-        prepend-inner-icon="fa-solid fa-chart-line"
-        prefix="Chart:"
-        :items="[{ title: 'Sales', value: 'sales' }, { title: 'Units', value: 'units' }]"
-        single-line />
-    </VCol>
-    <VDivider v-if="!isDashboard" />
-    <VCol cols="12">
-      <Plot v-bind="plot" />
-    </VCol>
+    <slot>
+      <VCol v-if="!isDashboard" cols="3">
+        <VSelect
+          v-model="views"
+          name="overall-sales-views"
+          label="Select View..."
+          prepend-inner-icon="fa-solid fa-chart-line"
+          prefix="Chart:"
+          :items="[{ title: 'Sales', value: 'sales' }, { title: 'Units', value: 'units' }]"
+          single-line />
+      </VCol>
+      <VDivider v-if="!isDashboard" />
+      <VCol cols="12">
+        <Plot v-bind="plot" />
+      </VCol>
+    </slot>
   </VRow>
 </template>

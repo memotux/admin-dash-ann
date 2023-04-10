@@ -27,15 +27,17 @@ const products = computed(() => data?.listProducts?.items as Array<ProductsProps
 const uploadProducts = async () => {
   const auth = useAuthenticator()
 
-  await useLoadProducts(auth.user.username)
+  await useFetch('/api/load/products', {
+    method: 'post',
+    body: {
+      q: auth.user.username
+    }
+  })
 }
 </script>
 
 <template>
   <VContainer style="min-height: 80vh; height: 100%;">
-    <VRow align="center" justify="end">
-      <VBtn @click="uploadProducts" color="secondary">Load Products</VBtn>
-    </VRow>
     <VRow v-if="Boolean(products?.length)" align="stretch" justify="start">
       <VCol v-for="product in products"
         :key="product!.id" cols="12" sm="6" md="4" lg="3">
@@ -43,7 +45,7 @@ const uploadProducts = async () => {
       </VCol>
     </VRow>
     <VRow v-else align="center" justify="center" style="min-height: inherit;">
-      <VProgressCircular color="secondary-700" indeterminate :size="80" width="8" />
+      <VBtn @click="uploadProducts" color="secondary">Load Products</VBtn>
     </VRow>
   </VContainer>
 </template>

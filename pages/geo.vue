@@ -84,8 +84,8 @@ const plot = {
 
 <template>
   <VContainer>
-    <VRow v-if="!data" justify="center" align="center">
-      <VProgressCircular color="secondary" indeterminate />
+    <VRow v-if="!data?.listUsers?.items.length" justify="center" align="center">
+      <h2>Sorry! There is NO DATA to show.</h2>
     </VRow>
     <VRow v-else>
       <VCol cols="12">

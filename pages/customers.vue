@@ -22,7 +22,7 @@ const { data } = await useListUsers<UserByRoleQuery>({
 })
 
 const loadCustomers = async () => {
-  await useLoadUsers()
+  await useFetch('/api/load/users')
 }
 
 /**
@@ -80,11 +80,6 @@ const loadCustomers = async () => {
 
 <template>
   <VContainer>
-    <VRow align="center" justify="end" class="mb-8">
-      <VBtn @click="loadCustomers" color="secondary">
-        Load Customers
-      </VBtn>
-    </VRow>
     <VRow v-if="data?.userByRole && data.userByRole.items.length > 0">
       <VDataTable
         :items-per-page="itemsPerPage"
@@ -93,6 +88,11 @@ const loadCustomers = async () => {
         item-title="name"
         item-value="email"
         class="elevation-1 rounded-lg" />
+    </VRow>
+    <VRow v-else align="center" justify="center" class="mb-8">
+      <VBtn @click="loadCustomers" color="secondary">
+        Load Customers
+      </VBtn>
     </VRow>
   </VContainer>
 </template>

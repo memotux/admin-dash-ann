@@ -23,8 +23,8 @@ const itemsPerPage = ref(10)
 
 <template>
   <VContainer>
-    <VRow v-if="!data" justify="center" align="center">
-      <VProgressCircular color="secondary" indeterminate />
+    <VRow v-if="!data?.transactionsByUserId?.items.length" justify="center" align="center">
+      <h2>Sorry! There is NO DATA to show.</h2>
     </VRow>
     <VRow v-else>
       <!-- <pre>{{ data }}</pre> -->

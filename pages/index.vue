@@ -24,12 +24,17 @@ const headers = [
 ]
 
 const itemsPerPage = ref(5)
+
+const showContent = computed(() => (
+  Boolean(overallStats.value?.listOverallSales?.items[0]) &&
+  Boolean(transactions.value?.listTransactions?.items[0])
+))
 </script>
 
 <template>
   <VContainer>
-    <VRow align="stretch" dense>
-      <VCol v-if="overallStats?.listOverallSales?.items[0]" cols="12" lg="6">
+    <VRow v-if="showContent" align="stretch" dense>
+      <VCol cols="12" lg="6">
         <VRow align="center" dense>
           <VCol>
             <StatBox
@@ -37,7 +42,7 @@ const itemsPerPage = ref(5)
               density="compact"
               class="h-100"
               title="Total Customers"
-              :value="overallStats.listOverallSales.items[0].totalCustomers!"
+              :value="overallStats?.listOverallSales?.items[0]?.totalCustomers || 0"
               increase="+14%"
               description="Since last month"
               icon="fa-solid fa-envelope" />
@@ -72,7 +77,7 @@ const itemsPerPage = ref(5)
               density="compact"
               class="h-100"
               title="Yearly Sales ($)"
-              :value="overallStats.listOverallSales.items[0].yearlySalesTotal!"
+              :value="overallStats?.listOverallSales?.items[0]?.yearlySalesTotal || 0"
               increase="+43%"
               description="Since last month"
               icon="fa-solid fa-traffic-light" />
@@ -87,7 +92,7 @@ const itemsPerPage = ref(5)
         </VCard>
       </VCol>
     </VRow>
-    <VRow align="stretch" dense>
+    <VRow v-if="showContent" align="stretch" dense>
       <VCol cols="12" lg="8">
         <VCard color="primary-700">
           <VCardTitle>
@@ -127,6 +132,9 @@ const itemsPerPage = ref(5)
           </VCardText>
         </VCard>
       </VCol>
+    </VRow>
+    <VRow v-else justify="center" align="center">
+      <h3>Sorry! There is NO DATA to show...</h3>
     </VRow>
   </VContainer>
 </template>

@@ -72,7 +72,7 @@ const masks = ref({
 <template>
   <VContainer>
     <VRow v-if="pending || !data || plot.marks.length < 1" justify="center" align="center">
-      <VProgressCircular size="65" color="secondary" indeterminate />
+      <h2>Sorry! There is NO DATA to show.</h2>
     </VRow>
     <VRow v-else class="flex-column">
       <VCol cols="12" sm="9" md="6" class="mx-auto">

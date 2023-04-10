@@ -48,8 +48,9 @@ const plot = computed(() => {
 
 <template>
   <VContainer>
-    <VRow v-if="pending || !data" justify="center" align="center">
-      <VProgressCircular size="65" color="secondary" indeterminate />
+    <VRow v-if="pending || !data?.listOverallSales?.items.length" justify="center"
+      align="center">
+      <h2>Sorry! There is NO DATA to show.</h2>
     </VRow>
     <VRow v-else>
       <VCol cols="12">
