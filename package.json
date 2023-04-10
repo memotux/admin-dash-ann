@@ -8,18 +8,18 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@aws-amplify/ui-vue": "^3.1.10",
-    "@fortawesome/fontawesome-free": "^6.3.0",
-    "@mdi/font": "^7.1.96",
-    "@observablehq/plot": "^0.6.4",
+    "@aws-amplify/ui-vue": "^3.1.13",
+    "@fortawesome/fontawesome-free": "^6.4.0",
+    "@mdi/font": "^7.2.96",
+    "@observablehq/plot": "^0.6.5",
     "@popperjs/core": "^2.11.7",
     "@types/d3": "^7.4.0",
-    "@types/node": "^18.15.0",
-    "aws-amplify": "^5.0.18",
+    "@types/node": "^18.15.11",
+    "aws-amplify": "^5.0.25",
     "country-iso-2-to-3": "^1.1.0",
-    "nuxt": "^3.3.1",
-    "v-calendar": "^3.0.2",
+    "nuxt": "^3.3.3",
+    "v-calendar": "^3.0.3",
     "vite-plugin-vuetify": "^1.0.2",
-    "vuetify": "^3.1.8"
+    "vuetify": "^3.1.13"
   }
 }
