@@ -1,13 +1,12 @@
-import { API } from "aws-amplify";
+import { withSSRContext } from "aws-amplify";
 import { createProduct, updateProduct } from '@/graphql/mutations';
 import { dataProductStat, dataProduct } from '@/data'
 
 const productMutations = { create: createProduct, update: updateProduct }
 
-export async function useLoadProducts(
-  u: string,
-  q: 'create' | 'update' = 'create'
-) {
+export default defineEventHandler(async (event) => {
+  const SSR = withSSRContext({ req: event.node.req })
+  const { u, q = 'create' } = await readBody(event)
   if (!u) {
     throw createError({
       statusCode: 403,
@@ -30,8 +29,8 @@ export async function useLoadProducts(
 
       console.log('Processing Product: ', idx, item._id);
 
-      return await API.graphql({
-        query: productMutations[q],
+      return await SSR.API.graphql({
+        query: productMutations[q as keyof typeof productMutations],
         variables: {
           input: Object.fromEntries(setItem)
         },
@@ -42,5 +41,9 @@ export async function useLoadProducts(
   } catch (error) {
     console.info('We have a problem...')
     console.error(error);
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'Error creating Products'
+    })
   }
-}
+})

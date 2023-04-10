@@ -1,8 +1,9 @@
-import { API } from "aws-amplify";
+import { withSSRContext } from "aws-amplify";
 import { createUser } from '@/graphql/mutations';
 import { dataUser } from '@/data'
 
-export async function useLoadUsers() {
+export default defineEventHandler(async (event) => {
+  const SSR = withSSRContext({ req: event.node.req })
   try {
     const slice = dataUser.map(async (item, idx) => {
       const setItem = new Map(Object.entries(item)) as Map<keyof typeof item | 'id', string | number | unknown>
@@ -15,7 +16,7 @@ export async function useLoadUsers() {
 
       console.log('Processing Customer: ', idx, item._id);
 
-      return await API.graphql({
+      return await SSR.API.graphql({
         query: createUser,
         variables: {
           input: Object.fromEntries(setItem)
@@ -28,4 +29,4 @@ export async function useLoadUsers() {
     console.info('We have a problem...')
     console.error(error);
   }
-}
+})

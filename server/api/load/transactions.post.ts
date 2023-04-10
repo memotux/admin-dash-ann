@@ -1,9 +1,11 @@
-import { API } from "aws-amplify";
+import { withSSRContext } from "aws-amplify";
 import { createTransaction } from '@/graphql/mutations';
 import { dataTransaction } from '@/data'
 
-export async function useLoadTransactions() {
+export default defineEventHandler(async (event) => {
   console.log('starting loadTransactions');
+
+  const SSR = withSSRContext({ req: event.node.req })
 
   try {
     const transactions = dataTransaction.map(async (item) => {
@@ -13,7 +15,7 @@ export async function useLoadTransactions() {
       setItem.set('id', item._id)
 
       console.log('Processing Transactions: ', item._id);
-      return await API.graphql({
+      return await SSR.API.graphql({
         query: createTransaction,
         variables: {
           input: Object.fromEntries(setItem)
@@ -26,4 +28,4 @@ export async function useLoadTransactions() {
     console.info('We have a problem...')
     console.error(error);
   }
-}
+})

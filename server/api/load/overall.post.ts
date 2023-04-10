@@ -1,11 +1,12 @@
-import { API } from "aws-amplify";
+import { withSSRContext } from "aws-amplify";
 import { createOverallSales } from '@/graphql/mutations';
 import { dataOverallStat } from '@/data'
-import type { CreateOverallSalesMutation } from "~~/graphql/types";
 
-export async function useLoadOverall() {
+export default defineEventHandler(async (event) => {
+  const SSR = withSSRContext({ req: event.node.req })
+
   try {
-    const overallSales = dataOverallStat.map(async (item, idx) => {
+    const overallSales = dataOverallStat.map((item, idx) => {
       const setItem = new Map(Object.entries(item)) as Map<keyof typeof item | 'id' | 'v', string | number | unknown>
       setItem.delete('_id')
       setItem.delete('__v')
@@ -14,7 +15,7 @@ export async function useLoadOverall() {
 
       console.log('Processing OverallSale: ', idx + 1);
 
-      return await API.graphql<CreateOverallSalesMutation>({
+      return SSR.API.graphql({
         query: createOverallSales,
         variables: {
           input: Object.fromEntries(setItem)
@@ -25,10 +26,9 @@ export async function useLoadOverall() {
     return await Promise.all(overallSales)
   } catch (error: any) {
     console.error(error);
-
-    // throw createError({
-    //   statusCode: 400,
-    //   statusMessage: error.errors[0].message
-    // })
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'Error creating Overall Stats',
+    })
   }
-}
+})
