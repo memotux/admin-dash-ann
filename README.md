@@ -6,10 +6,13 @@ This project it is inspired by [FullStack Admin](https://github.com/ed-roh/fulls
 
 ## Features
 
-- Use Nuxt 3 with Server API
-- Use Vuetify 3 for Framework and Theme
+- Use Nuxt 3 with Server APIs & Composables
+- Use Vuetify 3 for UI Framework and Theme
 - Use AWS Amplify as backend (DynamoDB, AppSync, Cognito) and Deployment
-- Use [ObservableHQ/Plot](https://github.com/observablehq/plot/) for data visualization
+- Use AWS Amplify with SSR on Nuxt Serve APIs
+- Use Nuxt `useFetch` or `useAsyncData` to query AWS AppSync with API Key or Auth Sesion Access Token
+- Use Vue Reactivity to make API Call on data change
+- Use [ObservableHQ/Plot](https://github.com/observablehq/plot/) & D3 for data visualization
 
 ## Setup
 
