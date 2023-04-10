@@ -17,10 +17,10 @@ const headers = [
 ]
 
 const loadTransactions = async () => {
-  await useFetch('/api/load/transactions')
+  await useFetch('/api/load/transactions', { method: 'POST' })
 }
 const loadPTs = async () => {
-  await useFetch('/api/load/pst')
+  await useFetch('/api/load/pst', { method: 'POST' })
 }
 
 /**

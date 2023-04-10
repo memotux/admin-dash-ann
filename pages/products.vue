@@ -30,7 +30,7 @@ const uploadProducts = async () => {
   await useFetch('/api/load/products', {
     method: 'post',
     body: {
-      q: auth.user.username
+      u: auth.user.username
     }
   })
 }

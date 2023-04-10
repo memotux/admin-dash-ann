@@ -22,7 +22,7 @@ const { data } = await useListUsers<UserByRoleQuery>({
 })
 
 const loadCustomers = async () => {
-  await useFetch('/api/load/users')
+  await useFetch('/api/load/users', { method: 'post' })
 }
 
 /**
